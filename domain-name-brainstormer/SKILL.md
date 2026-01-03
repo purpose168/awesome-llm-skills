@@ -1,212 +1,211 @@
 ---
 name: domain-name-brainstormer
-description: Generates creative domain name ideas for your project and checks availability across multiple TLDs (.com, .io, .dev, .ai, etc.). Saves hours of brainstorming and manual checking.
+description: 为您的项目生成创意域名，并检查多个顶级域名（.com、.io、.dev、.ai等）的可用性。节省数小时的头脑风暴和手动检查时间。
 ---
 
-# Domain Name Brainstormer
+# 域名头脑风暴器
 
-This skill helps you find the perfect domain name for your project by generating creative options and checking what's actually available to register.
+这个技能通过生成创意选项并检查哪些域名实际上可注册，帮助您为项目找到完美的域名。
 
-## When to Use This Skill
+## 何时使用此技能
 
-- Starting a new project or company
-- Launching a product or service
-- Creating a personal brand or portfolio site
-- Rebranding an existing project
-- Registering a domain for a side project
-- Finding available alternatives when your first choice is taken
+- 启动新项目或新公司
+- 推出产品或服务
+- 创建个人品牌或作品集网站
+- 现有项目重新命名
+- 为副业项目注册域名
+- 当首选域名被占用时寻找可用替代方案
 
-## What This Skill Does
+## 此技能的功能
 
-1. **Understands Your Project**: Analyzes what you're building and who it's for
-2. **Generates Creative Names**: Creates relevant, memorable domain options
-3. **Checks Availability**: Verifies which domains are actually available across multiple TLDs
-4. **Multiple Extensions**: Suggests .com, .io, .dev, .ai, .app, and more
-5. **Provides Alternatives**: Offers variations if top choices are taken
-6. **Branding Insights**: Explains why certain names work well
+1. **理解您的项目**：分析您正在构建的内容以及面向的用户群体
+2. **生成创意名称**：创建相关且易记的域名选项
+3. **检查可用性**：验证哪些域名在多个顶级域名下实际可用
+4. **多种扩展名**：推荐.com、.io、.dev、.ai、.app等扩展名
+5. **提供替代方案**：如果首选域名被占用，提供变体选项
+6. **品牌见解**：解释为什么某些名称效果良好
 
-## How to Use
+## 使用方法
 
-### Basic Brainstorming
-
-```
-I'm building a project management tool for remote teams. 
-Suggest domain names.
-```
+### 基本头脑风暴
 
 ```
-Help me brainstorm domain names for a personal finance app
+我正在为远程团队构建一个项目管理工具。
+请推荐域名。
 ```
 
-### Specific Preferences
-
 ```
-I need a domain name for my AI writing assistant. 
-Prefer short names with .ai or .io extension.
+帮我为个人理财应用头脑风暴域名
 ```
 
-### With Keywords
+### 特定偏好
 
 ```
-Suggest domain names using the words "pixel" or "studio" 
-for my design agency
+我需要为我的AI写作助手找一个域名。
+偏好短名称，带有.ai或.io扩展名。
 ```
 
-## Example
-
-**User**: "I'm building a tool for developers to share code snippets. Suggest creative domain names."
-
-**Output**:
-```
-Analyzing your project...
-Target audience: Developers
-Key features: Code sharing, snippets, collaboration
-
-🎯 Domain Name Suggestions
-
-## Available (.com)
-1. ✓ snippetbox.com - Clear, memorable, available!
-   Why: Directly describes the product, easy to remember
-
-2. ✓ codeclip.com - Short and snappy
-   Why: Implies quick code sharing, only 8 characters
-
-3. ✓ devpaste.com - Developer-focused
-   Why: Familiar to devs (like pastebin), clear purpose
-
-## Available (Alternative TLDs)
-4. ✓ snippet.dev - Perfect extension for developers
-   Why: .dev extension signals developer tool
-
-5. ✓ codebox.io - Tech-forward
-   Why: .io popular with tech startups, clean name
-
-6. ✓ sharecode.app - Descriptive
-   Why: .app extension, clearly states the action
-
-## Premium/Taken (.com)
-- codeshare.com (Taken, est. $2,500)
-- snippets.com (Taken, premium domain)
-
-## Recommendations
-
-🏆 Top Pick: snippet.dev
-- Perfect for developer audience
-- Short and memorable  
-- .dev extension adds credibility
-- Available now!
-
-🥈 Runner-up: snippetbox.com
-- .com is universally recognized
-- Slightly longer but descriptive
-- Great brandability
-
-Next steps:
-1. Register your favorite before someone else does!
-2. Want me to check more variations?
-3. Need help with logo ideas for these names?
-```
-
-**Inspired by:** Ben Aiad's use case from Lenny's Newsletter
-
-## Domain Naming Tips
-
-### What Makes a Good Domain
-
-✓ **Short**: Under 15 characters ideal
-✓ **Memorable**: Easy to recall and spell
-✓ **Pronounceable**: Can be said in conversation
-✓ **Descriptive**: Hints at what you do
-✓ **Brandable**: Unique enough to stand out
-✓ **No hyphens**: Easier to share verbally
-
-### TLD Guide
-
-- **.com**: Universal, trusted, great for businesses
-- **.io**: Tech startups, developer tools
-- **.dev**: Developer-focused products
-- **.ai**: AI/ML products
-- **.app**: Mobile or web applications
-- **.co**: Alternative to .com
-- **.xyz**: Modern, creative projects
-- **.design**: Creative/design agencies
-- **.tech**: Technology companies
-
-## Advanced Features
-
-### Check Similar Variations
+### 使用关键词
 
 ```
-Check availability for "codebase" and similar variations 
-across .com, .io, .dev
+请使用"pixel"或"studio"等词为我的设计机构
+推荐域名
 ```
 
-### Industry-Specific
+## 示例
+
+**用户**："我正在为开发者构建一个分享代码片段的工具。请推荐创意域名。"
+
+**输出**：
+```
+正在分析您的项目...
+目标受众：开发者
+关键功能：代码分享、片段、协作
+
+🎯 域名建议
+
+## 可用（.com）
+1. ✓ snippetbox.com - 清晰易记，可用！
+   原因：直接描述产品，易于记忆
+
+2. ✓ codeclip.com - 简短有力
+   原因：暗示快速代码分享，仅8个字符
+
+3. ✓ devpaste.com - 面向开发者
+   原因：对开发者来说很熟悉（如pastebin），用途明确
+
+## 可用（替代顶级域名）
+4. ✓ snippet.dev - 开发者的完美扩展名
+   原因：.dev扩展名表明这是开发者工具
+
+5. ✓ codebox.io - 科技感前沿
+   原因：.io在科技创业公司中很受欢迎，名称简洁
+
+6. ✓ sharecode.app - 描述性强
+   原因：.app扩展名，清晰表明功能
+
+## 溢价/已被占用（.com）
+- codeshare.com（已被占用，估计$2,500）
+- snippets.com（已被占用，溢价域名）
+
+## 推荐
+
+🏆 首选：snippet.dev
+- 完美契合开发者受众
+- 简短易记  
+- .dev扩展名增加可信度
+- 现在可用！
+
+🥈 次选：snippetbox.com
+- .com被全球广泛认可
+- 稍长但描述性强
+- 出色的品牌塑造潜力
+
+后续步骤：
+1. 立即注册您最喜欢的域名，以免被他人抢注！
+2. 需要我检查更多变体吗？
+3. 需要为这些名称提供logo设计建议吗？
+```
+
+**灵感来源**：Lenny时事通讯中Ben Aiad的用例
+
+## 域名命名技巧
+
+### 好域名的特点
+
+✓ **简短**：理想情况下不超过15个字符
+✓ **易记**：容易回忆和拼写
+✓ **可发音**：可以在对话中轻松说出
+✓ **描述性**：暗示您的业务内容
+✓ **可品牌化**：足够独特以脱颖而出
+✓ **无连字符**：更易于口头分享
+
+### 顶级域名（TLD）指南
+
+- **.com**：通用、可信，非常适合企业
+- **.io**：科技创业公司、开发者工具
+- **.dev**：面向开发者的产品
+- **.ai**：AI/ML产品
+- **.app**：移动或Web应用程序
+- **.co**：.com的替代方案
+- **.xyz**：现代、创意项目
+- **.design**：创意/设计机构
+- **.tech**：科技公司
+
+## 高级功能
+
+### 检查相似变体
 
 ```
-Suggest domain names for a sustainable fashion brand, 
-checking .eco and .fashion TLDs
+检查"codebase"及其相似变体在
+.com、.io、.dev域名下的可用性
 ```
 
-### Multilingual Options
+### 行业特定
 
 ```
-Brainstorm domain names in English and Spanish for 
-a language learning app
+为可持续时尚品牌推荐域名，
+同时检查.eco和.fashion顶级域名
 ```
 
-### Competitor Analysis
+### 多语言选项
 
 ```
-Show me domain patterns used by successful project 
-management tools, then suggest similar available ones
+为语言学习应用头脑风暴中英文域名
 ```
 
-## Example Workflows
+### 竞争对手分析
 
-### Startup Launch
-1. Describe your startup idea
-2. Get 10-15 domain suggestions across TLDs
-3. Review availability and pricing
-4. Pick top 3 favorites
-5. Register immediately
+```
+展示成功的项目管理工具使用的域名模式，
+然后推荐类似的可用域名
+```
 
-### Personal Brand
-1. Share your name and profession
-2. Get variations (firstname.com, firstnamelastname.dev, etc.)
-3. Check social media handle availability too
-4. Register consistent brand across platforms
+## 工作流程示例
 
-### Product Naming
-1. Describe product and target market
-2. Get creative, brandable names
-3. Check trademark conflicts
-4. Verify domain and social availability
-5. Test names with target audience
+### 创业公司启动
+1. 描述您的创业想法
+2. 获取10-15个跨顶级域名的域名建议
+3. 查看可用性和价格
+4. 选择前3个最喜欢的
+5. 立即注册
 
-## Tips for Success
+### 个人品牌
+1. 分享您的姓名和职业
+2. 获取变体（firstname.com、firstnamelastname.dev等）
+3. 同时检查社交媒体账号可用性
+4. 在多个平台注册一致的品牌
 
-1. **Act Fast**: Good domains get taken quickly
-2. **Register Variations**: Get .com and .io to protect brand
-3. **Avoid Numbers**: Hard to communicate verbally
-4. **Check Social Media**: Make sure @username is available too
-5. **Say It Out Loud**: Test if it's easy to pronounce
-6. **Check Trademarks**: Ensure no legal conflicts
-7. **Think Long-term**: Will it still make sense in 5 years?
+### 产品命名
+1. 描述产品和目标市场
+2. 获取创意、可品牌化的名称
+3. 检查商标冲突
+4. 验证域名和社交媒体可用性
+5. 在目标受众中测试名称
 
-## Pricing Context
+## 成功提示
 
-When suggesting domains, I'll note:
-- Standard domains: ~$10-15/year
-- Premium TLDs (.io, .ai): ~$30-50/year
-- Taken domains: Market price if listed
-- Premium domains: $hundreds to $thousands
+1. **迅速行动**：好域名很快就会被抢注
+2. **注册变体**：获取.com和.io以保护品牌
+3. **避免数字**：口头交流时难以传达
+4. **检查社交媒体**：确保@username也可用
+5. **大声朗读**：测试是否易于发音
+6. **检查商标**：确保没有法律冲突
+7. **长远考虑**：5年后这个域名是否仍然合理？
 
-## Related Tools
+## 价格参考
 
-After picking a domain:
-- Check logo design options
-- Verify social media handles
-- Research trademark availability
-- Plan brand identity colors/fonts
+在推荐域名时，我会注明：
+- 标准域名：约$10-15/年
+- 溢价顶级域名（.io、.ai）：约$30-50/年
+- 已被占用域名：如有列出则显示市场价格
+- 溢价域名：数百到数千美元
+
+## 相关工具
+
+选择域名后：
+- 查看logo设计选项
+- 验证社交媒体账号
+- 研究商标可用性
+- 规划品牌标识颜色/字体
 
