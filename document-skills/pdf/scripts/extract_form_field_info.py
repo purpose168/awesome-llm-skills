@@ -4,11 +4,10 @@ import sys
 from pypdf import PdfReader
 
 
-# Extracts data for the fillable form fields in a PDF and outputs JSON that
-# Claude uses to fill the fields. See forms.md.
+# 提取PDF中可填写表单字段的数据，并输出JSON格式供Claude用于填充字段。请参见forms.md。
 
 
-# This matches the format used by PdfReader `get_fields` and `update_page_form_field_values` methods.
+# 此函数匹配PdfReader的`get_fields`和`update_page_form_field_values`方法使用的格式。
 def get_full_annotation_field_id(annotation):
     components = []
     while annotation:
@@ -25,17 +24,17 @@ def make_field_dict(field, field_id):
     if ft == "/Tx":
         field_dict["type"] = "text"
     elif ft == "/Btn":
-        field_dict["type"] = "checkbox"  # radio groups handled separately
+        field_dict["type"] = "checkbox"  # 单选按钮组单独处理
         states = field.get("/_States_", [])
         if len(states) == 2:
-            # "/Off" seems to always be the unchecked value, as suggested by
+            # "/Off"似乎总是未选中的值，如以下文档所示：
             # https://opensource.adobe.com/dc-acrobat-sdk-docs/standards/pdfstandards/pdf/PDF32000_2008.pdf#page=448
-            # It can be either first or second in the "/_States_" list.
+            # 它可以是"/_States_"列表中的第一个或第二个。
             if "/Off" in states:
                 field_dict["checked_value"] = states[0] if states[0] != "/Off" else states[1]
                 field_dict["unchecked_value"] = "/Off"
             else:
-                print(f"Unexpected state values for checkbox `${field_id}`. Its checked and unchecked values may not be correct; if you're trying to check it, visually verify the results.")
+                print(f"复选框 `${field_id}` 的状态值意外。其选中和未选中的值可能不正确；如果您尝试勾选它，请直观验证结果。")
                 field_dict["checked_value"] = states[0]
                 field_dict["unchecked_value"] = states[1]
     elif ft == "/Ch":
@@ -50,13 +49,13 @@ def make_field_dict(field, field_id):
     return field_dict
 
 
-# Returns a list of fillable PDF fields:
+# 返回可填写PDF字段的列表：
 # [
 #   {
 #     "field_id": "name",
 #     "page": 1,
 #     "type": ("text", "checkbox", "radio_group", or "choice")
-#     // Per-type additional fields described in forms.md
+#     // 每种类型的附加字段在forms.md中描述
 #   },
 # ]
 def get_field_info(reader: PdfReader):
@@ -66,19 +65,18 @@ def get_field_info(reader: PdfReader):
     possible_radio_names = set()
 
     for field_id, field in fields.items():
-        # Skip if this is a container field with children, except that it might be
-        # a parent group for radio button options.
+        # 如果这是带有子项的容器字段，则跳过，除非它可能是单选按钮选项的父组。
         if field.get("/Kids"):
             if field.get("/FT") == "/Btn":
                 possible_radio_names.add(field_id)
             continue
         field_info_by_id[field_id] = make_field_dict(field, field_id)
 
-    # Bounding rects are stored in annotations in page objects.
+    # 边界矩形存储在页面对象的注释中。
 
-    # Radio button options have a separate annotation for each choice;
-    # all choices have the same field name.
-    # See https://westhealth.github.io/exploring-fillable-forms-with-pdfrw.html
+    # 单选按钮选项为每个选择都有一个单独的注释；
+    # 所有选择都具有相同的字段名称。
+    # 请参见 https://westhealth.github.io/exploring-fillable-forms-with-pdfrw.html
     radio_fields_by_id = {}
 
     for page_index, page in enumerate(reader.pages):
@@ -90,8 +88,8 @@ def get_field_info(reader: PdfReader):
                 field_info_by_id[field_id]["rect"] = ann.get('/Rect')
             elif field_id in possible_radio_names:
                 try:
-                    # ann['/AP']['/N'] should have two items. One of them is '/Off',
-                    # the other is the active value.
+                    # ann['/AP']['/N'] 应该有两个项。其中一个是 '/Off'，
+                    # 另一个是激活值。
                     on_values = [v for v in ann["/AP"]["/N"] if v != "/Off"]
                 except KeyError:
                     continue
@@ -104,25 +102,24 @@ def get_field_info(reader: PdfReader):
                             "page": page_index + 1,
                             "radio_options": [],
                         }
-                    # Note: at least on macOS 15.7, Preview.app doesn't show selected
-                    # radio buttons correctly. (It does if you remove the leading slash
-                    # from the value, but that causes them not to appear correctly in
-                    # Chrome/Firefox/Acrobat/etc).
+                    # 注意：至少在 macOS 15.7 上，Preview.app 不能正确显示选中的单选按钮。
+                    # （如果从值中删除前导斜杠，它可以正常工作，但这会导致它们在
+                    # Chrome/Firefox/Acrobat 等中显示不正确）。
                     radio_fields_by_id[field_id]["radio_options"].append({
                         "value": on_values[0],
                         "rect": rect,
                     })
 
-    # Some PDFs have form field definitions without corresponding annotations,
-    # so we can't tell where they are. Ignore these fields for now.
+    # 有些PDF有表单字段定义但没有相应的注释，
+    # 所以我们无法确定它们的位置。现在暂时忽略这些字段。
     fields_with_location = []
     for field_info in field_info_by_id.values():
         if "page" in field_info:
             fields_with_location.append(field_info)
         else:
-            print(f"Unable to determine location for field id: {field_info.get('field_id')}, ignoring")
+            print(f"无法确定字段ID的位置: {field_info.get('field_id')}, 忽略")
 
-    # Sort by page number, then Y position (flipped in PDF coordinate system), then X.
+    # 按页码排序，然后按Y位置（PDF坐标系中翻转）排序，然后按X位置排序。
     def sort_key(f):
         if "radio_options" in f:
             rect = f["radio_options"][0]["rect"] or [0, 0, 0, 0]
@@ -142,11 +139,11 @@ def write_field_info(pdf_path: str, json_output_path: str):
     field_info = get_field_info(reader)
     with open(json_output_path, "w") as f:
         json.dump(field_info, f, indent=2)
-    print(f"Wrote {len(field_info)} fields to {json_output_path}")
+    print(f"已将 {len(field_info)} 个字段写入 {json_output_path}")
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: extract_form_field_info.py [input pdf] [output json]")
+        print("用法: extract_form_field_info.py [输入PDF文件] [输出JSON文件]")
         sys.exit(1)
     write_field_info(sys.argv[1], sys.argv[2])

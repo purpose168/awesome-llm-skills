@@ -1,32 +1,31 @@
 #!/usr/bin/env python3
 """
-Utilities for editing OOXML documents.
+用于编辑OOXML文档的工具。
 
-This module provides XMLEditor, a tool for manipulating XML files with support for
-line-number-based node finding and DOM manipulation. Each element is automatically
-annotated with its original line and column position during parsing.
+本模块提供XMLEditor，这是一个用于操作XML文件的工具，支持基于行号的节点查找和DOM操作。
+在解析过程中，每个元素都会自动标注其在原始文件中的行号和列位置。
 
-Example usage:
+使用示例：
     editor = XMLEditor("document.xml")
 
-    # Find node by line number or range
+    # 按行号或行范围查找节点
     elem = editor.get_node(tag="w:r", line_number=519)
     elem = editor.get_node(tag="w:p", line_number=range(100, 200))
 
-    # Find node by text content
+    # 按文本内容查找节点
     elem = editor.get_node(tag="w:p", contains="specific text")
 
-    # Find node by attributes
+    # 按属性查找节点
     elem = editor.get_node(tag="w:r", attrs={"w:id": "target"})
 
-    # Combine filters
+    # 组合过滤器
     elem = editor.get_node(tag="w:p", line_number=range(1, 50), contains="text")
 
-    # Replace, insert, or manipulate
+    # 替换、插入或操作节点
     new_elem = editor.replace_node(elem, "<w:r><w:t>new text</w:t></w:r>")
     editor.insert_after(new_elem, "<w:r><w:t>more</w:t></w:r>")
 
-    # Save changes
+    # 保存更改
     editor.save()
 """
 
@@ -40,31 +39,30 @@ import defusedxml.sax
 
 class XMLEditor:
     """
-    Editor for manipulating OOXML XML files with line-number-based node finding.
+    用于操作OOXML XML文件的编辑器，支持基于行号的节点查找。
 
-    This class parses XML files and tracks the original line and column position
-    of each element. This enables finding nodes by their line number in the original
-    file, which is useful when working with Read tool output.
+    该类解析XML文件并跟踪每个元素在原始文件中的行号和列位置。
+    这使得可以通过原始文件中的行号查找节点，在使用Read工具输出时非常有用。
 
-    Attributes:
-        xml_path: Path to the XML file being edited
-        encoding: Detected encoding of the XML file ('ascii' or 'utf-8')
-        dom: Parsed DOM tree with parse_position attributes on elements
+    属性：
+        xml_path: 正在编辑的XML文件路径
+        encoding: 检测到的XML文件编码（'ascii'或'utf-8'）
+        dom: 解析后的DOM树，元素上带有parse_position属性
     """
 
     def __init__(self, xml_path):
         """
-        Initialize with path to XML file and parse with line number tracking.
+        使用XML文件路径初始化并使用行号跟踪进行解析。
 
-        Args:
-            xml_path: Path to XML file to edit (str or Path)
+        参数：
+            xml_path: 要编辑的XML文件路径（str或Path）
 
-        Raises:
-            ValueError: If the XML file does not exist
+        异常：
+            ValueError: 如果XML文件不存在
         """
         self.xml_path = Path(xml_path)
         if not self.xml_path.exists():
-            raise ValueError(f"XML file not found: {xml_path}")
+            raise ValueError(f"未找到XML文件: {xml_path}")
 
         with open(self.xml_path, "rb") as f:
             header = f.read(200).decode("utf-8", errors="ignore")
@@ -81,42 +79,41 @@ class XMLEditor:
         contains: Optional[str] = None,
     ):
         """
-        Get a DOM element by tag and identifier.
+        通过标签和标识符获取DOM元素。
 
-        Finds an element by either its line number in the original file or by
-        matching attribute values. Exactly one match must be found.
+        通过原始文件中的行号或匹配属性值查找元素。必须找到且只找到一个匹配项。
 
-        Args:
-            tag: The XML tag name (e.g., "w:del", "w:ins", "w:r")
-            attrs: Dictionary of attribute name-value pairs to match (e.g., {"w:id": "1"})
-            line_number: Line number (int) or line range (range) in original XML file (1-indexed)
-            contains: Text string that must appear in any text node within the element.
-                      Supports both entity notation (&#8220;) and Unicode characters (\u201c).
+        参数：
+            tag: XML标签名称（例如："w:del", "w:ins", "w:r"）
+            attrs: 要匹配的属性名值对字典（例如：{"w:id": "1"}）
+            line_number: 原始XML文件中的行号（int）或行范围（range）（从1开始索引）
+            contains: 必须出现在元素内任何文本节点中的文本字符串。
+                      同时支持实体表示法（&#8220;）和Unicode字符（\u201c）。
 
-        Returns:
-            defusedxml.minidom.Element: The matching DOM element
+        返回：
+            defusedxml.minidom.Element: 匹配的DOM元素
 
-        Raises:
-            ValueError: If node not found or multiple matches found
+        异常：
+            ValueError: 如果节点未找到或找到多个匹配项
 
-        Example:
+        示例：
             elem = editor.get_node(tag="w:r", line_number=519)
             elem = editor.get_node(tag="w:r", line_number=range(100, 200))
             elem = editor.get_node(tag="w:del", attrs={"w:id": "1"})
             elem = editor.get_node(tag="w:p", attrs={"w14:paraId": "12345678"})
             elem = editor.get_node(tag="w:commentRangeStart", attrs={"w:id": "0"})
-            elem = editor.get_node(tag="w:p", contains="specific text")
-            elem = editor.get_node(tag="w:t", contains="&#8220;Agreement")  # Entity notation
-            elem = editor.get_node(tag="w:t", contains="\u201cAgreement")   # Unicode character
+            elem = editor.get_node(tag="w:p", contains="特定文本")
+            elem = editor.get_node(tag="w:t", contains="&#8220;协议")  # 实体表示法
+            elem = editor.get_node(tag="w:t", contains="\u201c协议")   # Unicode字符
         """
         matches = []
         for elem in self.dom.getElementsByTagName(tag):
-            # Check line_number filter
+            # 检查行号过滤器
             if line_number is not None:
                 parse_pos = getattr(elem, "parse_position", (None,))
                 elem_line = parse_pos[0]
 
-                # Handle both single line number and range
+                # 处理单行号和行范围
                 if isinstance(line_number, range):
                     if elem_line not in line_number:
                         continue
@@ -124,7 +121,7 @@ class XMLEditor:
                     if elem_line != line_number:
                         continue
 
-            # Check attrs filter
+            # 检查属性过滤器
             if attrs is not None:
                 if not all(
                     elem.getAttribute(attr_name) == attr_value
@@ -132,20 +129,20 @@ class XMLEditor:
                 ):
                     continue
 
-            # Check contains filter
+            # 检查文本内容过滤器
             if contains is not None:
                 elem_text = self._get_element_text(elem)
-                # Normalize the search string: convert HTML entities to Unicode characters
-                # This allows searching for both "&#8220;Rowan" and ""Rowan"
+                # 规范化搜索字符串：将HTML实体转换为Unicode字符
+                # 这允许同时搜索"&#8220;Rowan"和"Rowan"
                 normalized_contains = html.unescape(contains)
                 if normalized_contains not in elem_text:
                     continue
 
-            # If all applicable filters passed, this is a match
+            # 如果所有适用的过滤器都通过，则匹配成功
             matches.append(elem)
 
         if not matches:
-            # Build descriptive error message
+            # 构建描述性错误消息
             filters = []
             if line_number is not None:
                 line_str = (
@@ -160,43 +157,43 @@ class XMLEditor:
                 filters.append(f"containing '{contains}'")
 
             filter_desc = " ".join(filters) if filters else ""
-            base_msg = f"Node not found: <{tag}> {filter_desc}".strip()
+            base_msg = f"未找到节点: <{tag}> {filter_desc}".strip()
 
-            # Add helpful hint based on filters used
+            # 根据使用的过滤器添加有用提示
             if contains:
-                hint = "Text may be split across elements or use different wording."
+                hint = "文本可能跨多个元素分割或使用不同措辞。"
             elif line_number:
-                hint = "Line numbers may have changed if document was modified."
+                hint = "如果文档已修改，行号可能已更改。"
             elif attrs:
-                hint = "Verify attribute values are correct."
+                hint = "请验证属性值是否正确。"
             else:
-                hint = "Try adding filters (attrs, line_number, or contains)."
+                hint = "尝试添加过滤器（attrs、line_number或contains）。"
 
             raise ValueError(f"{base_msg}. {hint}")
         if len(matches) > 1:
             raise ValueError(
-                f"Multiple nodes found: <{tag}>. "
-                f"Add more filters (attrs, line_number, or contains) to narrow the search."
+                f"找到多个节点: <{tag}>. "
+                f"请添加更多过滤器（attrs、line_number或contains）以缩小搜索范围。"
             )
         return matches[0]
 
     def _get_element_text(self, elem):
         """
-        Recursively extract all text content from an element.
+        递归提取元素中的所有文本内容。
 
-        Skips text nodes that contain only whitespace (spaces, tabs, newlines),
-        which typically represent XML formatting rather than document content.
+        跳过仅包含空白字符（空格、制表符、换行符）的文本节点，
+        这些通常代表XML格式而非文档内容。
 
-        Args:
-            elem: defusedxml.minidom.Element to extract text from
+        参数：
+            elem: 要提取文本的defusedxml.minidom.Element
 
-        Returns:
-            str: Concatenated text from all non-whitespace text nodes within the element
+        返回：
+            str: 元素内所有非空白文本节点的连接文本
         """
         text_parts = []
         for node in elem.childNodes:
             if node.nodeType == node.TEXT_NODE:
-                # Skip whitespace-only text nodes (XML formatting)
+                # 跳过仅包含空白字符的文本节点（XML格式）
                 if node.data.strip():
                     text_parts.append(node.data)
             elif node.nodeType == node.ELEMENT_NODE:
@@ -205,17 +202,17 @@ class XMLEditor:
 
     def replace_node(self, elem, new_content):
         """
-        Replace a DOM element with new XML content.
+        用新的XML内容替换DOM元素。
 
-        Args:
-            elem: defusedxml.minidom.Element to replace
-            new_content: String containing XML to replace the node with
+        参数：
+            elem: 要替换的defusedxml.minidom.Element
+            new_content: 包含用于替换节点的XML的字符串
 
-        Returns:
-            List[defusedxml.minidom.Node]: All inserted nodes
+        返回：
+            List[defusedxml.minidom.Node]: 所有插入的节点
 
-        Example:
-            new_nodes = editor.replace_node(old_elem, "<w:r><w:t>text</w:t></w:r>")
+        示例：
+            new_nodes = editor.replace_node(old_elem, "<w:r><w:t>文本</w:t></w:r>")
         """
         parent = elem.parentNode
         nodes = self._parse_fragment(new_content)
@@ -226,17 +223,17 @@ class XMLEditor:
 
     def insert_after(self, elem, xml_content):
         """
-        Insert XML content after a DOM element.
+        在DOM元素后插入XML内容。
 
-        Args:
-            elem: defusedxml.minidom.Element to insert after
-            xml_content: String containing XML to insert
+        参数：
+            elem: 要在其后插入的defusedxml.minidom.Element
+            xml_content: 包含要插入的XML的字符串
 
-        Returns:
-            List[defusedxml.minidom.Node]: All inserted nodes
+        返回：
+            List[defusedxml.minidom.Node]: 所有插入的节点
 
-        Example:
-            new_nodes = editor.insert_after(elem, "<w:r><w:t>text</w:t></w:r>")
+        示例：
+            new_nodes = editor.insert_after(elem, "<w:r><w:t>文本</w:t></w:r>")
         """
         parent = elem.parentNode
         next_sibling = elem.nextSibling
@@ -250,17 +247,17 @@ class XMLEditor:
 
     def insert_before(self, elem, xml_content):
         """
-        Insert XML content before a DOM element.
+        在DOM元素前插入XML内容。
 
-        Args:
-            elem: defusedxml.minidom.Element to insert before
-            xml_content: String containing XML to insert
+        参数：
+            elem: 要在其前插入的defusedxml.minidom.Element
+            xml_content: 包含要插入的XML的字符串
 
-        Returns:
-            List[defusedxml.minidom.Node]: All inserted nodes
+        返回：
+            List[defusedxml.minidom.Node]: 所有插入的节点
 
-        Example:
-            new_nodes = editor.insert_before(elem, "<w:r><w:t>text</w:t></w:r>")
+        示例：
+            new_nodes = editor.insert_before(elem, "<w:r><w:t>文本</w:t></w:r>")
         """
         parent = elem.parentNode
         nodes = self._parse_fragment(xml_content)
@@ -270,17 +267,17 @@ class XMLEditor:
 
     def append_to(self, elem, xml_content):
         """
-        Append XML content as a child of a DOM element.
+        将XML内容作为DOM元素的子节点追加。
 
-        Args:
-            elem: defusedxml.minidom.Element to append to
-            xml_content: String containing XML to append
+        参数：
+            elem: 要追加到的defusedxml.minidom.Element
+            xml_content: 包含要追加的XML的字符串
 
-        Returns:
-            List[defusedxml.minidom.Node]: All inserted nodes
+        返回：
+            List[defusedxml.minidom.Node]: 所有插入的节点
 
-        Example:
-            new_nodes = editor.append_to(elem, "<w:r><w:t>text</w:t></w:r>")
+        示例：
+            new_nodes = editor.append_to(elem, "<w:r><w:t>文本</w:t></w:r>")
         """
         nodes = self._parse_fragment(xml_content)
         for node in nodes:
@@ -288,7 +285,7 @@ class XMLEditor:
         return nodes
 
     def get_next_rid(self):
-        """Get the next available rId for relationships files."""
+        """获取关系文件的下一个可用rId。"""
         max_id = 0
         for rel_elem in self.dom.getElementsByTagName("Relationship"):
             rel_id = rel_elem.getAttribute("Id")
@@ -301,28 +298,28 @@ class XMLEditor:
 
     def save(self):
         """
-        Save the edited XML back to the file.
+        将编辑后的XML保存回文件。
 
-        Serializes the DOM tree and writes it back to the original file path,
-        preserving the original encoding (ascii or utf-8).
+        序列化DOM树并将其写回原始文件路径，
+        保留原始编码（ascii或utf-8）。
         """
         content = self.dom.toxml(encoding=self.encoding)
         self.xml_path.write_bytes(content)
 
     def _parse_fragment(self, xml_content):
         """
-        Parse XML fragment and return list of imported nodes.
+        解析XML片段并返回导入节点的列表。
 
-        Args:
-            xml_content: String containing XML fragment
+        参数：
+            xml_content: 包含XML片段的字符串
 
-        Returns:
-            List of defusedxml.minidom.Node objects imported into this document
+        返回：
+            导入到该文档中的defusedxml.minidom.Node对象列表
 
-        Raises:
-            AssertionError: If fragment contains no element nodes
+        异常：
+            AssertionError: 如果片段不包含任何元素节点
         """
-        # Extract namespace declarations from the root document element
+        # 从根文档元素提取命名空间声明
         root_elem = self.dom.documentElement
         namespaces = []
         if root_elem and root_elem.attributes:
@@ -339,20 +336,20 @@ class XMLEditor:
             for child in fragment_doc.documentElement.childNodes  # type: ignore
         ]
         elements = [n for n in nodes if n.nodeType == n.ELEMENT_NODE]
-        assert elements, "Fragment must contain at least one element"
+        assert elements, "片段必须包含至少一个元素"
         return nodes
 
 
 def _create_line_tracking_parser():
     """
-    Create a SAX parser that tracks line and column numbers for each element.
+    创建一个跟踪每个元素行号和列号的SAX解析器。
 
-    Monkey patches the SAX content handler to store the current line and column
-    position from the underlying expat parser onto each element as a parse_position
-    attribute (line, column) tuple.
+    猴子补丁SAX内容处理程序，将当前行和列位置
+    从底层expat解析器存储到每个元素上，作为parse_position
+    属性（行，列）元组。
 
-    Returns:
-        defusedxml.sax.xmlreader.XMLReader: Configured SAX parser
+    返回：
+        defusedxml.sax.xmlreader.XMLReader: 配置好的SAX解析器
     """
 
     def set_content_handler(dom_handler):

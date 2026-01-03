@@ -1,44 +1,45 @@
 #!/bin/bash
+# React项目初始化脚本：创建带有shadcn/ui和Tailwind CSS的完整React应用
 
-# Exit on error
+# 发生错误时退出
 set -e
 
-# Detect Node version
+# 检测Node版本
 NODE_VERSION=$(node -v | cut -d'v' -f2 | cut -d'.' -f1)
 
-echo "🔍 Detected Node.js version: $NODE_VERSION"
+echo "🔍 检测到Node.js版本：$NODE_VERSION"
 
 if [ "$NODE_VERSION" -lt 18 ]; then
-  echo "❌ Error: Node.js 18 or higher is required"
-  echo "   Current version: $(node -v)"
+  echo "❌ 错误：需要Node.js 18或更高版本"
+  echo "   当前版本：$(node -v)"
   exit 1
 fi
 
-# Set Vite version based on Node version
+# 根据Node版本设置Vite版本
 if [ "$NODE_VERSION" -ge 20 ]; then
   VITE_VERSION="latest"
-  echo "✅ Using Vite latest (Node 20+)"
+  echo "✅ 使用Vite最新版本（Node 20+）"
 else
   VITE_VERSION="5.4.11"
-  echo "✅ Using Vite $VITE_VERSION (Node 18 compatible)"
+  echo "✅ 使用Vite $VITE_VERSION（兼容Node 18）"
 fi
 
-# Detect OS and set sed syntax
+# 检测操作系统并设置sed语法
 if [[ "$OSTYPE" == "darwin"* ]]; then
   SED_INPLACE="sed -i ''"
 else
   SED_INPLACE="sed -i"
 fi
 
-# Check if pnpm is installed
+# 检查是否安装了pnpm
 if ! command -v pnpm &> /dev/null; then
-  echo "📦 pnpm not found. Installing pnpm..."
+  echo "📦 未找到pnpm。正在安装pnpm..."
   npm install -g pnpm
 fi
 
-# Check if project name is provided
+# 检查是否提供了项目名称
 if [ -z "$1" ]; then
-  echo "❌ Usage: ./create-react-shadcn-complete.sh <project-name>"
+  echo "❌ 使用方法：./init-artifact.sh <项目名称>"
   exit 1
 fi
 
@@ -46,39 +47,39 @@ PROJECT_NAME="$1"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMPONENTS_TARBALL="$SCRIPT_DIR/shadcn-components.tar.gz"
 
-# Check if components tarball exists
+# 检查组件压缩包是否存在
 if [ ! -f "$COMPONENTS_TARBALL" ]; then
-  echo "❌ Error: shadcn-components.tar.gz not found in script directory"
-  echo "   Expected location: $COMPONENTS_TARBALL"
+  echo "❌ 错误：在脚本目录中未找到shadcn-components.tar.gz"
+  echo "   预期位置：$COMPONENTS_TARBALL"
   exit 1
 fi
 
-echo "🚀 Creating new React + Vite project: $PROJECT_NAME"
+echo "🚀 创建新的React + Vite项目：$PROJECT_NAME"
 
-# Create new Vite project (always use latest create-vite, pin vite version later)
+# 创建新的Vite项目（始终使用最新的create-vite，稍后固定vite版本）
 pnpm create vite "$PROJECT_NAME" --template react-ts
 
-# Navigate into project directory
+# 进入项目目录
 cd "$PROJECT_NAME"
 
-echo "🧹 Cleaning up Vite template..."
+echo "🧹 清理Vite模板..."
 $SED_INPLACE '/<link rel="icon".*vite\.svg/d' index.html
 $SED_INPLACE 's/<title>.*<\/title>/<title>'"$PROJECT_NAME"'<\/title>/' index.html
 
-echo "📦 Installing base dependencies..."
+echo "📦 安装基础依赖..."
 pnpm install
 
-# Pin Vite version for Node 18
+# 为Node 18固定Vite版本
 if [ "$NODE_VERSION" -lt 20 ]; then
-  echo "📌 Pinning Vite to $VITE_VERSION for Node 18 compatibility..."
+  echo "📌 为Node 18兼容性固定Vite版本为$VITE_VERSION..."
   pnpm add -D vite@$VITE_VERSION
 fi
 
-echo "📦 Installing Tailwind CSS and dependencies..."
+echo "📦 安装Tailwind CSS及其依赖..."
 pnpm install -D tailwindcss@3.4.1 postcss autoprefixer @types/node tailwindcss-animate
 pnpm install class-variance-authority clsx tailwind-merge lucide-react next-themes
 
-echo "⚙️  Creating Tailwind and PostCSS configuration..."
+echo "⚙️ 创建Tailwind和PostCSS配置..."
 cat > postcss.config.js << 'EOF'
 export default {
   plugins: {
@@ -88,9 +89,8 @@ export default {
 }
 EOF
 
-echo "📝 Configuring Tailwind with shadcn theme..."
-cat > tailwind.config.js << 'EOF'
-/** @type {import('tailwindcss').Config} */
+echo "📝 使用shadcn主题配置Tailwind..."
+cat > tailwind.config.js << 'EOF' /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -159,8 +159,8 @@ module.exports = {
 }
 EOF
 
-# Add Tailwind directives and CSS variables to index.css
-echo "🎨 Adding Tailwind directives and CSS variables..."
+# 向index.css添加Tailwind指令和CSS变量
+echo "🎨 添加Tailwind指令和CSS变量..."
 cat > src/index.css << 'EOF'
 @tailwind base;
 @tailwind components;
@@ -223,8 +223,8 @@ cat > src/index.css << 'EOF'
 }
 EOF
 
-# Add path aliases to tsconfig.json
-echo "🔧 Adding path aliases to tsconfig.json..."
+# 向tsconfig.json添加路径别名
+echo "🔧 向tsconfig.json添加路径别名..."
 node -e "
 const fs = require('fs');
 const config = JSON.parse(fs.readFileSync('tsconfig.json', 'utf8'));
@@ -234,13 +234,13 @@ config.compilerOptions.paths = { '@/*': ['./src/*'] };
 fs.writeFileSync('tsconfig.json', JSON.stringify(config, null, 2));
 "
 
-# Add path aliases to tsconfig.app.json
-echo "🔧 Adding path aliases to tsconfig.app.json..."
+# 向tsconfig.app.json添加路径别名
+echo "🔧 向tsconfig.app.json添加路径别名..."
 node -e "
 const fs = require('fs');
 const path = 'tsconfig.app.json';
 const content = fs.readFileSync(path, 'utf8');
-// Remove comments manually
+// 手动移除注释
 const lines = content.split('\n').filter(line => !line.trim().startsWith('//'));
 const jsonContent = lines.join('\n');
 const config = JSON.parse(jsonContent.replace(/\/\*[\s\S]*?\*\//g, '').replace(/,(\s*[}\]])/g, '\$1'));
@@ -250,8 +250,8 @@ config.compilerOptions.paths = { '@/*': ['./src/*'] };
 fs.writeFileSync(path, JSON.stringify(config, null, 2));
 "
 
-# Update vite.config.ts
-echo "⚙️  Updating Vite configuration..."
+# 更新vite.config.ts
+echo "⚙️ 更新Vite配置..."
 cat > vite.config.ts << 'EOF'
 import path from "path";
 import react from "@vitejs/plugin-react";
@@ -267,17 +267,17 @@ export default defineConfig({
 });
 EOF
 
-# Install all shadcn/ui dependencies
-echo "📦 Installing shadcn/ui dependencies..."
+# 安装所有shadcn/ui依赖
+echo "📦 安装shadcn/ui依赖..."
 pnpm install @radix-ui/react-accordion @radix-ui/react-aspect-ratio @radix-ui/react-avatar @radix-ui/react-checkbox @radix-ui/react-collapsible @radix-ui/react-context-menu @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-hover-card @radix-ui/react-label @radix-ui/react-menubar @radix-ui/react-navigation-menu @radix-ui/react-popover @radix-ui/react-progress @radix-ui/react-radio-group @radix-ui/react-scroll-area @radix-ui/react-select @radix-ui/react-separator @radix-ui/react-slider @radix-ui/react-slot @radix-ui/react-switch @radix-ui/react-tabs @radix-ui/react-toast @radix-ui/react-toggle @radix-ui/react-toggle-group @radix-ui/react-tooltip
 pnpm install sonner cmdk vaul embla-carousel-react react-day-picker react-resizable-panels date-fns react-hook-form @hookform/resolvers zod
 
-# Extract shadcn components from tarball
-echo "📦 Extracting shadcn/ui components..."
+# 从压缩包提取shadcn组件
+echo "📦 提取shadcn/ui组件..."
 tar -xzf "$COMPONENTS_TARBALL" -C src/
 
-# Create components.json for reference
-echo "📝 Creating components.json config..."
+# 创建components.json配置文件
+echo "📝 创建components.json配置..."
 cat > components.json << 'EOF'
 {
   "$schema": "https://ui.shadcn.com/schema.json",
@@ -301,9 +301,9 @@ cat > components.json << 'EOF'
 }
 EOF
 
-echo "✅ Setup complete! You can now use Tailwind CSS and shadcn/ui in your project."
+echo "✅ 设置完成！您现在可以在项目中使用Tailwind CSS和shadcn/ui了。"
 echo ""
-echo "📦 Included components (40+ total):"
+echo "📦 包含的组件（共40+个）："
 echo "  - accordion, alert, aspect-ratio, avatar, badge, breadcrumb"
 echo "  - button, calendar, card, carousel, checkbox, collapsible"
 echo "  - command, context-menu, dialog, drawer, dropdown-menu"
@@ -312,11 +312,11 @@ echo "  - popover, progress, radio-group, resizable, scroll-area"
 echo "  - select, separator, sheet, skeleton, slider, sonner"
 echo "  - switch, table, tabs, textarea, toast, toggle, toggle-group, tooltip"
 echo ""
-echo "To start developing:"
+echo "开始开发："
 echo "  cd $PROJECT_NAME"
 echo "  pnpm dev"
 echo ""
-echo "📚 Import components like:"
+echo "📚 导入组件示例："
 echo "  import { Button } from '@/components/ui/button'"
 echo "  import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'"
 echo "  import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'"

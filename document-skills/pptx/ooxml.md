@@ -1,20 +1,20 @@
-# Office Open XML Technical Reference for PowerPoint
+# PowerPoint的Office Open XML技术参考
 
-**Important: Read this entire document before starting.** Critical XML schema rules and formatting requirements are covered throughout. Incorrect implementation can create invalid PPTX files that PowerPoint cannot open.
+**重要提示：开始前请完整阅读本文档。** 本文档涵盖了关键的XML模式规则和格式要求。不正确的实现可能会创建PowerPoint无法打开的无效PPTX文件。
 
-## Technical Guidelines
+## 技术指南
 
-### Schema Compliance
-- **Element ordering in `<p:txBody>`**: `<a:bodyPr>`, `<a:lstStyle>`, `<a:p>`
-- **Whitespace**: Add `xml:space='preserve'` to `<a:t>` elements with leading/trailing spaces
-- **Unicode**: Escape characters in ASCII content: `"` becomes `&#8220;`
-- **Images**: Add to `ppt/media/`, reference in slide XML, set dimensions to fit slide bounds
-- **Relationships**: Update `ppt/slides/_rels/slideN.xml.rels` for each slide's resources
-- **Dirty attribute**: Add `dirty="0"` to `<a:rPr>` and `<a:endParaRPr>` elements to indicate clean state
+### 模式合规性
+- **`<p:txBody>`中的元素顺序**：`<a:bodyPr>`、`<a:lstStyle>`、`<a:p>`
+- **空白处理**：为带有前导/尾随空格的`<a:t>`元素添加`xml:space='preserve'`
+- **Unicode字符**：在ASCII内容中转义字符：`"`变为`&#8220;`
+- **图像**：添加到`ppt/media/`，在幻灯片XML中引用，设置尺寸以适应幻灯片边界
+- **关系**：更新每张幻灯片资源的`ppt/slides/_rels/slideN.xml.rels`
+- **Dirty属性**：向`<a:rPr>`和`<a:endParaRPr>`元素添加`dirty="0"`以指示干净状态
 
-## Presentation Structure
+## 演示文稿结构
 
-### Basic Slide Structure
+### 基本幻灯片结构
 ```xml
 <!-- ppt/slides/slide1.xml -->
 <p:sld>
@@ -22,13 +22,13 @@
     <p:spTree>
       <p:nvGrpSpPr>...</p:nvGrpSpPr>
       <p:grpSpPr>...</p:grpSpPr>
-      <!-- Shapes go here -->
+      <!-- 形状放置在此处 -->
     </p:spTree>
   </p:cSld>
 </p:sld>
 ```
 
-### Text Box / Shape with Text
+### 文本框/带有文本的形状
 ```xml
 <p:sp>
   <p:nvSpPr>
@@ -51,100 +51,100 @@
     <a:lstStyle/>
     <a:p>
       <a:r>
-        <a:t>Slide Title</a:t>
+        <a:t>幻灯片标题</a:t>
       </a:r>
     </a:p>
   </p:txBody>
 </p:sp>
 ```
 
-### Text Formatting
+### 文本格式化
 ```xml
-<!-- Bold -->
+<!-- 粗体 -->
 <a:r>
   <a:rPr b="1"/>
-  <a:t>Bold Text</a:t>
+  <a:t>粗体文本</a:t>
 </a:r>
 
-<!-- Italic -->
+<!-- 斜体 -->
 <a:r>
   <a:rPr i="1"/>
-  <a:t>Italic Text</a:t>
+  <a:t>斜体文本</a:t>
 </a:r>
 
-<!-- Underline -->
+<!-- 下划线 -->
 <a:r>
   <a:rPr u="sng"/>
-  <a:t>Underlined</a:t>
+  <a:t>带下划线的文本</a:t>
 </a:r>
 
-<!-- Highlight -->
+<!-- 高亮 -->
 <a:r>
   <a:rPr>
     <a:highlight>
       <a:srgbClr val="FFFF00"/>
     </a:highlight>
   </a:rPr>
-  <a:t>Highlighted Text</a:t>
+  <a:t>高亮文本</a:t>
 </a:r>
 
-<!-- Font and Size -->
+<!-- 字体和大小 -->
 <a:r>
   <a:rPr sz="2400" typeface="Arial">
     <a:solidFill>
       <a:srgbClr val="FF0000"/>
     </a:solidFill>
   </a:rPr>
-  <a:t>Colored Arial 24pt</a:t>
+  <a:t>红色Arial 24pt字体</a:t>
 </a:r>
 
-<!-- Complete formatting example -->
+<!-- 完整格式化示例 -->
 <a:r>
   <a:rPr lang="en-US" sz="1400" b="1" dirty="0">
     <a:solidFill>
       <a:srgbClr val="FAFAFA"/>
     </a:solidFill>
   </a:rPr>
-  <a:t>Formatted text</a:t>
+  <a:t>格式化文本</a:t>
 </a:r>
 ```
 
-### Lists
+### 列表
 ```xml
-<!-- Bullet list -->
+<!-- 项目符号列表 -->
 <a:p>
   <a:pPr lvl="0">
     <a:buChar char="•"/>
   </a:pPr>
   <a:r>
-    <a:t>First bullet point</a:t>
+    <a:t>第一个项目符号点</a:t>
   </a:r>
 </a:p>
 
-<!-- Numbered list -->
+<!-- 编号列表 -->
 <a:p>
   <a:pPr lvl="0">
     <a:buAutoNum type="arabicPeriod"/>
   </a:pPr>
   <a:r>
-    <a:t>First numbered item</a:t>
+    <a:t>第一个编号项目</a:t>
   </a:r>
 </a:p>
 
-<!-- Second level indent -->
+<!-- 第二级缩进 -->
 <a:p>
   <a:pPr lvl="1">
     <a:buChar char="•"/>
   </a:pPr>
   <a:r>
-    <a:t>Indented bullet</a:t>
+    <a:t>缩进的项目符号</a:t>
   </a:r>
 </a:p>
 ```
 
-### Shapes
+### 形状
 ```xml
-<!-- Rectangle -->
+<!-- 矩形 -->
 <p:sp>
   <p:nvSpPr>
     <p:cNvPr id="3" name="Rectangle"/>
@@ -170,7 +170,7 @@
   </p:spPr>
 </p:sp>
 
-<!-- Rounded Rectangle -->
+<!-- 圆角矩形 -->
 <p:sp>
   <p:spPr>
     <a:prstGeom prst="roundRect">
@@ -179,7 +179,7 @@
   </p:spPr>
 </p:sp>
 
-<!-- Circle/Ellipse -->
+<!-- 圆形/椭圆形 -->
 <p:sp>
   <p:spPr>
     <a:prstGeom prst="ellipse">
@@ -189,7 +189,7 @@
 </p:sp>
 ```
 
-### Images
+### 图像
 ```xml
 <p:pic>
   <p:nvPicPr>
@@ -219,7 +219,7 @@
 </p:pic>
 ```
 
-### Tables
+### 表格
 ```xml
 <p:graphicFrame>
   <p:nvGraphicFramePr>
@@ -247,7 +247,7 @@
               <a:lstStyle/>
               <a:p>
                 <a:r>
-                  <a:t>Cell 1</a:t>
+                  <a:t>单元格1</a:t>
                 </a:r>
               </a:p>
             </a:txBody>
@@ -258,7 +258,7 @@
               <a:lstStyle/>
               <a:p>
                 <a:r>
-                  <a:t>Cell 2</a:t>
+                  <a:t>单元格2</a:t>
                 </a:r>
               </a:p>
             </a:txBody>
@@ -270,17 +270,17 @@
 </p:graphicFrame>
 ```
 
-### Slide Layouts
+### 幻灯片布局
 
 ```xml
-<!-- Title Slide Layout -->
+<!-- 标题幻灯片布局 -->
 <p:sp>
   <p:nvSpPr>
     <p:nvPr>
       <p:ph type="ctrTitle"/>
     </p:nvPr>
   </p:nvSpPr>
-  <!-- Title content -->
+  <!-- 标题内容 -->
 </p:sp>
 
 <p:sp>
@@ -289,17 +289,17 @@
       <p:ph type="subTitle" idx="1"/>
     </p:nvPr>
   </p:nvSpPr>
-  <!-- Subtitle content -->
+  <!-- 副标题内容 -->
 </p:sp>
 
-<!-- Content Slide Layout -->
+<!-- 内容幻灯片布局 -->
 <p:sp>
   <p:nvSpPr>
     <p:nvPr>
       <p:ph type="title"/>
     </p:nvPr>
   </p:nvSpPr>
-  <!-- Slide title -->
+  <!-- 幻灯片标题 -->
 </p:sp>
 
 <p:sp>
@@ -308,34 +308,34 @@
       <p:ph type="body" idx="1"/>
     </p:nvPr>
   </p:nvSpPr>
-  <!-- Content body -->
+  <!-- 内容主体 -->
 </p:sp>
 ```
 
-## File Updates
+## 文件更新
 
-When adding content, update these files:
+添加内容时，更新以下文件：
 
-**`ppt/_rels/presentation.xml.rels`:**
+**`ppt/_rels/presentation.xml.rels`：**
 ```xml
 <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/slide1.xml"/>
 <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster" Target="slideMasters/slideMaster1.xml"/>
 ```
 
-**`ppt/slides/_rels/slide1.xml.rels`:**
+**`ppt/slides/_rels/slide1.xml.rels`：**
 ```xml
 <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout" Target="../slideLayouts/slideLayout1.xml"/>
 <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/image1.png"/>
 ```
 
-**`[Content_Types].xml`:**
+**`[Content_Types].xml`：**
 ```xml
 <Default Extension="png" ContentType="image/png"/>
 <Default Extension="jpg" ContentType="image/jpeg"/>
 <Override PartName="/ppt/slides/slide1.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/>
 ```
 
-**`ppt/presentation.xml`:**
+**`ppt/presentation.xml`：**
 ```xml
 <p:sldIdLst>
   <p:sldId id="256" r:id="rId1"/>
@@ -343,47 +343,47 @@ When adding content, update these files:
 </p:sldIdLst>
 ```
 
-**`docProps/app.xml`:** Update slide count and statistics
+**`docProps/app.xml`：** 更新幻灯片数量和统计信息
 ```xml
 <Slides>2</Slides>
 <Paragraphs>10</Paragraphs>
 <Words>50</Words>
 ```
 
-## Slide Operations
+## 幻灯片操作
 
-### Adding a New Slide
-When adding a slide to the end of the presentation:
+### 添加新幻灯片
+向演示文稿末尾添加幻灯片时：
 
-1. **Create the slide file** (`ppt/slides/slideN.xml`)
-2. **Update `[Content_Types].xml`**: Add Override for the new slide
-3. **Update `ppt/_rels/presentation.xml.rels`**: Add relationship for the new slide
-4. **Update `ppt/presentation.xml`**: Add slide ID to `<p:sldIdLst>`
-5. **Create slide relationships** (`ppt/slides/_rels/slideN.xml.rels`) if needed
-6. **Update `docProps/app.xml`**: Increment slide count and update statistics (if present)
+1. **创建幻灯片文件** (`ppt/slides/slideN.xml`)
+2. **更新`[Content_Types].xml`**：为新幻灯片添加Override
+3. **更新`ppt/_rels/presentation.xml.rels`**：为新幻灯片添加关系
+4. **更新`ppt/presentation.xml`**：向`<p:sldIdLst>`添加幻灯片ID
+5. **创建幻灯片关系**（如果需要）(`ppt/slides/_rels/slideN.xml.rels`)
+6. **更新`docProps/app.xml`**：增加幻灯片数量并更新统计信息（如果存在）
 
-### Duplicating a Slide
-1. Copy the source slide XML file with a new name
-2. Update all IDs in the new slide to be unique
-3. Follow the "Adding a New Slide" steps above
-4. **CRITICAL**: Remove or update any notes slide references in `_rels` files
-5. Remove references to unused media files
+### 复制幻灯片
+1. 复制源幻灯片XML文件并使用新名称
+2. 更新新幻灯片中的所有ID以确保唯一性
+3. 按照上述"添加新幻灯片"的步骤操作
+4. **关键**：删除或更新`_rels`文件中的任何备注幻灯片引用
+5. 删除对未使用媒体文件的引用
 
-### Reordering Slides
-1. **Update `ppt/presentation.xml`**: Reorder `<p:sldId>` elements in `<p:sldIdLst>`
-2. The order of `<p:sldId>` elements determines slide order
-3. Keep slide IDs and relationship IDs unchanged
+### 重新排序幻灯片
+1. **更新`ppt/presentation.xml`**：重新排列`<p:sldIdLst>`中的`<p:sldId>`元素
+2. `<p:sldId>`元素的顺序决定了幻灯片顺序
+3. 保持幻灯片ID和关系ID不变
 
-Example:
+示例：
 ```xml
-<!-- Original order -->
+<!-- 原始顺序 -->
 <p:sldIdLst>
   <p:sldId id="256" r:id="rId2"/>
   <p:sldId id="257" r:id="rId3"/>
   <p:sldId id="258" r:id="rId4"/>
 </p:sldIdLst>
 
-<!-- After moving slide 3 to position 2 -->
+<!-- 将幻灯片3移到位置2后 -->
 <p:sldIdLst>
   <p:sldId id="256" r:id="rId2"/>
   <p:sldId id="258" r:id="rId4"/>
@@ -391,37 +391,37 @@ Example:
 </p:sldIdLst>
 ```
 
-### Deleting a Slide
-1. **Remove from `ppt/presentation.xml`**: Delete the `<p:sldId>` entry
-2. **Remove from `ppt/_rels/presentation.xml.rels`**: Delete the relationship
-3. **Remove from `[Content_Types].xml`**: Delete the Override entry
-4. **Delete files**: Remove `ppt/slides/slideN.xml` and `ppt/slides/_rels/slideN.xml.rels`
-5. **Update `docProps/app.xml`**: Decrement slide count and update statistics
-6. **Clean up unused media**: Remove orphaned images from `ppt/media/`
+### 删除幻灯片
+1. **从`ppt/presentation.xml`中删除**：删除`<p:sldId>`条目
+2. **从`ppt/_rels/presentation.xml.rels`中删除**：删除关系
+3. **从`[Content_Types].xml`中删除**：删除Override条目
+4. **删除文件**：删除`ppt/slides/slideN.xml`和`ppt/slides/_rels/slideN.xml.rels`
+5. **更新`docProps/app.xml`**：减少幻灯片数量并更新统计信息
+6. **清理未使用的媒体**：从`ppt/media/`中删除孤立图像
 
-Note: Don't renumber remaining slides - keep their original IDs and filenames.
+注意：不要重新编号剩余的幻灯片 - 保持它们的原始ID和文件名。
 
 
-## Common Errors to Avoid
+## 需避免的常见错误
 
-- **Encodings**: Escape unicode characters in ASCII content: `"` becomes `&#8220;`
-- **Images**: Add to `ppt/media/` and update relationship files
-- **Lists**: Omit bullets from list headers
-- **IDs**: Use valid hexadecimal values for UUIDs
-- **Themes**: Check all themes in `theme` directory for colors
+- **编码**：在ASCII内容中转义Unicode字符：`"`变为`&#8220;`
+- **图像**：添加到`ppt/media/`并更新关系文件
+- **列表**：从列表标题中省略项目符号
+- **ID**：为UUID使用有效的十六进制值
+- **主题**：检查`theme`目录中的所有主题以获取颜色
 
-## Validation Checklist for Template-Based Presentations
+## 基于模板的演示文稿验证清单
 
-### Before Packing, Always:
-- **Clean unused resources**: Remove unreferenced media, fonts, and notes directories
-- **Fix Content_Types.xml**: Declare ALL slides, layouts, and themes present in the package
-- **Fix relationship IDs**: 
-   - Remove font embed references if not using embedded fonts
-- **Remove broken references**: Check all `_rels` files for references to deleted resources
+### 打包前始终：
+- **清理未使用的资源**：删除未引用的媒体、字体和备注目录
+- **修复Content_Types.xml**：声明包中存在的所有幻灯片、布局和主题
+- **修复关系ID**：
+   - 如果不使用嵌入字体，则删除字体嵌入引用
+- **删除损坏的引用**：检查所有`_rels`文件中对已删除资源的引用
 
-### Common Template Duplication Pitfalls:
-- Multiple slides referencing the same notes slide after duplication
-- Image/media references from template slides that no longer exist
-- Font embedding references when fonts aren't included
-- Missing slideLayout declarations for layouts 12-25
-- docProps directory may not unpack - this is optional
+### 常见的模板复制陷阱：
+- 复制后多个幻灯片引用同一备注幻灯片
+- 模板幻灯片中的图像/媒体引用不再存在
+- 未包含字体时的字体嵌入引用
+- 缺少12-25号布局的slideLayout声明
+- docProps目录可能不会解包 - 这是可选的

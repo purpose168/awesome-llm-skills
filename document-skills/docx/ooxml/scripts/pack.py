@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Tool to pack a directory into a .docx, .pptx, or .xlsx file with XML formatting undone.
+将目录打包为.docx、.pptx或.xlsx文件的工具，会去除XML格式化。
 
-Example usage:
-    python pack.py <input_directory> <office_file> [--force]
+使用示例：
+    python pack.py <输入目录> <Office文件> [--force]
 """
 
 import argparse
@@ -17,10 +17,10 @@ from pathlib import Path
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Pack a directory into an Office file")
-    parser.add_argument("input_directory", help="Unpacked Office document directory")
-    parser.add_argument("output_file", help="Output Office file (.docx/.pptx/.xlsx)")
-    parser.add_argument("--force", action="store_true", help="Skip validation")
+    parser = argparse.ArgumentParser(description="将目录打包为Office文件")
+    parser.add_argument("input_directory", help="已解压的Office文档目录")
+    parser.add_argument("output_file", help="输出Office文件(.docx/.pptx/.xlsx)")
+    parser.add_argument("--force", action="store_true", help="跳过验证")
     args = parser.parse_args()
 
     try:
@@ -28,30 +28,30 @@ def main():
             args.input_directory, args.output_file, validate=not args.force
         )
 
-        # Show warning if validation was skipped
+        # 如果跳过验证，显示警告
         if args.force:
-            print("Warning: Skipped validation, file may be corrupt", file=sys.stderr)
-        # Exit with error if validation failed
+            print("警告: 跳过了验证，文件可能已损坏", file=sys.stderr)
+        # 如果验证失败，错误退出
         elif not success:
-            print("Contents would produce a corrupt file.", file=sys.stderr)
-            print("Please validate XML before repacking.", file=sys.stderr)
-            print("Use --force to skip validation and pack anyway.", file=sys.stderr)
+            print("内容将生成损坏的文件。", file=sys.stderr)
+            print("请在重新打包前验证XML。", file=sys.stderr)
+            print("使用--force跳过验证并强制打包。", file=sys.stderr)
             sys.exit(1)
 
     except ValueError as e:
-        sys.exit(f"Error: {e}")
+        sys.exit(f"错误: {e}")
 
 
 def pack_document(input_dir, output_file, validate=False):
-    """Pack a directory into an Office file (.docx/.pptx/.xlsx).
+    """将目录打包为Office文件(.docx/.pptx/.xlsx)。
 
-    Args:
-        input_dir: Path to unpacked Office document directory
-        output_file: Path to output Office file
-        validate: If True, validates with soffice (default: False)
+    参数:
+        input_dir: 已解压的Office文档目录路径
+        output_file: 输出Office文件路径
+        validate: 如果为True，使用soffice验证(默认: False)
 
-    Returns:
-        bool: True if successful, False if validation failed
+    返回:
+        bool: 成功返回True，验证失败返回False
     """
     input_dir = Path(input_dir)
     output_file = Path(output_file)
@@ -61,35 +61,35 @@ def pack_document(input_dir, output_file, validate=False):
     if output_file.suffix.lower() not in {".docx", ".pptx", ".xlsx"}:
         raise ValueError(f"{output_file} must be a .docx, .pptx, or .xlsx file")
 
-    # Work in temporary directory to avoid modifying original
+    # 在临时目录中工作，避免修改原始文件
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_content_dir = Path(temp_dir) / "content"
         shutil.copytree(input_dir, temp_content_dir)
 
-        # Process XML files to remove pretty-printing whitespace
+        # 处理XML文件以移除格式化空白
         for pattern in ["*.xml", "*.rels"]:
             for xml_file in temp_content_dir.rglob(pattern):
                 condense_xml(xml_file)
 
-        # Create final Office file as zip archive
+        # 将最终Office文件创建为zip存档
         output_file.parent.mkdir(parents=True, exist_ok=True)
         with zipfile.ZipFile(output_file, "w", zipfile.ZIP_DEFLATED) as zf:
             for f in temp_content_dir.rglob("*"):
                 if f.is_file():
                     zf.write(f, f.relative_to(temp_content_dir))
 
-        # Validate if requested
+        # 如果请求验证
         if validate:
             if not validate_document(output_file):
-                output_file.unlink()  # Delete the corrupt file
+                output_file.unlink()  # 删除损坏的文件
                 return False
 
     return True
 
 
 def validate_document(doc_path):
-    """Validate document by converting to HTML with soffice."""
-    # Determine the correct filter based on file extension
+    """通过使用soffice转换为HTML来验证文档。"""
+    # 根据文件扩展名确定正确的过滤器
     match doc_path.suffix.lower():
         case ".docx":
             filter_name = "html:HTML"
@@ -115,33 +115,33 @@ def validate_document(doc_path):
                 text=True,
             )
             if not (Path(temp_dir) / f"{doc_path.stem}.html").exists():
-                error_msg = result.stderr.strip() or "Document validation failed"
-                print(f"Validation error: {error_msg}", file=sys.stderr)
+                error_msg = result.stderr.strip() or "文档验证失败"
+                print(f"验证错误: {error_msg}", file=sys.stderr)
                 return False
             return True
         except FileNotFoundError:
-            print("Warning: soffice not found. Skipping validation.", file=sys.stderr)
+            print("警告: 未找到soffice。跳过验证。", file=sys.stderr)
             return True
         except subprocess.TimeoutExpired:
-            print("Validation error: Timeout during conversion", file=sys.stderr)
+            print("验证错误: 转换过程超时", file=sys.stderr)
             return False
         except Exception as e:
-            print(f"Validation error: {e}", file=sys.stderr)
+            print(f"验证错误: {e}", file=sys.stderr)
             return False
 
 
 def condense_xml(xml_file):
-    """Strip unnecessary whitespace and remove comments."""
+    """去除不必要的空白和注释。"""
     with open(xml_file, "r", encoding="utf-8") as f:
         dom = defusedxml.minidom.parse(f)
 
-    # Process each element to remove whitespace and comments
+    # 处理每个元素以移除空白和注释
     for element in dom.getElementsByTagName("*"):
-        # Skip w:t elements and their processing
+        # 跳过w:t元素及其处理
         if element.tagName.endswith(":t"):
             continue
 
-        # Remove whitespace-only text nodes and comment nodes
+        # 移除仅包含空白的文本节点和注释节点
         for child in list(element.childNodes):
             if (
                 child.nodeType == child.TEXT_NODE
@@ -150,7 +150,7 @@ def condense_xml(xml_file):
             ) or child.nodeType == child.COMMENT_NODE:
                 element.removeChild(child)
 
-    # Write back the condensed XML
+    # 写回压缩后的XML
     with open(xml_file, "wb") as f:
         f.write(dom.toxml(encoding="UTF-8"))
 

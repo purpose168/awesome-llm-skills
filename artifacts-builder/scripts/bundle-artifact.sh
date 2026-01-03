@@ -1,28 +1,29 @@
 #!/bin/bash
+# React应用打包脚本：将React应用打包为单个HTML工件
 set -e
 
-echo "📦 Bundling React app to single HTML artifact..."
+echo "📦 将React应用打包为单个HTML工件..."
 
-# Check if we're in a project directory
+# 检查是否在项目目录中
 if [ ! -f "package.json" ]; then
-  echo "❌ Error: No package.json found. Run this script from your project root."
+  echo "❌ 错误：未找到package.json文件。请从项目根目录运行此脚本。"
   exit 1
 fi
 
-# Check if index.html exists
+# 检查是否存在index.html
 if [ ! -f "index.html" ]; then
-  echo "❌ Error: No index.html found in project root."
-  echo "   This script requires an index.html entry point."
+  echo "❌ 错误：项目根目录中未找到index.html文件。"
+  echo "   此脚本需要一个index.html入口点。"
   exit 1
 fi
 
-# Install bundling dependencies
-echo "📦 Installing bundling dependencies..."
+# 安装打包依赖
+echo "📦 正在安装打包依赖..."
 pnpm add -D parcel @parcel/config-default parcel-resolver-tspaths html-inline
 
-# Create Parcel config with tspaths resolver
+# 创建带tspaths解析器的Parcel配置
 if [ ! -f ".parcelrc" ]; then
-  echo "🔧 Creating Parcel configuration with path alias support..."
+  echo "🔧 创建带路径别名支持的Parcel配置..."
   cat > .parcelrc << 'EOF'
 {
   "extends": "@parcel/config-default",
@@ -31,24 +32,24 @@ if [ ! -f ".parcelrc" ]; then
 EOF
 fi
 
-# Clean previous build
-echo "🧹 Cleaning previous build..."
+# 清理之前的构建
+echo "🧹 正在清理之前的构建..."
 rm -rf dist bundle.html
 
-# Build with Parcel
-echo "🔨 Building with Parcel..."
+# 使用Parcel构建
+echo "🔨 正在使用Parcel构建..."
 pnpm exec parcel build index.html --dist-dir dist --no-source-maps
 
-# Inline everything into single HTML
-echo "🎯 Inlining all assets into single HTML file..."
+# 将所有内容内联到单个HTML中
+echo "🎯 正在将所有资源内联到单个HTML文件中..."
 pnpm exec html-inline dist/index.html > bundle.html
 
-# Get file size
+# 获取文件大小
 FILE_SIZE=$(du -h bundle.html | cut -f1)
 
 echo ""
-echo "✅ Bundle complete!"
-echo "📄 Output: bundle.html ($FILE_SIZE)"
+echo "✅ 打包完成！"
+echo "📄 输出文件：bundle.html ($FILE_SIZE)"
 echo ""
-echo "You can now use this single HTML file as an artifact in Claude conversations."
-echo "To test locally: open bundle.html in your browser"
+echo "您现在可以将此单个HTML文件用作Claude对话中的工件。"
+echo "本地测试方法：在浏览器中打开bundle.html文件"

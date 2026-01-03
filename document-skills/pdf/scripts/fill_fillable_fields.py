@@ -6,13 +6,13 @@ from pypdf import PdfReader, PdfWriter
 from extract_form_field_info import get_field_info
 
 
-# Fills fillable form fields in a PDF. See forms.md.
+# 填充PDF中的可填写表单字段。请参见forms.md。
 
 
 def fill_pdf_fields(input_pdf_path: str, fields_json_path: str, output_pdf_path: str):
     with open(fields_json_path) as f:
         fields = json.load(f)
-    # Group by page number.
+    # 按页码分组。
     fields_by_page = {}
     for field in fields:
         if "value" in field:
@@ -31,10 +31,10 @@ def fill_pdf_fields(input_pdf_path: str, fields_json_path: str, output_pdf_path:
         existing_field = fields_by_ids.get(field["field_id"])
         if not existing_field:
             has_error = True
-            print(f"ERROR: `{field['field_id']}` is not a valid field ID")
+            print(f"错误: `{field['field_id']}` 不是有效的字段ID")
         elif field["page"] != existing_field["page"]:
             has_error = True
-            print(f"ERROR: Incorrect page number for `{field['field_id']}` (got {field['page']}, expected {existing_field['page']})")
+            print(f"错误: 字段 `{field['field_id']}` 的页码不正确 (得到 {field['page']}, 期望 {existing_field['page']})")
         else:
             if "value" in field:
                 err = validation_error_for_field_value(existing_field, field["value"])
@@ -48,8 +48,8 @@ def fill_pdf_fields(input_pdf_path: str, fields_json_path: str, output_pdf_path:
     for page, field_values in fields_by_page.items():
         writer.update_page_form_field_values(writer.pages[page - 1], field_values, auto_regenerate=False)
 
-    # This seems to be necessary for many PDF viewers to format the form values correctly.
-    # It may cause the viewer to show a "save changes" dialog even if the user doesn't make any changes.
+    # 这对于许多PDF查看器正确格式化表单值似乎是必要的。
+    # 即使用户没有进行任何更改，它也可能导致查看器显示"保存更改"对话框。
     writer.set_need_appearances_writer(True)
     
     with open(output_pdf_path, "wb") as f:
@@ -63,30 +63,29 @@ def validation_error_for_field_value(field_info, field_value):
         checked_val = field_info["checked_value"]
         unchecked_val = field_info["unchecked_value"]
         if field_value != checked_val and field_value != unchecked_val:
-            return f'ERROR: Invalid value "{field_value}" for checkbox field "{field_id}". The checked value is "{checked_val}" and the unchecked value is "{unchecked_val}"'
+            return f'错误: 复选框字段 "{field_id}" 的值 "{field_value}" 无效。选中值为 "{checked_val}"，未选中值为 "{unchecked_val}"'
     elif field_type == "radio_group":
         option_values = [opt["value"] for opt in field_info["radio_options"]]
         if field_value not in option_values:
-            return f'ERROR: Invalid value "{field_value}" for radio group field "{field_id}". Valid values are: {option_values}' 
+            return f'错误: 单选按钮组字段 "{field_id}" 的值 "{field_value}" 无效。有效值为: {option_values}' 
     elif field_type == "choice":
         choice_values = [opt["value"] for opt in field_info["choice_options"]]
         if field_value not in choice_values:
-            return f'ERROR: Invalid value "{field_value}" for choice field "{field_id}". Valid values are: {choice_values}'
+            return f'错误: 选择字段 "{field_id}" 的值 "{field_value}" 无效。有效值为: {choice_values}'
     return None
 
 
-# pypdf (at least version 5.7.0) has a bug when setting the value for a selection list field.
-# In _writer.py around line 966:
+# pypdf（至少版本5.7.0）在设置选择列表字段的值时有一个bug。
+# 在 _writer.py 约第966行：
 #
 # if field.get(FA.FT, "/Tx") == "/Ch" and field_flags & FA.FfBits.Combo == 0:
 #     txt = "\n".join(annotation.get_inherited(FA.Opt, []))
 #
-# The problem is that for selection lists, `get_inherited` returns a list of two-element lists like
+# 问题是对于选择列表，`get_inherited` 返回的是两元素列表的列表，如下所示：
 # [["value1", "Text 1"], ["value2", "Text 2"], ...]
-# This causes `join` to throw a TypeError because it expects an iterable of strings.
-# The horrible workaround is to patch `get_inherited` to return a list of the value strings.
-# We call the original method and adjust the return value only if the argument to `get_inherited`
-# is `FA.Opt` and if the return value is a list of two-element lists.
+# 这导致 `join` 抛出TypeError，因为它期望一个字符串的可迭代对象。
+# 解决方案是修补 `get_inherited` 方法，使其返回值字符串的列表。
+# 我们调用原始方法，并仅当 `get_inherited` 的参数是 `FA.Opt` 且返回值是两元素列表的列表时，才调整返回值。
 def monkeypatch_pydpf_method():
     from pypdf.generic import DictionaryObject
     from pypdf.constants import FieldDictionaryAttributes
@@ -105,7 +104,7 @@ def monkeypatch_pydpf_method():
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: fill_fillable_fields.py [input pdf] [field_values.json] [output pdf]")
+        print("用法: fill_fillable_fields.py [输入PDF文件] [field_values.json文件] [输出PDF文件]")
         sys.exit(1)
     monkeypatch_pydpf_method()
     input_pdf = sys.argv[1]

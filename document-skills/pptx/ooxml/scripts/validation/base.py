@@ -1,5 +1,5 @@
 """
-Base validator with common validation logic for document files.
+文档文件通用验证逻辑的基础验证器。
 """
 
 import re
@@ -9,68 +9,68 @@ import lxml.etree
 
 
 class BaseSchemaValidator:
-    """Base validator with common validation logic for document files."""
+    """文档文件通用验证逻辑的基础验证器。"""
 
-    # Elements whose 'id' attributes must be unique within their file
-    # Format: element_name -> (attribute_name, scope)
-    # scope can be 'file' (unique within file) or 'global' (unique across all files)
+    # 其'id'属性必须在文件内唯一的元素
+    # 格式: element_name -> (attribute_name, scope)
+    # scope可以是'file'（文件内唯一）或'global'（全局唯一）
     UNIQUE_ID_REQUIREMENTS = {
-        # Word elements
-        "comment": ("id", "file"),  # Comment IDs in comments.xml
-        "commentrangestart": ("id", "file"),  # Must match comment IDs
-        "commentrangeend": ("id", "file"),  # Must match comment IDs
-        "bookmarkstart": ("id", "file"),  # Bookmark start IDs
-        "bookmarkend": ("id", "file"),  # Bookmark end IDs
-        # Note: ins and del (track changes) can share IDs when part of same revision
-        # PowerPoint elements
-        "sldid": ("id", "file"),  # Slide IDs in presentation.xml
-        "sldmasterid": ("id", "global"),  # Slide master IDs must be globally unique
-        "sldlayoutid": ("id", "global"),  # Slide layout IDs must be globally unique
-        "cm": ("authorid", "file"),  # Comment author IDs
-        # Excel elements
-        "sheet": ("sheetid", "file"),  # Sheet IDs in workbook.xml
-        "definedname": ("id", "file"),  # Named range IDs
-        # Drawing/Shape elements (all formats)
-        "cxnsp": ("id", "file"),  # Connection shape IDs
-        "sp": ("id", "file"),  # Shape IDs
-        "pic": ("id", "file"),  # Picture IDs
-        "grpsp": ("id", "file"),  # Group shape IDs
+        # Word元素
+        "comment": ("id", "file"),  # comments.xml中的注释ID
+        "commentrangestart": ("id", "file"),  # 必须与注释ID匹配
+        "commentrangeend": ("id", "file"),  # 必须与注释ID匹配
+        "bookmarkstart": ("id", "file"),  # 书签开始ID
+        "bookmarkend": ("id", "file"),  # 书签结束ID
+        # 注意: 当属于同一修订时，ins和del（跟踪更改）可以共享ID
+        # PowerPoint元素
+        "sldid": ("id", "file"),  # presentation.xml中的幻灯片ID
+        "sldmasterid": ("id", "global"),  # 幻灯片母版ID必须全局唯一
+        "sldlayoutid": ("id", "global"),  # 幻灯片布局ID必须全局唯一
+        "cm": ("authorid", "file"),  # 注释作者ID
+        # Excel元素
+        "sheet": ("sheetid", "file"),  # workbook.xml中的工作表ID
+        "definedname": ("id", "file"),  # 命名范围ID
+        # 绘图/形状元素（所有格式）
+        "cxnsp": ("id", "file"),  # 连接形状ID
+        "sp": ("id", "file"),  # 形状ID
+        "pic": ("id", "file"),  # 图片ID
+        "grpsp": ("id", "file"),  # 组形状ID
     }
 
-    # Mapping of element names to expected relationship types
-    # Subclasses should override this with format-specific mappings
+    # 元素名称到预期关系类型的映射
+    # 子类应使用特定格式的映射覆盖此映射
     ELEMENT_RELATIONSHIP_TYPES = {}
 
-    # Unified schema mappings for all Office document types
+    # 所有Office文档类型的统一模式映射
     SCHEMA_MAPPINGS = {
-        # Document type specific schemas
-        "word": "ISO-IEC29500-4_2016/wml.xsd",  # Word documents
-        "ppt": "ISO-IEC29500-4_2016/pml.xsd",  # PowerPoint presentations
-        "xl": "ISO-IEC29500-4_2016/sml.xsd",  # Excel spreadsheets
-        # Common file types
+        # 文档类型特定模式
+        "word": "ISO-IEC29500-4_2016/wml.xsd",  # Word文档
+        "ppt": "ISO-IEC29500-4_2016/pml.xsd",  # PowerPoint演示文稿
+        "xl": "ISO-IEC29500-4_2016/sml.xsd",  # Excel电子表格
+        # 通用文件类型
         "[Content_Types].xml": "ecma/fouth-edition/opc-contentTypes.xsd",
         "app.xml": "ISO-IEC29500-4_2016/shared-documentPropertiesExtended.xsd",
         "core.xml": "ecma/fouth-edition/opc-coreProperties.xsd",
         "custom.xml": "ISO-IEC29500-4_2016/shared-documentPropertiesCustom.xsd",
         ".rels": "ecma/fouth-edition/opc-relationships.xsd",
-        # Word-specific files
+        # Word特定文件
         "people.xml": "microsoft/wml-2012.xsd",
         "commentsIds.xml": "microsoft/wml-cid-2016.xsd",
         "commentsExtensible.xml": "microsoft/wml-cex-2018.xsd",
         "commentsExtended.xml": "microsoft/wml-2012.xsd",
-        # Chart files (common across document types)
+        # 图表文件（所有文档类型通用）
         "chart": "ISO-IEC29500-4_2016/dml-chart.xsd",
-        # Theme files (common across document types)
+        # 主题文件（所有文档类型通用）
         "theme": "ISO-IEC29500-4_2016/dml-main.xsd",
-        # Drawing and media files
+        # 绘图和媒体文件
         "drawing": "ISO-IEC29500-4_2016/dml-main.xsd",
     }
 
-    # Unified namespace constants
+    # 统一命名空间常量
     MC_NAMESPACE = "http://schemas.openxmlformats.org/markup-compatibility/2006"
     XML_NAMESPACE = "http://www.w3.org/XML/1998/namespace"
 
-    # Common OOXML namespaces used across validators
+    # 验证器间使用的通用OOXML命名空间
     PACKAGE_RELATIONSHIPS_NAMESPACE = (
         "http://schemas.openxmlformats.org/package/2006/relationships"
     )
@@ -81,10 +81,10 @@ class BaseSchemaValidator:
         "http://schemas.openxmlformats.org/package/2006/content-types"
     )
 
-    # Folders where we should clean ignorable namespaces
+    # 应清理可忽略命名空间的文件夹
     MAIN_CONTENT_FOLDERS = {"word", "ppt", "xl"}
 
-    # All allowed OOXML namespaces (superset of all document types)
+    # 所有允许的OOXML命名空间（所有文档类型的超集）
     OOXML_NAMESPACES = {
         "http://schemas.openxmlformats.org/officeDocument/2006/math",
         "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
@@ -108,59 +108,59 @@ class BaseSchemaValidator:
         self.original_file = Path(original_file)
         self.verbose = verbose
 
-        # Set schemas directory
+        # 设置模式目录
         self.schemas_dir = Path(__file__).parent.parent.parent / "schemas"
 
-        # Get all XML and .rels files
+        # 获取所有XML和.rels文件
         patterns = ["*.xml", "*.rels"]
         self.xml_files = [
             f for pattern in patterns for f in self.unpacked_dir.rglob(pattern)
         ]
 
         if not self.xml_files:
-            print(f"Warning: No XML files found in {self.unpacked_dir}")
+            print(f"警告: 在{self.unpacked_dir}中未找到XML文件")
 
     def validate(self):
-        """Run all validation checks and return True if all pass."""
-        raise NotImplementedError("Subclasses must implement the validate method")
+        """运行所有验证检查，如果全部通过则返回True。"""
+        raise NotImplementedError("子类必须实现validate方法")
 
     def validate_xml(self):
-        """Validate that all XML files are well-formed."""
+        """验证所有XML文件是否格式良好。"""
         errors = []
 
         for xml_file in self.xml_files:
             try:
-                # Try to parse the XML file
+                # 尝试解析XML文件
                 lxml.etree.parse(str(xml_file))
             except lxml.etree.XMLSyntaxError as e:
                 errors.append(
                     f"  {xml_file.relative_to(self.unpacked_dir)}: "
-                    f"Line {e.lineno}: {e.msg}"
+                    f"第{e.lineno}行: {e.msg}"
                 )
             except Exception as e:
                 errors.append(
                     f"  {xml_file.relative_to(self.unpacked_dir)}: "
-                    f"Unexpected error: {str(e)}"
+                    f"意外错误: {str(e)}"
                 )
 
         if errors:
-            print(f"FAILED - Found {len(errors)} XML violations:")
+            print(f"失败 - 发现{len(errors)}个XML违规:")
             for error in errors:
                 print(error)
             return False
         else:
             if self.verbose:
-                print("PASSED - All XML files are well-formed")
+                print("通过 - 所有XML文件格式良好")
             return True
 
     def validate_namespaces(self):
-        """Validate that namespace prefixes in Ignorable attributes are declared."""
+        """验证Ignorable属性中的命名空间前缀是否已声明。"""
         errors = []
 
         for xml_file in self.xml_files:
             try:
                 root = lxml.etree.parse(str(xml_file)).getroot()
-                declared = set(root.nsmap.keys()) - {None}  # Exclude default namespace
+                declared = set(root.nsmap.keys()) - {None}  # 排除默认命名空间
 
                 for attr_val in [
                     v for k, v in root.attrib.items() if k.endswith("Ignorable")
@@ -168,52 +168,52 @@ class BaseSchemaValidator:
                     undeclared = set(attr_val.split()) - declared
                     errors.extend(
                         f"  {xml_file.relative_to(self.unpacked_dir)}: "
-                        f"Namespace '{ns}' in Ignorable but not declared"
+                        f"Ignorable中的命名空间 '{ns}' 未声明"
                         for ns in undeclared
                     )
             except lxml.etree.XMLSyntaxError:
                 continue
 
         if errors:
-            print(f"FAILED - {len(errors)} namespace issues:")
+            print(f"失败 - {len(errors)}个命名空间问题:")
             for error in errors:
                 print(error)
             return False
         if self.verbose:
-            print("PASSED - All namespace prefixes properly declared")
+            print("通过 - 所有命名空间前缀已正确声明")
         return True
 
     def validate_unique_ids(self):
-        """Validate that specific IDs are unique according to OOXML requirements."""
+        """根据OOXML要求验证特定ID是否唯一。"""
         errors = []
-        global_ids = {}  # Track globally unique IDs across all files
+        global_ids = {}  # 跟踪所有文件中全局唯一的ID
 
         for xml_file in self.xml_files:
             try:
                 root = lxml.etree.parse(str(xml_file)).getroot()
-                file_ids = {}  # Track IDs that must be unique within this file
+                file_ids = {}  # 跟踪必须在此文件内唯一的ID
 
-                # Remove all mc:AlternateContent elements from the tree
+                # 从树中移除所有mc:AlternateContent元素
                 mc_elements = root.xpath(
                     ".//mc:AlternateContent", namespaces={"mc": self.MC_NAMESPACE}
                 )
                 for elem in mc_elements:
                     elem.getparent().remove(elem)
 
-                # Now check IDs in the cleaned tree
+                # 现在在清理后的树中检查ID
                 for elem in root.iter():
-                    # Get the element name without namespace
+                    # 获取不带命名空间的元素名称
                     tag = (
                         elem.tag.split("}")[-1].lower()
                         if "}" in elem.tag
                         else elem.tag.lower()
                     )
 
-                    # Check if this element type has ID uniqueness requirements
+                    # 检查此元素类型是否有ID唯一性要求
                     if tag in self.UNIQUE_ID_REQUIREMENTS:
                         attr_name, scope = self.UNIQUE_ID_REQUIREMENTS[tag]
 
-                        # Look for the specified attribute
+                        # 查找指定的属性
                         id_value = None
                         for attr, value in elem.attrib.items():
                             attr_local = (
@@ -227,15 +227,15 @@ class BaseSchemaValidator:
 
                         if id_value is not None:
                             if scope == "global":
-                                # Check global uniqueness
+                                # 检查全局唯一性
                                 if id_value in global_ids:
                                     prev_file, prev_line, prev_tag = global_ids[
                                         id_value
                                     ]
                                     errors.append(
                                         f"  {xml_file.relative_to(self.unpacked_dir)}: "
-                                        f"Line {elem.sourceline}: Global ID '{id_value}' in <{tag}> "
-                                        f"already used in {prev_file} at line {prev_line} in <{prev_tag}>"
+                                        f"第 {elem.sourceline} 行: <{tag}> 中的全局ID '{id_value}' "
+                                        f"已在 {prev_file} 文件的第 {prev_line} 行 <{prev_tag}> 中使用"
                                     )
                                 else:
                                     global_ids[id_value] = (
@@ -244,7 +244,7 @@ class BaseSchemaValidator:
                                         tag,
                                     )
                             elif scope == "file":
-                                # Check file-level uniqueness
+                                # 检查文件级唯一性
                                 key = (tag, attr_name)
                                 if key not in file_ids:
                                     file_ids[key] = {}
@@ -253,69 +253,69 @@ class BaseSchemaValidator:
                                     prev_line = file_ids[key][id_value]
                                     errors.append(
                                         f"  {xml_file.relative_to(self.unpacked_dir)}: "
-                                        f"Line {elem.sourceline}: Duplicate {attr_name}='{id_value}' in <{tag}> "
-                                        f"(first occurrence at line {prev_line})"
+                                        f"第 {elem.sourceline} 行: <{tag}> 中的 {attr_name}='{id_value}' 重复 "
+                                        f"(第一次出现在第 {prev_line} 行)"
                                     )
                                 else:
                                     file_ids[key][id_value] = elem.sourceline
 
             except (lxml.etree.XMLSyntaxError, Exception) as e:
                 errors.append(
-                    f"  {xml_file.relative_to(self.unpacked_dir)}: Error: {e}"
+                    f"  {xml_file.relative_to(self.unpacked_dir)}: 错误: {e}"
                 )
 
         if errors:
-            print(f"FAILED - Found {len(errors)} ID uniqueness violations:")
+            print(f"失败 - 发现 {len(errors)} 个ID唯一性违规:")
             for error in errors:
                 print(error)
             return False
         else:
             if self.verbose:
-                print("PASSED - All required IDs are unique")
+                print("通过 - 所有必需的ID都是唯一的")
             return True
 
     def validate_file_references(self):
         """
-        Validate that all .rels files properly reference files and that all files are referenced.
+        验证所有.rels文件是否正确引用文件以及所有文件是否都被引用。
         """
         errors = []
 
-        # Find all .rels files
+        # 查找所有.rels文件
         rels_files = list(self.unpacked_dir.rglob("*.rels"))
 
         if not rels_files:
             if self.verbose:
-                print("PASSED - No .rels files found")
+                print("通过 - 未找到.rels文件")
             return True
 
-        # Get all files in the unpacked directory (excluding reference files)
+        # 获取解压目录中的所有文件（排除引用文件）
         all_files = []
         for file_path in self.unpacked_dir.rglob("*"):
             if (
                 file_path.is_file()
                 and file_path.name != "[Content_Types].xml"
                 and not file_path.name.endswith(".rels")
-            ):  # This file is not referenced by .rels
+            ):  # 此文件不被.rels引用
                 all_files.append(file_path.resolve())
 
-        # Track all files that are referenced by any .rels file
+        # 跟踪所有被任何.rels文件引用的文件
         all_referenced_files = set()
 
         if self.verbose:
             print(
-                f"Found {len(rels_files)} .rels files and {len(all_files)} target files"
+                f"找到 {len(rels_files)} 个.rels文件和 {len(all_files)} 个目标文件"
             )
 
-        # Check each .rels file
+        # 检查每个.rels文件
         for rels_file in rels_files:
             try:
-                # Parse relationships file
+                # 解析关系文件
                 rels_root = lxml.etree.parse(str(rels_file)).getroot()
 
-                # Get the directory where this .rels file is located
+                # 获取此.rels文件所在的目录
                 rels_dir = rels_file.parent
 
-                # Find all relationships and their targets
+                # 查找所有关系及其目标
                 referenced_files = set()
                 broken_refs = []
 
@@ -326,18 +326,19 @@ class BaseSchemaValidator:
                     target = rel.get("Target")
                     if target and not target.startswith(
                         ("http", "mailto:")
-                    ):  # Skip external URLs
-                        # Resolve the target path relative to the .rels file location
+                    ):
+                        # 跳过外部URL
+                        # 相对于.rels文件位置解析目标路径
                         if rels_file.name == ".rels":
-                            # Root .rels file - targets are relative to unpacked_dir
+                            # 根.rels文件 - 目标相对于unpacked_dir
                             target_path = self.unpacked_dir / target
                         else:
-                            # Other .rels files - targets are relative to their parent's parent
-                            # e.g., word/_rels/document.xml.rels -> targets relative to word/
+                            # 其他.rels文件 - 目标相对于其父目录的父目录
+                            # 例如，word/_rels/document.xml.rels -> 目标相对于word/
                             base_dir = rels_dir.parent
                             target_path = base_dir / target
 
-                        # Normalize the path and check if it exists
+                        # 规范化路径并检查是否存在
                         try:
                             target_path = target_path.resolve()
                             if target_path.exists() and target_path.is_file():
@@ -348,69 +349,69 @@ class BaseSchemaValidator:
                         except (OSError, ValueError):
                             broken_refs.append((target, rel.sourceline))
 
-                # Report broken references
+                # 报告损坏的引用
                 if broken_refs:
                     rel_path = rels_file.relative_to(self.unpacked_dir)
                     for broken_ref, line_num in broken_refs:
                         errors.append(
-                            f"  {rel_path}: Line {line_num}: Broken reference to {broken_ref}"
+                            f"  {rel_path}: 第 {line_num} 行: 对 {broken_ref} 的引用损坏"
                         )
 
             except Exception as e:
                 rel_path = rels_file.relative_to(self.unpacked_dir)
-                errors.append(f"  Error parsing {rel_path}: {e}")
+                errors.append(f"  解析 {rel_path} 时出错: {e}")
 
-        # Check for unreferenced files (files that exist but are not referenced anywhere)
+        # 检查未引用的文件（存在但未被任何地方引用的文件）
         unreferenced_files = set(all_files) - all_referenced_files
 
         if unreferenced_files:
             for unref_file in sorted(unreferenced_files):
                 unref_rel_path = unref_file.relative_to(self.unpacked_dir)
-                errors.append(f"  Unreferenced file: {unref_rel_path}")
+                errors.append(f"  未引用的文件: {unref_rel_path}")
 
         if errors:
-            print(f"FAILED - Found {len(errors)} relationship validation errors:")
+            print(f"失败 - 发现 {len(errors)} 个关系验证错误:")
             for error in errors:
                 print(error)
             print(
-                "CRITICAL: These errors will cause the document to appear corrupt. "
-                + "Broken references MUST be fixed, "
-                + "and unreferenced files MUST be referenced or removed."
+                "严重: 这些错误会导致文档显示为损坏。 "
+                + "必须修复损坏的引用， "
+                + "并且未引用的文件必须被引用或删除。"
             )
             return False
         else:
             if self.verbose:
                 print(
-                    "PASSED - All references are valid and all files are properly referenced"
+                    "通过 - 所有引用都有效，所有文件都被正确引用"
                 )
             return True
 
     def validate_all_relationship_ids(self):
         """
-        Validate that all r:id attributes in XML files reference existing IDs
-        in their corresponding .rels files, and optionally validate relationship types.
+        验证XML文件中的所有r:id属性是否引用其对应.rels文件中存在的ID，
+        并可选地验证关系类型。
         """
         import lxml.etree
 
         errors = []
 
-        # Process each XML file that might contain r:id references
+        # 处理每个可能包含r:id引用的XML文件
         for xml_file in self.xml_files:
-            # Skip .rels files themselves
+            # 跳过.rels文件本身
             if xml_file.suffix == ".rels":
                 continue
 
-            # Determine the corresponding .rels file
-            # For dir/file.xml, it's dir/_rels/file.xml.rels
+            # 确定对应的.rels文件
+            # 对于dir/file.xml，对应的.rels文件是dir/_rels/file.xml.rels
             rels_dir = xml_file.parent / "_rels"
             rels_file = rels_dir / f"{xml_file.name}.rels"
 
-            # Skip if there's no corresponding .rels file (that's okay)
+            # 如果没有对应的.rels文件则跳过（这是正常的）
             if not rels_file.exists():
                 continue
 
             try:
-                # Parse the .rels file to get valid relationship IDs and their types
+                # 解析.rels文件以获取有效的关系ID及其类型
                 rels_root = lxml.etree.parse(str(rels_file)).getroot()
                 rid_to_type = {}
 
@@ -420,25 +421,25 @@ class BaseSchemaValidator:
                     rid = rel.get("Id")
                     rel_type = rel.get("Type", "")
                     if rid:
-                        # Check for duplicate rIds
+                        # 检查重复的rId
                         if rid in rid_to_type:
                             rels_rel_path = rels_file.relative_to(self.unpacked_dir)
                             errors.append(
-                                f"  {rels_rel_path}: Line {rel.sourceline}: "
-                                f"Duplicate relationship ID '{rid}' (IDs must be unique)"
+                                f"  {rels_rel_path}: 第 {rel.sourceline} 行: "
+                                f"重复的关系ID '{rid}' (ID必须唯一)"
                             )
-                        # Extract just the type name from the full URL
+                        # 从完整URL中提取类型名称
                         type_name = (
                             rel_type.split("/")[-1] if "/" in rel_type else rel_type
                         )
                         rid_to_type[rid] = type_name
 
-                # Parse the XML file to find all r:id references
+                # 解析XML文件以查找所有r:id引用
                 xml_root = lxml.etree.parse(str(xml_file)).getroot()
 
-                # Find all elements with r:id attributes
+                # 查找所有带有r:id属性的元素
                 for elem in xml_root.iter():
-                    # Check for r:id attribute (relationship ID)
+                    # 检查r:id属性（关系ID）
                     rid_attr = elem.get(f"{{{self.OFFICE_RELATIONSHIPS_NAMESPACE}}}id")
                     if rid_attr:
                         xml_rel_path = xml_file.relative_to(self.unpacked_dir)
@@ -446,96 +447,96 @@ class BaseSchemaValidator:
                             elem.tag.split("}")[-1] if "}" in elem.tag else elem.tag
                         )
 
-                        # Check if the ID exists
+                        # 检查ID是否存在
                         if rid_attr not in rid_to_type:
                             errors.append(
-                                f"  {xml_rel_path}: Line {elem.sourceline}: "
-                                f"<{elem_name}> references non-existent relationship '{rid_attr}' "
-                                f"(valid IDs: {', '.join(sorted(rid_to_type.keys())[:5])}{'...' if len(rid_to_type) > 5 else ''})"
+                                f"  {xml_rel_path}: 第 {elem.sourceline} 行: "
+                                f"<{elem_name}> 引用了不存在的关系 '{rid_attr}' "
+                                f"(有效ID: {', '.join(sorted(rid_to_type.keys())[:5])}{'...' if len(rid_to_type) > 5 else ''})"
                             )
-                        # Check if we have type expectations for this element
+                        # 检查是否对此元素有类型期望
                         elif self.ELEMENT_RELATIONSHIP_TYPES:
                             expected_type = self._get_expected_relationship_type(
                                 elem_name
                             )
                             if expected_type:
                                 actual_type = rid_to_type[rid_attr]
-                                # Check if the actual type matches or contains the expected type
+                                # 检查实际类型是否匹配或包含预期类型
                                 if expected_type not in actual_type.lower():
                                     errors.append(
-                                        f"  {xml_rel_path}: Line {elem.sourceline}: "
-                                        f"<{elem_name}> references '{rid_attr}' which points to '{actual_type}' "
-                                        f"but should point to a '{expected_type}' relationship"
+                                        f"  {xml_rel_path}: 第 {elem.sourceline} 行: "
+                                        f"<{elem_name}> 引用了 '{rid_attr}'，它指向 '{actual_type}' "
+                                        f"但应该指向 '{expected_type}' 类型的关系"
                                     )
 
             except Exception as e:
                 xml_rel_path = xml_file.relative_to(self.unpacked_dir)
-                errors.append(f"  Error processing {xml_rel_path}: {e}")
+                errors.append(f"  处理 {xml_rel_path} 时出错: {e}")
 
         if errors:
-            print(f"FAILED - Found {len(errors)} relationship ID reference errors:")
+            print(f"失败 - 发现 {len(errors)} 个关系ID引用错误:")
             for error in errors:
                 print(error)
-            print("\nThese ID mismatches will cause the document to appear corrupt!")
+            print("\n这些ID不匹配会导致文档显示为损坏!")
             return False
         else:
             if self.verbose:
-                print("PASSED - All relationship ID references are valid")
+                print("通过 - 所有关系ID引用都有效")
             return True
 
     def _get_expected_relationship_type(self, element_name):
         """
-        Get the expected relationship type for an element.
-        First checks the explicit mapping, then tries pattern detection.
+        获取元素的预期关系类型。
+        首先检查显式映射，然后尝试模式检测。
         """
-        # Normalize element name to lowercase
+        # 将元素名称规范化为小写
         elem_lower = element_name.lower()
 
-        # Check explicit mapping first
+        # 首先检查显式映射
         if elem_lower in self.ELEMENT_RELATIONSHIP_TYPES:
             return self.ELEMENT_RELATIONSHIP_TYPES[elem_lower]
 
-        # Try pattern detection for common patterns
-        # Pattern 1: Elements ending in "Id" often expect a relationship of the prefix type
+        # 尝试检测常见模式
+        # 模式1：以"Id"结尾的元素通常期望前缀类型的关系
         if elem_lower.endswith("id") and len(elem_lower) > 2:
-            # e.g., "sldId" -> "sld", "sldMasterId" -> "sldMaster"
-            prefix = elem_lower[:-2]  # Remove "id"
-            # Check if this might be a compound like "sldMasterId"
+            # 例如，"sldId" -> "sld"，"sldMasterId" -> "sldMaster"
+            prefix = elem_lower[:-2]  # 移除"id"
+            # 检查是否可能是复合形式，如"sldMasterId"
             if prefix.endswith("master"):
                 return prefix.lower()
             elif prefix.endswith("layout"):
                 return prefix.lower()
             else:
-                # Simple case like "sldId" -> "slide"
-                # Common transformations
+                # 简单情况，如"sldId" -> "slide"
+                # 常见转换
                 if prefix == "sld":
                     return "slide"
                 return prefix.lower()
 
-        # Pattern 2: Elements ending in "Reference" expect a relationship of the prefix type
+        # 模式2：以"Reference"结尾的元素期望前缀类型的关系
         if elem_lower.endswith("reference") and len(elem_lower) > 9:
-            prefix = elem_lower[:-9]  # Remove "reference"
+            prefix = elem_lower[:-9]  # 移除"reference"
             return prefix.lower()
 
         return None
 
     def validate_content_types(self):
-        """Validate that all content files are properly declared in [Content_Types].xml."""
+        """验证所有内容文件是否在[Content_Types].xml中正确声明。"""
         errors = []
 
-        # Find [Content_Types].xml file
+        # 查找[Content_Types].xml文件
         content_types_file = self.unpacked_dir / "[Content_Types].xml"
         if not content_types_file.exists():
-            print("FAILED - [Content_Types].xml file not found")
+            print("失败 - 未找到[Content_Types].xml文件")
             return False
 
         try:
-            # Parse and get all declared parts and extensions
+            # 解析并获取所有声明的部分和扩展名
             root = lxml.etree.parse(str(content_types_file)).getroot()
             declared_parts = set()
             declared_extensions = set()
 
-            # Get Override declarations (specific files)
+            # 获取Override声明（特定文件）
             for override in root.findall(
                 f".//{{{self.CONTENT_TYPES_NAMESPACE}}}Override"
             ):
@@ -543,7 +544,7 @@ class BaseSchemaValidator:
                 if part_name is not None:
                     declared_parts.add(part_name.lstrip("/"))
 
-            # Get Default declarations (by extension)
+            # 获取Default声明（按扩展名）
             for default in root.findall(
                 f".//{{{self.CONTENT_TYPES_NAMESPACE}}}Default"
             ):
@@ -551,7 +552,7 @@ class BaseSchemaValidator:
                 if extension is not None:
                     declared_extensions.add(extension.lower())
 
-            # Root elements that require content type declaration
+            # 需要声明内容类型的根元素
             declarable_roots = {
                 "sld",
                 "sldLayout",
@@ -560,10 +561,10 @@ class BaseSchemaValidator:
                 "document",  # Word
                 "workbook",
                 "worksheet",  # Excel
-                "theme",  # Common
+                "theme",  # 通用
             }
 
-            # Common media file extensions that should be declared
+            # 应该声明的常见媒体文件扩展名
             media_extensions = {
                 "png": "image/png",
                 "jpg": "image/jpeg",
@@ -575,17 +576,17 @@ class BaseSchemaValidator:
                 "emf": "image/x-emf",
             }
 
-            # Get all files in the unpacked directory
+            # 获取解压目录中的所有文件
             all_files = list(self.unpacked_dir.rglob("*"))
             all_files = [f for f in all_files if f.is_file()]
 
-            # Check all XML files for Override declarations
+            # 检查所有XML文件的Override声明
             for xml_file in self.xml_files:
                 path_str = str(xml_file.relative_to(self.unpacked_dir)).replace(
                     "\\", "/"
                 )
 
-                # Skip non-content files
+                # 跳过非内容文件
                 if any(
                     skip in path_str
                     for skip in [".rels", "[Content_Types]", "docProps/", "_rels/"]
@@ -598,15 +599,15 @@ class BaseSchemaValidator:
 
                     if root_name in declarable_roots and path_str not in declared_parts:
                         errors.append(
-                            f"  {path_str}: File with <{root_name}> root not declared in [Content_Types].xml"
+                            f"  {path_str}: 包含<{root_name}>根元素的文件未在[Content_Types].xml中声明"
                         )
 
                 except Exception:
-                    continue  # Skip unparseable files
+                    continue  # 跳过无法解析的文件
 
-            # Check all non-XML files for Default extension declarations
+            # 检查所有非XML文件的Default扩展名声明
             for file_path in all_files:
-                # Skip XML files and metadata files (already checked above)
+                # 跳过XML文件和元数据文件（已在上面检查过）
                 if file_path.suffix.lower() in {".xml", ".rels"}:
                     continue
                 if file_path.name == "[Content_Types].xml":
@@ -616,77 +617,77 @@ class BaseSchemaValidator:
 
                 extension = file_path.suffix.lstrip(".").lower()
                 if extension and extension not in declared_extensions:
-                    # Check if it's a known media extension that should be declared
+                    # 检查它是否是应声明的已知媒体扩展名
                     if extension in media_extensions:
                         relative_path = file_path.relative_to(self.unpacked_dir)
                         errors.append(
-                            f'  {relative_path}: File with extension \'{extension}\' not declared in [Content_Types].xml - should add: <Default Extension="{extension}" ContentType="{media_extensions[extension]}"/>'
+                            f'  {relative_path}: 扩展名 \'{extension}\' 的文件未在[Content_Types].xml中声明 - 应添加: <Default Extension="{extension}" ContentType="{media_extensions[extension]}"/>'
                         )
 
         except Exception as e:
-            errors.append(f"  Error parsing [Content_Types].xml: {e}")
+            errors.append(f"  解析[Content_Types].xml时出错: {e}")
 
         if errors:
-            print(f"FAILED - Found {len(errors)} content type declaration errors:")
+            print(f"失败 - 发现 {len(errors)} 个内容类型声明错误:")
             for error in errors:
                 print(error)
             return False
         else:
             if self.verbose:
                 print(
-                    "PASSED - All content files are properly declared in [Content_Types].xml"
+                    "通过 - 所有内容文件都已在[Content_Types].xml中正确声明"
                 )
             return True
 
     def validate_file_against_xsd(self, xml_file, verbose=False):
-        """Validate a single XML file against XSD schema, comparing with original.
+        """根据XSD模式验证单个XML文件，与原始文件比较。
 
-        Args:
-            xml_file: Path to XML file to validate
-            verbose: Enable verbose output
+        参数:
+            xml_file: 要验证的XML文件路径
+            verbose: 启用详细输出
 
-        Returns:
-            tuple: (is_valid, new_errors_set) where is_valid is True/False/None (skipped)
+        返回:
+            tuple: (is_valid, new_errors_set) 其中is_valid是True/False/None（跳过）
         """
-        # Resolve both paths to handle symlinks
+        # 解析两个路径以处理符号链接
         xml_file = Path(xml_file).resolve()
         unpacked_dir = self.unpacked_dir.resolve()
 
-        # Validate current file
+        # 验证当前文件
         is_valid, current_errors = self._validate_single_file_xsd(
             xml_file, unpacked_dir
         )
 
         if is_valid is None:
-            return None, set()  # Skipped
+            return None, set()  # 跳过
         elif is_valid:
-            return True, set()  # Valid, no errors
+            return True, set()  # 有效，无错误
 
-        # Get errors from original file for this specific file
+        # 获取该特定文件的原始错误
         original_errors = self._get_original_file_errors(xml_file)
 
-        # Compare with original (both are guaranteed to be sets here)
+        # 与原始文件比较（两者在这里都保证是集合）
         assert current_errors is not None
         new_errors = current_errors - original_errors
 
         if new_errors:
             if verbose:
                 relative_path = xml_file.relative_to(unpacked_dir)
-                print(f"FAILED - {relative_path}: {len(new_errors)} new error(s)")
+                print(f"失败 - {relative_path}: {len(new_errors)} 个新错误")
                 for error in list(new_errors)[:3]:
                     truncated = error[:250] + "..." if len(error) > 250 else error
                     print(f"  - {truncated}")
             return False, new_errors
         else:
-            # All errors existed in original
+            # 所有错误都已存在于原始文件中
             if verbose:
                 print(
-                    f"PASSED - No new errors (original had {len(current_errors)} errors)"
+                    f"通过 - 无新错误（原始文件有 {len(current_errors)} 个错误）"
                 )
             return True, set()
 
     def validate_against_xsd(self):
-        """Validate XML files against XSD schemas, showing only new errors compared to original."""
+        """根据XSD模式验证XML文件，仅显示与原始文件相比的新错误。"""
         new_errors = []
         original_error_count = 0
         valid_count = 0
@@ -705,96 +706,96 @@ class BaseSchemaValidator:
                 valid_count += 1
                 continue
             elif is_valid:
-                # Had errors but all existed in original
+                # 有错误但都已存在于原始文件中
                 original_error_count += 1
                 valid_count += 1
                 continue
 
-            # Has new errors
-            new_errors.append(f"  {relative_path}: {len(new_file_errors)} new error(s)")
-            for error in list(new_file_errors)[:3]:  # Show first 3 errors
+            # 有新错误
+            new_errors.append(f"  {relative_path}: {len(new_file_errors)} 个新错误")
+            for error in list(new_file_errors)[:3]:  # 显示前3个错误
                 new_errors.append(
                     f"    - {error[:250]}..." if len(error) > 250 else f"    - {error}"
                 )
 
-        # Print summary
+        # 打印摘要
         if self.verbose:
-            print(f"Validated {len(self.xml_files)} files:")
-            print(f"  - Valid: {valid_count}")
-            print(f"  - Skipped (no schema): {skipped_count}")
+            print(f"已验证 {len(self.xml_files)} 个文件:")
+            print(f"  - 有效: {valid_count}")
+            print(f"  - 跳过（无模式）: {skipped_count}")
             if original_error_count:
-                print(f"  - With original errors (ignored): {original_error_count}")
+                print(f"  - 包含原始错误（已忽略）: {original_error_count}")
             print(
-                f"  - With NEW errors: {len(new_errors) > 0 and len([e for e in new_errors if not e.startswith('    ')]) or 0}"
+                f"  - 包含新错误: {len(new_errors) > 0 and len([e for e in new_errors if not e.startswith('    ')]) or 0}"
             )
 
         if new_errors:
-            print("\nFAILED - Found NEW validation errors:")
+            print("\n失败 - 发现新的验证错误:")
             for error in new_errors:
                 print(error)
             return False
         else:
             if self.verbose:
-                print("\nPASSED - No new XSD validation errors introduced")
+                print("\n通过 - 未引入新的XSD验证错误")
             return True
 
     def _get_schema_path(self, xml_file):
-        """Determine the appropriate schema path for an XML file."""
-        # Check exact filename match
+        """确定XML文件的适当模式路径。"""
+        # 检查精确的文件名匹配
         if xml_file.name in self.SCHEMA_MAPPINGS:
             return self.schemas_dir / self.SCHEMA_MAPPINGS[xml_file.name]
 
-        # Check .rels files
+        # 检查.rels文件
         if xml_file.suffix == ".rels":
             return self.schemas_dir / self.SCHEMA_MAPPINGS[".rels"]
 
-        # Check chart files
+        # 检查图表文件
         if "charts/" in str(xml_file) and xml_file.name.startswith("chart"):
             return self.schemas_dir / self.SCHEMA_MAPPINGS["chart"]
 
-        # Check theme files
+        # 检查主题文件
         if "theme/" in str(xml_file) and xml_file.name.startswith("theme"):
             return self.schemas_dir / self.SCHEMA_MAPPINGS["theme"]
 
-        # Check if file is in a main content folder and use appropriate schema
+        # 检查文件是否在主内容文件夹中并使用适当的模式
         if xml_file.parent.name in self.MAIN_CONTENT_FOLDERS:
             return self.schemas_dir / self.SCHEMA_MAPPINGS[xml_file.parent.name]
 
         return None
 
     def _clean_ignorable_namespaces(self, xml_doc):
-        """Remove attributes and elements not in allowed namespaces."""
-        # Create a clean copy
+        """删除不在允许命名空间中的属性和元素。"""
+        # 创建一个干净的副本
         xml_string = lxml.etree.tostring(xml_doc, encoding="unicode")
         xml_copy = lxml.etree.fromstring(xml_string)
 
-        # Remove attributes not in allowed namespaces
+        # 删除不在允许命名空间中的属性
         for elem in xml_copy.iter():
             attrs_to_remove = []
 
             for attr in elem.attrib:
-                # Check if attribute is from a namespace other than allowed ones
+                # 检查属性是否来自允许命名空间以外的命名空间
                 if "{" in attr:
                     ns = attr.split("}")[0][1:]
                     if ns not in self.OOXML_NAMESPACES:
                         attrs_to_remove.append(attr)
 
-            # Remove collected attributes
+            # 删除收集到的属性
             for attr in attrs_to_remove:
                 del elem.attrib[attr]
 
-        # Remove elements not in allowed namespaces
+        # 删除不在允许命名空间中的元素
         self._remove_ignorable_elements(xml_copy)
 
         return lxml.etree.ElementTree(xml_copy)
 
     def _remove_ignorable_elements(self, root):
-        """Recursively remove all elements not in allowed namespaces."""
+        """递归删除所有不在允许命名空间中的元素。"""
         elements_to_remove = []
 
-        # Find elements to remove
+        # 查找要删除的元素
         for elem in list(root):
-            # Skip non-element nodes (comments, processing instructions, etc.)
+            # 跳过非元素节点（注释、处理指令等）
             if not hasattr(elem, "tag") or callable(elem.tag):
                 continue
 
@@ -805,32 +806,32 @@ class BaseSchemaValidator:
                     elements_to_remove.append(elem)
                     continue
 
-            # Recursively clean child elements
+            # 递归清理子元素
             self._remove_ignorable_elements(elem)
 
-        # Remove collected elements
+        # 删除收集到的元素
         for elem in elements_to_remove:
             root.remove(elem)
 
     def _preprocess_for_mc_ignorable(self, xml_doc):
-        """Preprocess XML to handle mc:Ignorable attribute properly."""
-        # Remove mc:Ignorable attributes before validation
+        """预处理XML以正确处理mc:Ignorable属性。"""
+        # 验证前删除mc:Ignorable属性
         root = xml_doc.getroot()
 
-        # Remove mc:Ignorable attribute from root
+        # 从根元素移除mc:Ignorable属性
         if f"{{{self.MC_NAMESPACE}}}Ignorable" in root.attrib:
             del root.attrib[f"{{{self.MC_NAMESPACE}}}Ignorable"]
 
         return xml_doc
 
     def _validate_single_file_xsd(self, xml_file, base_path):
-        """Validate a single XML file against XSD schema. Returns (is_valid, errors_set)."""
+        """根据XSD模式验证单个XML文件。返回(is_valid, errors_set)。"""
         schema_path = self._get_schema_path(xml_file)
         if not schema_path:
-            return None, None  # Skip file
+            return None, None  # 跳过文件
 
         try:
-            # Load schema
+            # 加载模式
             with open(schema_path, "rb") as xsd_file:
                 parser = lxml.etree.XMLParser()
                 xsd_doc = lxml.etree.parse(
@@ -838,14 +839,14 @@ class BaseSchemaValidator:
                 )
                 schema = lxml.etree.XMLSchema(xsd_doc)
 
-            # Load and preprocess XML
+            # 加载并预处理XML
             with open(xml_file, "r") as f:
                 xml_doc = lxml.etree.parse(f)
 
             xml_doc, _ = self._remove_template_tags_from_text_nodes(xml_doc)
             xml_doc = self._preprocess_for_mc_ignorable(xml_doc)
 
-            # Clean ignorable namespaces if needed
+            # 必要时清理可忽略的命名空间
             relative_path = xml_file.relative_to(base_path)
             if (
                 relative_path.parts
@@ -853,13 +854,13 @@ class BaseSchemaValidator:
             ):
                 xml_doc = self._clean_ignorable_namespaces(xml_doc)
 
-            # Validate
+            # 验证
             if schema.validate(xml_doc):
                 return True, set()
             else:
                 errors = set()
                 for error in schema.error_log:
-                    # Store normalized error message (without line numbers for comparison)
+                    # 存储标准化的错误消息（无行号以便比较）
                     errors.add(error.message)
                 return False, errors
 
@@ -867,18 +868,18 @@ class BaseSchemaValidator:
             return False, {str(e)}
 
     def _get_original_file_errors(self, xml_file):
-        """Get XSD validation errors from a single file in the original document.
+        """从原始文档中的单个文件获取XSD验证错误。
 
-        Args:
-            xml_file: Path to the XML file in unpacked_dir to check
+        参数:
+            xml_file: unpacked_dir中要检查的XML文件路径
 
-        Returns:
-            set: Set of error messages from the original file
+        返回:
+            set: 原始文件的错误消息集合
         """
         import tempfile
         import zipfile
 
-        # Resolve both paths to handle symlinks (e.g., /var vs /private/var on macOS)
+        # 解析两个路径以处理符号链接（例如，macOS上的/var与/private/var）
         xml_file = Path(xml_file).resolve()
         unpacked_dir = self.unpacked_dir.resolve()
         relative_path = xml_file.relative_to(unpacked_dir)
@@ -886,37 +887,36 @@ class BaseSchemaValidator:
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_path = Path(temp_dir)
 
-            # Extract original file
+            # 提取原始文件
             with zipfile.ZipFile(self.original_file, "r") as zip_ref:
                 zip_ref.extractall(temp_path)
 
-            # Find corresponding file in original
+            # 在原始文件中查找对应的文件
             original_xml_file = temp_path / relative_path
 
             if not original_xml_file.exists():
-                # File didn't exist in original, so no original errors
+                # 文件在原始文档中不存在，因此没有原始错误
                 return set()
 
-            # Validate the specific file in original
+            # 验证原始文件中的特定文件
             is_valid, errors = self._validate_single_file_xsd(
                 original_xml_file, temp_path
             )
             return errors if errors else set()
 
     def _remove_template_tags_from_text_nodes(self, xml_doc):
-        """Remove template tags from XML text nodes and collect warnings.
+        """从XML文本节点中删除模板标签并收集警告。
 
-        Template tags follow the pattern {{ ... }} and are used as placeholders
-        for content replacement. They should be removed from text content before
-        XSD validation while preserving XML structure.
+        模板标签遵循 {{ ... }} 模式，用作内容替换的占位符。
+        在XSD验证之前，应将它们从文本内容中删除，同时保留XML结构。
 
-        Returns:
+        返回:
             tuple: (cleaned_xml_doc, warnings_list)
         """
         warnings = []
         template_pattern = re.compile(r"\{\{[^}]*\}\}")
 
-        # Create a copy of the document to avoid modifying the original
+        # 创建文档的副本以避免修改原始文档
         xml_string = lxml.etree.tostring(xml_doc, encoding="unicode")
         xml_copy = lxml.etree.fromstring(xml_string)
 
@@ -927,25 +927,25 @@ class BaseSchemaValidator:
             if matches:
                 for match in matches:
                     warnings.append(
-                        f"Found template tag in {content_type}: {match.group()}"
+                        f"在 {content_type} 中找到模板标签: {match.group()}"
                     )
                 return template_pattern.sub("", text)
             return text
 
-        # Process all text nodes in the document
+        # 处理文档中的所有文本节点
         for elem in xml_copy.iter():
-            # Skip processing if this is a w:t element
+            # 如果这是w:t元素，则跳过处理
             if not hasattr(elem, "tag") or callable(elem.tag):
                 continue
             tag_str = str(elem.tag)
             if tag_str.endswith("}t") or tag_str == "t":
                 continue
 
-            elem.text = process_text_content(elem.text, "text content")
-            elem.tail = process_text_content(elem.tail, "tail content")
+            elem.text = process_text_content(elem.text, "文本内容")
+            elem.tail = process_text_content(elem.tail, "尾部内容")
 
         return lxml.etree.ElementTree(xml_copy), warnings
 
 
 if __name__ == "__main__":
-    raise RuntimeError("This module should not be run directly.")
+    raise RuntimeError("此模块不应直接运行。")

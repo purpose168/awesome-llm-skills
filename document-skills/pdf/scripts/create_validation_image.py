@@ -4,12 +4,11 @@ import sys
 from PIL import Image, ImageDraw
 
 
-# Creates "validation" images with rectangles for the bounding box information that
-# Claude creates when determining where to add text annotations in PDFs. See forms.md.
+# 创建带有矩形框的"验证"图像，用于显示Claude在PDF中确定添加文本注释位置时创建的边界框信息。请参见forms.md。
 
 
 def create_validation_image(page_number, fields_json_path, input_path, output_path):
-    # Input file should be in the `fields.json` format described in forms.md.
+    # 输入文件应采用forms.md中描述的`fields.json`格式。
     with open(fields_json_path, 'r') as f:
         data = json.load(f)
 
@@ -21,18 +20,18 @@ def create_validation_image(page_number, fields_json_path, input_path, output_pa
             if field["page_number"] == page_number:
                 entry_box = field['entry_bounding_box']
                 label_box = field['label_bounding_box']
-                # Draw red rectangle over entry bounding box and blue rectangle over the label.
+                # 在输入边界框上绘制红色矩形，在标签上绘制蓝色矩形。
                 draw.rectangle(entry_box, outline='red', width=2)
                 draw.rectangle(label_box, outline='blue', width=2)
                 num_boxes += 2
         
         img.save(output_path)
-        print(f"Created validation image at {output_path} with {num_boxes} bounding boxes")
+        print(f"已在 {output_path} 创建验证图像，包含 {num_boxes} 个边界框")
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 5:
-        print("Usage: create_validation_image.py [page number] [fields.json file] [input image path] [output image path]")
+        print("用法: create_validation_image.py [页码] [fields.json文件] [输入图像路径] [输出图像路径]")
         sys.exit(1)
     page_number = int(sys.argv[1])
     fields_json_path = sys.argv[2]

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Rearrange PowerPoint slides based on a sequence of indices.
+根据索引序列重新排列PowerPoint幻灯片。
 
-Usage:
+使用方法：
     python rearrange.py template.pptx output.pptx 0,34,34,50,52
 
-This will create output.pptx using slides from template.pptx in the specified order.
-Slides can be repeated (e.g., 34 appears twice).
+这将使用template.pptx中的幻灯片创建output.pptx，幻灯片顺序由指定的索引序列决定。
+幻灯片可以重复（例如，索引34出现两次）。
 """
 
 import argparse
@@ -21,24 +21,24 @@ from pptx import Presentation
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Rearrange PowerPoint slides based on a sequence of indices.",
+        description="根据索引序列重新排列PowerPoint幻灯片。",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-Examples:
+示例：
   python rearrange.py template.pptx output.pptx 0,34,34,50,52
-    Creates output.pptx using slides 0, 34 (twice), 50, and 52 from template.pptx
+    使用template.pptx中的幻灯片0、34（两次）、50和52创建output.pptx
 
   python rearrange.py template.pptx output.pptx 5,3,1,2,4
-    Creates output.pptx with slides reordered as specified
+    创建按指定顺序重新排列幻灯片的output.pptx
 
-Note: Slide indices are 0-based (first slide is 0, second is 1, etc.)
+注意：幻灯片索引从0开始（第一张幻灯片为0，第二张为1，依此类推）
         """,
     )
 
-    parser.add_argument("template", help="Path to template PPTX file")
-    parser.add_argument("output", help="Path for output PPTX file")
+    parser.add_argument("template", help="模板PPTX文件路径")
+    parser.add_argument("output", help="输出PPTX文件路径")
     parser.add_argument(
-        "sequence", help="Comma-separated sequence of slide indices (0-based)"
+        "sequence", help="逗号分隔的幻灯片索引序列（从0开始）"
     )
 
     args = parser.parse_args()
@@ -48,14 +48,14 @@ Note: Slide indices are 0-based (first slide is 0, second is 1, etc.)
         slide_sequence = [int(x.strip()) for x in args.sequence.split(",")]
     except ValueError:
         print(
-            "Error: Invalid sequence format. Use comma-separated integers (e.g., 0,34,34,50,52)"
+            "错误: 序列格式无效。请使用逗号分隔的整数（例如：0,34,34,50,52）"
         )
         sys.exit(1)
 
     # Check template exists
     template_path = Path(args.template)
     if not template_path.exists():
-        print(f"Error: Template file not found: {args.template}")
+        print(f"错误: 找不到模板文件: {args.template}")
         sys.exit(1)
 
     # Create output directory if needed
@@ -65,15 +65,15 @@ Note: Slide indices are 0-based (first slide is 0, second is 1, etc.)
     try:
         rearrange_presentation(template_path, output_path, slide_sequence)
     except ValueError as e:
-        print(f"Error: {e}")
+        print(f"错误: {e}")
         sys.exit(1)
     except Exception as e:
-        print(f"Error processing presentation: {e}")
+        print(f"处理演示文稿时出错: {e}")
         sys.exit(1)
 
 
 def duplicate_slide(pres, index):
-    """Duplicate a slide in the presentation."""
+    """在演示文稿中复制幻灯片。"""
     source = pres.slides[index]
 
     # Use source's layout to preserve formatting
@@ -128,14 +128,14 @@ def duplicate_slide(pres, index):
 
 
 def delete_slide(pres, index):
-    """Delete a slide from the presentation."""
+    """从演示文稿中删除幻灯片。"""
     rId = pres.slides._sldIdLst[index].rId
     pres.part.drop_rel(rId)
     del pres.slides._sldIdLst[index]
 
 
 def reorder_slides(pres, slide_index, target_index):
-    """Move a slide from one position to another."""
+    """将幻灯片从一个位置移动到另一个位置。"""
     slides = pres.slides._sldIdLst
 
     # Remove slide element from current position
@@ -148,12 +148,12 @@ def reorder_slides(pres, slide_index, target_index):
 
 def rearrange_presentation(template_path, output_path, slide_sequence):
     """
-    Create a new presentation with slides from template in specified order.
+    使用模板中的幻灯片按指定顺序创建新演示文稿。
 
-    Args:
-        template_path: Path to template PPTX file
-        output_path: Path for output PPTX file
-        slide_sequence: List of slide indices (0-based) to include
+    参数：
+        template_path: 模板PPTX文件路径
+        output_path: 输出PPTX文件路径
+        slide_sequence: 要包含的幻灯片索引列表（从0开始）
     """
     # Copy template to preserve dimensions and theme
     if template_path != output_path:
@@ -174,19 +174,19 @@ def rearrange_presentation(template_path, output_path, slide_sequence):
     duplicated = {}  # Track duplicates: original_idx -> [duplicate_indices]
 
     # Step 1: DUPLICATE repeated slides
-    print(f"Processing {len(slide_sequence)} slides from template...")
+    print(f"正在处理模板中的 {len(slide_sequence)} 张幻灯片...")
     for i, template_idx in enumerate(slide_sequence):
         if template_idx in duplicated and duplicated[template_idx]:
             # Already duplicated this slide, use the duplicate
             slide_map.append(duplicated[template_idx].pop(0))
-            print(f"  [{i}] Using duplicate of slide {template_idx}")
+            print(f"  [{i}] 使用幻灯片 {template_idx} 的副本")
         elif slide_sequence.count(template_idx) > 1 and template_idx not in duplicated:
             # First occurrence of a repeated slide - create duplicates
             slide_map.append(template_idx)
             duplicates = []
             count = slide_sequence.count(template_idx) - 1
             print(
-                f"  [{i}] Using original slide {template_idx}, creating {count} duplicate(s)"
+                f"  [{i}] 使用原始幻灯片 {template_idx}，创建 {count} 个副本"
             )
             for _ in range(count):
                 duplicate_slide(prs, template_idx)
@@ -195,11 +195,11 @@ def rearrange_presentation(template_path, output_path, slide_sequence):
         else:
             # Unique slide or first occurrence already handled, use original
             slide_map.append(template_idx)
-            print(f"  [{i}] Using original slide {template_idx}")
+            print(f"  [{i}] 使用原始幻灯片 {template_idx}")
 
     # Step 2: DELETE unwanted slides (work backwards)
     slides_to_keep = set(slide_map)
-    print(f"\nDeleting {len(prs.slides) - len(slides_to_keep)} unused slides...")
+    print(f"\n正在删除 {len(prs.slides) - len(slides_to_keep)} 张未使用的幻灯片...")
     for i in range(len(prs.slides) - 1, -1, -1):
         if i not in slides_to_keep:
             delete_slide(prs, i)
@@ -207,7 +207,7 @@ def rearrange_presentation(template_path, output_path, slide_sequence):
             slide_map = [idx - 1 if idx > i else idx for idx in slide_map]
 
     # Step 3: REORDER to final sequence
-    print(f"Reordering {len(slide_map)} slides to final sequence...")
+    print(f"正在将 {len(slide_map)} 张幻灯片重新排序为最终序列...")
     for target_pos in range(len(slide_map)):
         # Find which slide should be at target_pos
         current_pos = slide_map[target_pos]
@@ -223,8 +223,8 @@ def rearrange_presentation(template_path, output_path, slide_sequence):
 
     # Save the presentation
     prs.save(output_path)
-    print(f"\nSaved rearranged presentation to: {output_path}")
-    print(f"Final presentation has {len(prs.slides)} slides")
+    print(f"\n已将重新排列的演示文稿保存到: {output_path}")
+    print(f"最终演示文稿包含 {len(prs.slides)} 张幻灯片")
 
 
 if __name__ == "__main__":

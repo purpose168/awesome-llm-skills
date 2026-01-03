@@ -1,293 +1,289 @@
 ---
 name: competitive-ads-extractor
-description: Extracts and analyzes competitors' ads from ad libraries (Facebook, LinkedIn, etc.) to understand what messaging, problems, and creative approaches are working. Helps inspire and improve your own ad campaigns.
+description: 从广告库（Facebook、LinkedIn等）中提取并分析竞争对手的广告，了解哪些信息传递、问题点和创意方法有效。帮助启发和改进您自己的广告活动。
 ---
 
-# Competitive Ads Extractor
+# 竞争对手广告提取器
 
-This skill extracts your competitors' ads from ad libraries and analyzes what's working—the problems they're highlighting, use cases they're targeting, and copy/creative that's resonating.
+该技能从广告库中提取竞争对手的广告，并分析哪些策略有效——包括他们强调的问题点、针对的使用场景以及引起共鸣的文案/创意。
 
-## When to Use This Skill
+## 何时使用此技能
 
-- Researching competitor ad strategies
-- Finding inspiration for your own ads
-- Understanding market positioning
-- Identifying successful ad patterns
-- Analyzing messaging that works
-- Discovering new use cases or pain points
-- Planning ad campaigns with proven concepts
+- 研究竞争对手的广告策略
+- 为自己的广告寻找灵感
+- 了解市场定位
+- 识别成功的广告模式
+- 分析有效的信息传递
+- 发现新的使用场景或痛点
+- 利用已验证的概念规划广告活动
 
-## What This Skill Does
+## 此技能能做什么
 
-1. **Extracts Ads**: Scrapes ads from Facebook Ad Library, LinkedIn, etc.
-2. **Captures Screenshots**: Saves visual copies of all ads
-3. **Analyzes Messaging**: Identifies problems, use cases, and value props
-4. **Categorizes Ads**: Groups by theme, audience, or format
-5. **Identifies Patterns**: Finds common successful approaches
-6. **Provides Insights**: Explains why certain ads likely perform well
+1. **提取广告**：从Facebook广告库、LinkedIn等平台抓取广告
+2. **捕获截图**：保存所有广告的视觉副本
+3. **分析信息传递**：识别问题点、使用场景和价值主张
+4. **分类广告**：按主题、受众或格式分组
+5. **识别模式**：发现常见的成功方法
+6. **提供洞察**：解释为什么某些广告可能表现良好
 
-## How to Use
+## 如何使用
 
-### Basic Extraction
-
-```
-Extract all current ads from [Competitor Name] on Facebook Ad Library
-```
+### 基本提取
 
 ```
-Scrape ads from [Company] and analyze their messaging
+从Facebook广告库中提取[竞争对手名称]的所有当前广告
 ```
 
-### Specific Analysis
-
 ```
-Get all ads from [Competitor] focusing on their messaging 
-about [specific problem]. What pain points are they highlighting?
+抓取[公司]的广告并分析其信息传递
 ```
 
-### Competitive Set
+### 特定分析
 
 ```
-Extract ads from these 5 competitors: [list]. 
-Compare their approaches and tell me what's working.
+获取[竞争对手]的所有广告，重点关注他们关于[特定问题]的信息传递。他们强调了哪些痛点？
 ```
 
-### Specific Platform
+### 竞争组分析
 
 ```
-Get LinkedIn ads from [Competitor] and analyze their 
-B2B positioning strategy
+提取这5个竞争对手的广告：[列表]。比较他们的方法并告诉我哪些有效。
 ```
 
-## Example
+### 特定平台
 
-**User**: "Extract ads from Notion on Facebook Ad Library and tell me what messaging is working for them."
-
-**Process**:
 ```
-Accessing Facebook Ad Library...
-Searching for: Notion
-Found: 23 active ads
+获取[竞争对手]的LinkedIn广告并分析其B2B定位策略
+```
 
-Extracting screenshots...
+## 示例
+
+**用户**："从Facebook广告库中提取Notion的广告，并告诉我哪些信息传递对他们有效。"
+
+**过程**：
+```
+正在访问Facebook广告库...
+搜索：Notion
+找到：23个活跃广告
+
+正在提取截图...
 [████████████████████] 100%
 
-Saved to: competitor-ads/notion/
+保存到：competitor-ads/notion/
 - ad-001-collaboration.png
 - ad-002-productivity.png
 - ad-003-templates.png
 ...
 
-Analyzing messaging...
+正在分析信息传递...
 ```
 
-**Output**:
+**输出**：
 ```
-# Notion Ad Analysis
+# Notion广告分析
 
-## Overview
-- Total Ads: 23 active
-- Primary Themes: Productivity (35%), Collaboration (30%), 
-  Templates (20%), AI Features (15%)
-- Ad Formats: Static images (60%), Video (40%)
-- CTA Patterns: "Try for free", "Get started"
+## 概述
+- 广告总数：23个活跃
+- 主要主题：生产力（35%）、协作（30%）、
+  模板（20%）、AI功能（15%）
+- 广告格式：静态图片（60%）、视频（40%）
+- CTA模式："免费试用"、"开始使用"
 
-## Key Problems They're Highlighting
+## 他们强调的关键问题
 
-1. **Scattered Information** (8 ads)
-   Copy: "Stop switching between 10 different tools"
-   Why it works: Direct pain point many teams face
+1. **信息分散**（8个广告）
+   文案："停止在10个不同工具之间切换"
+   为什么有效：直接针对许多团队面临的痛点
 
-2. **Meeting Overload** (5 ads)
-   Copy: "Replace unnecessary meetings with async updates"
-   Why it works: Post-COVID remote work pain point
+2. **会议过载**（5个广告）
+   文案："用异步更新取代不必要的会议"
+   为什么有效：后疫情远程工作痛点
 
-3. **Lost Documentation** (4 ads)
-   Copy: "Never ask 'where is that doc?' again"
-   Why it works: Universal workplace frustration
+3. **文档丢失**（4个广告）
+   文案："再也不用问'那个文档在哪里？'"
+   为什么有效：普遍的工作场所困扰
 
-## Successful Creative Patterns
+## 成功的创意模式
 
-### Pattern 1: Before/After Split
-- Shows chaotic tool landscape → Clean Notion workspace
-- Used in 6 high-performing ads
-- Visual metaphor is immediately clear
+### 模式1：前后对比
+- 展示混乱的工具环境 → 整洁的Notion工作区
+- 在6个高绩效广告中使用
+- 视觉隐喻清晰直观
 
-### Pattern 2: Feature Showcase
-- GIF of actual product usage
-- Shows specific feature in 5 seconds
-- Used for new features (AI, templates)
+### 模式2：功能展示
+- 实际产品使用的GIF
+- 5秒内展示特定功能
+- 用于新功能（AI、模板）
 
-### Pattern 3: Social Proof
-- "Join 20M users" messaging
-- Customer logos
-- Used in 4 ads targeting enterprise
+### 模式3：社会证明
+- "加入2000万用户"的信息
+- 客户标志
+- 在4个针对企业的广告中使用
 
-## Copy That's Working
+## 有效的文案
 
-Best Headlines:
-1. "Your team's knowledge, finally in one place"
-   → Benefit-focused, addresses pain directly
+最佳标题：
+1. "您团队的知识，终于集中在一个地方"
+   → 以利益为中心，直接解决痛点
    
-2. "The all-in-one workspace"
-   → Clear positioning, broad appeal
+2. "一站式工作区"
+   → 定位清晰，广泛吸引
    
-3. "AI that actually helps you work"
-   → Addresses AI skepticism, practical angle
+3. "真正帮助您工作的AI"
+   → 解决对AI的怀疑，实用角度
 
-Best Body Copy Patterns:
-- Short sentences (under 10 words)
-- Focus on outcomes not features
-- Include specific numbers ("Cut meetings by 50%")
+最佳正文模式：
+- 短句（少于10个单词）
+- 关注结果而非功能
+- 包含具体数字（"减少50%的会议"）
 
-## Audience Targeting Insights
+## 受众定位洞察
 
-Based on ad variations:
-- Startup founders: Solo productivity angle
-- Team leads: Collaboration and alignment
-- Enterprise: Security and compliance mentions
-- Students: Free plan, templates, organization
+基于广告变体：
+- 创业公司创始人：个人生产力角度
+- 团队领导：协作和对齐
+- 企业：提及安全性和合规性
+- 学生：免费计划、模板、组织
 
-## Recommendations for Your Ads
+## 对您广告的建议
 
-1. **Test the "tool sprawl" pain point**
-   → Strong resonance based on their ad frequency
+1. **测试"工具蔓延"痛点**
+   → 基于他们的广告频率，有很强的共鸣
 
-2. **Use product screenshots over abstract visuals**
-   → All their top ads show actual UI
+2. **使用产品截图而非抽象视觉效果**
+   → 他们所有表现最好的广告都展示了实际UI
 
-3. **Lead with the problem, not the solution**
-   → "Tired of X?" performs better than "Introducing Y"
+3. **以问题开头，而非解决方案**
+   → "厌倦了X？"比"介绍Y"表现更好
 
-4. **Keep copy under 100 characters**
-   → Their shortest ads seem most frequent
+4. **将文案控制在100个字符以内**
+   → 他们最短的广告似乎最频繁
 
-5. **Test before/after visual formats**
-   → Proven pattern in their creative
+5. **测试前后对比的视觉格式**
+   → 他们创意中的已验证模式
 
-## Files Saved
-- All ads: ~/competitor-ads/notion/
-- Analysis: ~/competitor-ads/notion/analysis.md
-- Best performers: ~/competitor-ads/notion/top-10/
+## 保存的文件
+- 所有广告：~/competitor-ads/notion/
+- 分析报告：~/competitor-ads/notion/analysis.md
+- 最佳表现：~/competitor-ads/notion/top-10/
 ```
 
-**Inspired by:** Sumant Subrahmanya's use case from Lenny's Newsletter
+**灵感来源**：Lenny's Newsletter中Sumant Subrahmanya的用例
 
-## What You Can Learn
+## 您能学到什么
 
-### Messaging Analysis
-- What problems they emphasize
-- How they position against competition
-- Value propositions that resonate
-- Target audience segments
+### 信息传递分析
+- 他们强调什么问题
+- 他们如何与竞争对手定位
+- 引起共鸣的价值主张
+- 目标受众细分
 
-### Creative Patterns
-- Visual styles that work
-- Video vs. static image performance
-- Color schemes and branding
-- Layout patterns
+### 创意模式
+- 有效的视觉风格
+- 视频与静态图片的表现
+- 配色方案和品牌
+- 布局模式
 
-### Copy Formulas
-- Headline structures
-- Call-to-action patterns
-- Length and tone
-- Emotional triggers
+### 文案公式
+- 标题结构
+- 行动号召模式
+- 长度和语气
+- 情感触发器
 
-### Campaign Strategy
-- Seasonal campaigns
-- Product launch approaches
-- Feature announcement tactics
-- Retargeting patterns
+### 广告活动策略
+- 季节性活动
+- 产品发布方法
+- 功能公告策略
+- 重定向模式
 
-## Best Practices
+## 最佳实践
 
-### Legal & Ethical
-✓ Only use for research and inspiration
-✓ Don't copy ads directly
-✓ Respect intellectual property
-✓ Use insights to inform original creative
-✗ Don't plagiarize copy or steal designs
+### 法律与道德
+✓ 仅用于研究和灵感
+✓ 不要直接复制广告
+✓ 尊重知识产权
+✓ 使用洞察来指导原创创意
+✗ 不要抄袭文案或窃取设计
 
-### Analysis Tips
-1. **Look for patterns**: What themes repeat?
-2. **Track over time**: Save ads monthly to see evolution
-3. **Test hypotheses**: Adapt successful patterns for your brand
-4. **Segment by audience**: Different messages for different targets
-5. **Compare platforms**: LinkedIn vs Facebook messaging differs
+### 分析提示
+1. **寻找模式**：哪些主题重复出现？
+2. **跟踪随时间的变化**：每月保存广告以观察演变
+3. **测试假设**：为您的品牌调整成功模式
+4. **按受众细分**：不同目标受众使用不同信息
+5. **比较平台**：LinkedIn与Facebook的信息传递有所不同
 
-## Advanced Features
+## 高级功能
 
-### Trend Tracking
+### 趋势跟踪
 ```
-Compare [Competitor]'s ads from Q1 vs Q2. 
-What messaging has changed?
-```
-
-### Multi-Competitor Analysis
-```
-Extract ads from [Company A], [Company B], [Company C]. 
-What are the common patterns? Where do they differ?
+比较[竞争对手]在第一季度和第二季度的广告。信息传递有何变化？
 ```
 
-### Industry Benchmarks
+### 多竞争对手分析
 ```
-Show me ad patterns across the top 10 project management 
-tools. What problems do they all focus on?
-```
-
-### Format Analysis
-```
-Analyze video ads vs static image ads from [Competitor]. 
-Which gets more engagement? (if data available)
+从[公司A]、[公司B]、[公司C]提取广告。
+它们有哪些共同模式？有何不同？
 ```
 
-## Common Workflows
+### 行业基准
+```
+向我展示前10个项目管理工具的广告模式。
+它们都关注哪些问题？
+```
 
-### Ad Campaign Planning
-1. Extract competitor ads
-2. Identify successful patterns
-3. Note gaps in their messaging
-4. Brainstorm unique angles
-5. Draft test ad variations
+### 格式分析
+```
+分析[竞争对手]的视频广告与静态图片广告。
+哪种获得更多参与度？（如有数据）
+```
 
-### Positioning Research
-1. Get ads from 5 competitors
-2. Map their positioning
-3. Find underserved angles
-4. Develop differentiated messaging
-5. Test against their approaches
+## 常见工作流
 
-### Creative Inspiration
-1. Extract ads by theme
-2. Analyze visual patterns
-3. Note color and layout trends
-4. Adapt successful patterns
-5. Create original variations
+### 广告活动规划
+1. 提取竞争对手广告
+2. 识别成功模式
+3. 注意他们信息传递中的差距
+4. 头脑风暴独特角度
+5. 起草测试广告变体
 
-## Tips for Success
+### 定位研究
+1. 获取5个竞争对手的广告
+2. 绘制他们的定位
+3. 找到服务不足的角度
+4. 开发差异化信息传递
+5. 与他们的方法进行测试
 
-1. **Regular Monitoring**: Check monthly for changes
-2. **Broad Research**: Look at adjacent competitors too
-3. **Save Everything**: Build a reference library
-4. **Test Insights**: Run your own experiments
-5. **Track Performance**: A/B test inspired concepts
-6. **Stay Original**: Use for inspiration, not copying
-7. **Multiple Platforms**: Compare Facebook, LinkedIn, TikTok, etc.
+### 创意灵感
+1. 按主题提取广告
+2. 分析视觉模式
+3. 注意颜色和布局趋势
+4. 调整成功模式
+5. 创建原创变体
 
-## Output Formats
+## 成功提示
 
-- **Screenshots**: All ads saved as images
-- **Analysis Report**: Markdown summary of insights
-- **Spreadsheet**: CSV with ad copy, CTAs, themes
-- **Presentation**: Visual deck of top performers
-- **Pattern Library**: Categorized by approach
+1. **定期监控**：每月检查变化
+2. **广泛研究**：也关注相邻的竞争对手
+3. **保存所有内容**：建立参考库
+4. **测试洞察**：运行自己的实验
+5. **跟踪表现**：A/B测试受启发的概念
+6. **保持原创**：用于灵感，而非复制
+7. **多个平台**：比较Facebook、LinkedIn、TikTok等
 
-## Related Use Cases
+## 输出格式
 
-- Writing better ad copy for your campaigns
-- Understanding market positioning
-- Finding content gaps in your messaging
-- Discovering new use cases for your product
-- Planning product marketing strategy
-- Inspiring social media content
+- **截图**：所有广告保存为图片
+- **分析报告**：洞察的Markdown摘要
+- **电子表格**：包含广告文案、CTA、主题的CSV
+- **演示文稿**：最佳表现的视觉演示
+- **模式库**：按方法分类
+
+## 相关用例
+
+- 为您的活动撰写更好的广告文案
+- 了解市场定位
+- 发现信息传递中的内容差距
+- 为您的产品发现新的使用场景
+- 规划产品营销策略
+- 启发社交媒体内容
 

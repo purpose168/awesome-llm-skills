@@ -1,5 +1,5 @@
 """
-Validation modules for Word document processing.
+OOXML文件验证包。
 """
 
 from .base import BaseSchemaValidator
