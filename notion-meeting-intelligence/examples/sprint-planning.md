@@ -1,80 +1,80 @@
-# Example: Sprint Planning Meeting Prep
+# 示例：冲刺规划会议准备
 
-**User Request**: "Prepare for tomorrow's sprint planning meeting"
+**用户请求**："为明天的冲刺规划会议做准备"
 
-## Workflow
+## 工作流程
 
-### 1. Search for Context
+### 1. 搜索上下文
 ```
 Notion:notion-search
 query: "sprint planning" + "product backlog"
 teamspace_id: "engineering-team"
 ```
 
-Found:
-- Last sprint retrospective
-- Product backlog (prioritized)
-- Current sprint progress
-- Team capacity notes
+找到：
+- 上次冲刺回顾
+- 产品待办事项（已优先级排序）
+- 当前冲刺进度
+- 团队容量说明
 
-### 2. Fetch Details
+### 2. 获取详细信息
 ```
 Notion:notion-fetch (4 pages)
 ```
 
-**Key context**:
-- **Last Sprint**: Completed 32/35 story points (91%)
-- **Velocity**: Consistent 30-35 points over last 3 sprints
-- **Team**: 5 engineers, 1 on vacation next sprint (80% capacity)
-- **Top Backlog Items**: User auth improvements, API performance, mobile responsive fixes
+**关键上下文**：
+- **上次冲刺**：完成 32/35 故事点（91%）
+- **速度**：过去 3 个冲刺保持 30-35 点
+- **团队**：5 名工程师，下个冲刺 1 人休假（80% 容量）
+- **顶级待办事项**：用户身份验证改进、API 性能、移动端响应式修复
 
-### 3. Query Current Sprint Tasks
+### 3. 查询当前冲刺任务
 ```
 Notion:notion-query-data-sources
 query: "SELECT * FROM tasks WHERE Sprint = 'Sprint 24' AND Status != 'Done'"
 ```
 
-3 tasks carrying over (technical debt items)
+3 个任务延续（技术债务项）
 
-### 4. Create Pre-Read (Internal)
+### 4. 创建预读材料（内部）
 ```
 Notion:notion-create-pages
-title: "Sprint 25 Planning - Pre-Read (Internal)"
+title: "Sprint 25 规划 - 预读材料（内部）"
 ```
 
-**Pre-read included**:
-- Sprint 24 summary (velocity, what carried over)
-- Team capacity for Sprint 25
-- Top backlog candidates with story points
-- Technical dependencies
-- Risk items (auth changes need QA time)
+**预读材料包括**：
+- Sprint 24 摘要（速度、延续项）
+- Sprint 25 团队容量
+- 带故事点的顶级待办候选项
+- 技术依赖关系
+- 风险项（身份验证更改需要 QA 时间）
 
-### 5. Create Agenda
+### 5. 创建议程
 ```
 Notion:notion-create-pages  
-title: "Sprint 25 Planning - Agenda"
+title: "Sprint 25 规划 - 议程"
 ```
 
-**Agenda**:
-- Review Sprint 24 completion (5 min)
-- Discuss carryover items (5 min)
-- Review capacity (28 points available)
-- Select backlog items (30 min)
-- Identify dependencies & risks (10 min)
-- Confirm commitments (10 min)
+**议程**：
+- 回顾 Sprint 24 完成情况（5分钟）
+- 讨论延续项（5分钟）
+- 审查容量（可用 28 点）
+- 选择待办事项（30分钟）
+- 识别依赖关系和风险（10分钟）
+- 确认承诺（10分钟）
 
-### 6. Link Documents
-Cross-linked pre-read and agenda, referenced last retro and backlog.
+### 6. 链接文档
+交叉链接预读材料和议程，引用上次回顾和待办事项。
 
-## Output Summary
+## 输出摘要
 
-**Internal Pre-Read**: Team context, capacity, blockers
-**External Agenda**: Meeting structure, discussion topics
-**Both saved to Notion** and linked to project pages
+**内部预读材料**：团队上下文、容量、阻碍因素
+**外部议程**：会议结构、讨论主题
+**两者都保存到 Notion** 并链接到项目页面
 
-## Key Success Factors
-- Gathered sprint history for velocity trends
-- Calculated realistic capacity (account for PTO)
-- Identified carryover items upfront
-- Pre-read gave team context before meeting
-- Agenda kept meeting focused and timeboxed
+## 关键成功因素
+- 收集冲刺历史以了解速度趋势
+- 计算实际容量（考虑休假）
+- 提前识别延续项
+- 预读材料在会议前为团队提供上下文
+- 议程保持会议专注和时间控制

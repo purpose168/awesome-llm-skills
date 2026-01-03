@@ -1,81 +1,81 @@
-# Brainstorming Meeting Template
+# 头脑风暴会议模板
 
-Use this template for creative ideation and brainstorming sessions.
+使用此模板进行创意构思和头脑风暴会议。
 
 ```markdown
-# [Topic] Brainstorming - [Date]
+# [主题] 头脑风暴 - [日期]
 
-## Meeting Details
-**Date**: [Date]
-**Facilitator**: [Name]
-**Note-taker**: [Name]
-**Attendees**: [List]
+## 会议详情
+**日期**：[日期]
+**主持人**：[姓名]
+**记录员**：[姓名]
+**参会者**：[列表]
 
-## Objective
+## 目标
 
-[Clear statement of what we're brainstorming]
+[我们要进行头脑风暴的清晰陈述]
 
-**Success looks like**: [How we'll know brainstorming was successful]
+**成功标准**：[我们如何知道头脑风暴是成功的]
 
-## Background & Context
+## 背景和上下文
 
-[Context from research - 2-3 paragraphs]
+[来自研究的上下文 - 2-3 段]
 
-**Related Pages**:
-- <mention-page url="...">Context Page 1</mention-page>
-- <mention-page url="...">Context Page 2</mention-page>
+**相关页面**：
+- <mention-page url="...">上下文页面 1</mention-page>
+- <mention-page url="...">上下文页面 2</mention-page>
 
-## Constraints
+## 约束条件
 
-- [Constraint]
-- [Constraint]
-- [Constraint]
+- [约束条件]
+- [约束条件]
+- [约束条件]
 
-## Seed Ideas
+## 种子想法
 
-[Starting ideas from research to spark discussion]:
+[来自研究的起始想法以激发讨论]：
 
-1. **[Idea]**: [Brief description]
-2. **[Idea]**: [Brief description]
+1. **[想法]**：[简要描述]
+2. **[想法]**：[简要描述]
 
-## Ground Rules
+## 基本规则
 
-- No criticism during ideation
-- Build on others' ideas
-- Quantity over quality initially
-- Wild ideas welcome
+- 构思期间不进行批评
+- 在他人想法基础上构建
+- 初期重数量轻质量
+- 欢迎疯狂的想法
 
-## Brainstorming Notes
+## 头脑风暴笔记
 
-### Ideas Generated
+### 产生的想法
 
-[To be filled during meeting]
+[会议期间填写]
 
-1. [Idea with brief description]
-2. [Idea with brief description]
+1. [想法及简要描述]
+2. [想法及简要描述]
 
-### Themes/Patterns
+### 主题/模式
 
-[Groupings that emerge]
+[出现的分组]
 
-## Evaluation
+## 评估
 
-[If time permits, evaluate top ideas]
+[如果时间允许，评估顶级想法]
 
-### Top Ideas
+### 顶级想法
 
-| Idea | Feasibility | Impact | Effort | Score |
-|------|-------------|---------|--------|-------|
-| [Idea] | [H/M/L] | [H/M/L] | [H/M/L] | [#] |
+| 想法 | 可行性 | 影响 | 工作量 | 得分 |
+|------|---------|------|--------|------|
+| [想法] | [高/中/低] | [高/中/低] | [高/中/低] | [#] |
 
-## Next Steps
+## 后续步骤
 
-- [ ] [Action to explore idea]
-- [ ] [Action to prototype]
-- [ ] [Action to research]
+- [ ] [探索想法的行动]
+- [ ] [原型的行动]
+- [ ] [研究的行动]
 
-## Follow-up
+## 跟进
 
-**Next meeting**: [Date to reconvene]
+**下次会议**：[重新召开日期]
 ```
 

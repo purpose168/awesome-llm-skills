@@ -1,56 +1,56 @@
-# Meeting Template Selection Guide
+# 会议模板选择指南
 
-Choose the right template for your meeting type.
+为您的会议类型选择合适的模板。
 
-## Template Overview
+## 模板概述
 
-| Meeting Type | Use This Template | When to Use |
-|--------------|-------------------|-------------|
-| Make a decision | [Decision Meeting](decision-meeting-template.md) | Need to evaluate options and reach a decision |
-| Project update | [Status Update](status-update-template.md) | Regular check-ins, progress reviews |
-| Generate ideas | [Brainstorming](brainstorming-template.md) | Creative ideation, problem-solving |
-| Sprint planning | [Sprint Planning](sprint-planning-template.md) | Planning agile sprint work |
-| Sprint retro | [Retrospective](retrospective-template.md) | Reflecting on completed work |
-| Manager/report | [1:1 Meeting](one-on-one-template.md) | Regular one-on-one check-ins |
-| Weekly team sync | [Status Update](status-update-template.md) (simplified) | Routine team synchronization |
+| 会议类型 | 使用此模板 | 何时使用 |
+|---------|-----------|---------|
+| 做出决策 | [决策会议](decision-meeting-template.md) | 需要评估选项并达成决策 |
+| 项目更新 | [状态更新](status-update-template.md) | 定期检查、进度审查 |
+| 产生想法 | [头脑风暴](brainstorming-template.md) | 创意构思、问题解决 |
+| 冲刺规划 | [冲刺规划](sprint-planning-template.md) | 规划敏捷冲刺工作 |
+| 冲刺回顾 | [回顾](retrospective-template.md) | 反思已完成的工作 |
+| 经理/下属 | [1:1 会议](one-on-one-template.md) | 定期一对一检查 |
+| 每周团队同步 | [状态更新](status-update-template.md)（简化版） | 常规团队同步 |
 
-## Quick Decision Tree
+## 快速决策树
 
 ```
-What's the primary purpose?
+主要目的是什么？
 
-├─ Make a decision
-│  └─ Use: Decision Meeting Template
+├─ 做出决策
+│  └─ 使用：决策会议模板
 │
-├─ Update on progress
-│  └─ Use: Status Update Template
+├─ 更新进度
+│  └─ 使用：状态更新模板
 │
-├─ Generate ideas
-│  └─ Use: Brainstorming Template
+├─ 产生想法
+│  └─ 使用：头脑风暴模板
 │
-├─ Plan sprint work
-│  └─ Use: Sprint Planning Template
+├─ 规划冲刺工作
+│  └─ 使用：冲刺规划模板
 │
-├─ Reflect on past work
-│  └─ Use: Retrospective Template
+├─ 反思过去的工作
+│  └─ 使用：回顾模板
 │
-└─ Manager/report check-in
-   └─ Use: 1:1 Meeting Template
+└─ 经理/下属检查
+   └─ 使用：1:1 会议模板
 ```
 
-## Template Customization
+## 模板自定义
 
-All templates can be customized:
-- **Simplify** for shorter meetings
-- **Add sections** for specific needs
-- **Combine elements** from multiple templates
-- **Adapt language** for your team culture
+所有模板都可以自定义：
+- **简化**以适应较短的会议
+- **添加部分**以满足特定需求
+- **组合元素**来自多个模板
+- **调整语言**以适应您的团队文化
 
-## Best Practices
+## 最佳实践
 
-1. **Choose template first**: Select before gathering context
-2. **Gather Notion content**: Search and fetch relevant pages
-3. **Enrich with research**: Add Claude insights where valuable
-4. **Customize as needed**: Adapt template to specific situation
-5. **Share early**: Give attendees time to review
+1. **首先选择模板**：在收集上下文之前选择
+2. **收集 Notion 内容**：搜索并获取相关页面
+3. **用研究丰富**：在有价值的地方添加 Claude 见解
+4. **根据需要自定义**：根据具体情况调整模板
+5. **尽早分享**：给参会者时间审查
 

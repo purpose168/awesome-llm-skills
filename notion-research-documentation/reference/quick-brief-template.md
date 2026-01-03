@@ -1,25 +1,24 @@
-# Quick Brief Template
+# 快速简报模板
 
-Use for fast turnaround requests or simple topics. See [quick-brief-format.md](quick-brief-format.md) for when to use this format.
+用于快速周转请求或简单主题。有关何时使用此格式的信息，请参阅 [quick-brief-format.md](quick-brief-format.md)。
 
 ```markdown
-# [Topic] - Quick Brief
+# [主题] - 快速简报
 
-**Date**: [Current date]
+**日期**：[当前日期]
 
-## Summary
-[3-4 sentences covering the essentials]
+## 摘要
+[3-4 句话涵盖要点]
 
-## Key Points
-- **Point 1**: [Details]
-- **Point 2**: [Details]
-- **Point 3**: [Details]
+## 关键要点
+- **要点 1**：[详细信息]
+- **要点 2**：[详细信息]
+- **要点 3**：[详细信息]
 
-## Action Items
-1. [Immediate next step]
-2. [Follow-up action]
+## 行动项
+1. [立即采取的下一步]
+2. [后续行动]
 
-## Sources
-[Brief list of pages consulted]
+## 来源
+[参考页面的简短列表]
 ```
-

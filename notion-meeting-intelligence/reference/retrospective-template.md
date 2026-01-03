@@ -1,58 +1,58 @@
-# Retrospective Template
+# 回顾模板
 
-Use this template for sprint retrospectives and team retrospectives.
+使用此模板进行冲刺回顾和团队回顾。
 
 ```markdown
-# Sprint [#] Retrospective - [Date]
+# 冲刺 [#] 回顾 - [日期]
 
-## Meeting Details
-**Date**: [Date]
-**Team**: [Team]
-**Sprint**: [Sprint dates]
-**Facilitator**: [Name]
+## 会议详情
+**日期**：[日期]
+**团队**：[团队]
+**冲刺**：[冲刺日期]
+**主持人**：[姓名]
 
-## Sprint Summary
+## 冲刺摘要
 
-**Sprint Goal**: [Goal]
-**Goal Met**: Yes / Partially / No
+**冲刺目标**：[目标]
+**目标达成**：是 / 部分 / 否
 
-**Completed**: [#] points
-**Velocity**: [#] points
-**Planned**: [#] points
+**已完成**：[#] 点
+**速度**：[#] 点
+**计划**：[#] 点
 
-## Pre-Read
+## 预读
 
-**Sprint Metrics**:
-- Tasks completed: [#]
-- Tasks carried over: [#]
-- Bugs found: [#]
-- Blockers encountered: [#]
+**冲刺指标**：
+- 已完成任务：[#]
+- 延续任务：[#]
+- 发现的 Bug：[#]
+- 遇到的阻碍：[#]
 
-## Discussion
+## 讨论
 
-### What Went Well (Keep)
+### 做得好的（保持）
 
-[Team input during meeting]
+[会议期间团队输入]
 
-### What Didn't Go Well (Stop)
+### 做得不好的（停止）
 
-[Team input during meeting]
+[会议期间团队输入]
 
-### What To Try (Start)
+### 要尝试的（开始）
 
-[Team input during meeting]
+[会议期间团队输入]
 
-### Shout-outs
+### 表扬
 
-[Team recognition]
+[团队认可]
 
-## Action Items
+## 行动项
 
-- [ ] [Improvement to implement] - @[Owner] - Due: [Date]
-- [ ] [Process change] - @[Owner] - Due: [Date]
+- [ ] [要实施的改进] - @[负责人] - 截止日期：[日期]
+- [ ] [流程变更] - @[负责人] - 截止日期：[日期]
 
-## Follow-up
+## 跟进
 
-**Review actions in**: [Next retro date]
+**审查行动于**：[下次回顾日期]
 ```
 

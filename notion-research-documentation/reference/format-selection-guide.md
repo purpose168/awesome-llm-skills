@@ -1,95 +1,94 @@
-# Format Selection Guide
+# 格式选择指南
 
-Choose the right output format for your research needs.
+根据研究需求选择合适的输出格式。
 
-## Decision Tree
+## 决策树
 
 ```
-Is this comparing multiple options?
-  ├─ YES → Use Comparison Format
-  └─ NO ↓
+这是在比较多个选项吗？
+  ├─ 是 → 使用比较格式
+  └─ 否 ↓
 
-Is this time-sensitive or simple?
-  ├─ YES → Use Quick Brief
-  └─ NO ↓
+这是时间敏感或简单的吗？
+  ├─ 是 → 使用快速简报
+  └─ 否 ↓
 
-Does this require formal/extensive documentation?
-  ├─ YES → Use Comprehensive Report
-  └─ NO → Use Research Summary (default)
+这需要正式/广泛的文档吗？
+  ├─ 是 → 使用综合报告
+  └─ 否 → 使用研究摘要（默认）
 ```
 
-## Format Overview
+## 格式概述
 
-| Format | Length | When to Use | Template |
+| 格式 | 长度 | 何时使用 | 模板 |
 |--------|--------|-------------|----------|
-| [Research Summary](research-summary-format.md) | 500-1000 words | Most research requests (default) | [Template](research-summary-template.md) |
-| [Comprehensive Report](comprehensive-report-format.md) | 1500+ words | Formal docs, strategic decisions | [Template](comprehensive-report-template.md) |
-| [Quick Brief](quick-brief-format.md) | 200-400 words | Time-sensitive, simple topics | [Template](quick-brief-template.md) |
-| [Comparison](comparison-format.md) | 800-1200 words | Evaluating options | [Template](comparison-template.md) |
+| [研究摘要](research-summary-format.md) | 500-1000 字 | 大多数研究请求（默认） | [模板](research-summary-template.md) |
+| [综合报告](comprehensive-report-format.md) | 1500 字以上 | 正式文档、战略决策 | [模板](comprehensive-report-template.md) |
+| [快速简报](quick-brief-format.md) | 200-400 字 | 时间敏感、简单主题 | [模板](quick-brief-template.md) |
+| [比较](comparison-format.md) | 800-1200 字 | 评估选项 | [模板](comparison-template.md) |
 
-## Formatting Guidelines
+## 格式指南
 
-### Headings
-- Use `#` for title
-- Use `##` for major sections
-- Use `###` for subsections
-- Keep heading hierarchy consistent
+### 标题
+- 使用 `#` 作为标题
+- 使用 `##` 作为主要章节
+- 使用 `###` 作为子章节
+- 保持标题层次结构一致
 
-### Lists
-- Use `-` for bullet points
-- Use `1.` for numbered lists
-- Keep list items parallel in structure
+### 列表
+- 使用 `-` 作为项目符号
+- 使用 `1.` 作为编号列表
+- 保持列表项结构平行
 
-### Emphasis
-- Use `**bold**` for key terms and section labels
-- Use `*italic*` for emphasis
-- Use sparingly for maximum impact
+### 强调
+- 使用 `**粗体**` 表示关键术语和章节标签
+- 使用 `*斜体*` 表示强调
+- 适度使用以获得最大效果
 
-### Citations
-- Always use `<mention-page url="...">Page Title</mention-page>` for source pages
-- Include citation immediately after referenced information
-- Group all sources in a "Sources" section at the end
+### 引用
+- 始终使用 `<mention-page url="...">页面标题</mention-page>` 引用来源页面
+- 在引用的信息后立即包含引用
+- 在末尾的"来源"章节中分组所有来源
 
-### Tables
-- Use for structured data comparison
-- Keep columns to 3-5 for readability
-- Include header row
-- Align content appropriately
+### 表格
+- 用于结构化数据比较
+- 保持 3-5 列以提高可读性
+- 包含标题行
+- 适当对齐内容
 
-### Code Blocks
-Use when including:
-- Technical specifications
-- Configuration examples
-- Command examples
+### 代码块
+在包含以下内容时使用：
+- 技术规范
+- 配置示例
+- 命令示例
 
 ```
-Example code or configuration here
+此处为示例代码或配置
 ```
 
-## Content Guidelines
+## 内容指南
 
-### Executive Summaries
-- Lead with the most important finding
-- Include 1-2 key implications
-- Make it standalone (reader gets value without reading further)
-- Target 2-3 sentences for summaries, 1 paragraph for reports
+### 执行摘要
+- 以最重要的发现开头
+- 包含 1-2 个关键影响
+- 使其独立（读者无需进一步阅读即可获得价值）
+- 摘要目标为 2-3 句话，报告目标为 1 段
 
-### Key Findings
-- Start with a clear headline
-- Support with specific evidence
-- Include relevant data points or quotes
-- Cite source immediately
-- Focus on actionable insights
+### 主要发现
+- 以清晰的标题开头
+- 用具体证据支持
+- 包含相关数据点或引用
+- 立即引用来源
+- 专注于可操作的见解
 
-### Recommendations
-- Make them specific and actionable
-- Explain the "why" behind each recommendation
-- Prioritize clearly (Priority 1, 2, 3 or High/Medium/Low)
-- Include implementation hints when relevant
+### 建议
+- 使其具体且可操作
+- 解释每个建议背后的"原因"
+- 明确确定优先级（优先级 1、2、3 或高/中/低）
+- 在相关时包含实施提示
 
-### Source Citations
-- Link to original pages using mentions
-- Note if information is outdated (check last-edited dates)
-- Credit specific sections when quoting
-- Group related sources together
-
+### 来源引用
+- 使用提及链接到原始页面
+- 注意信息是否过时（检查最后编辑日期）
+- 引用时注明特定章节
+- 将相关来源分组在一起

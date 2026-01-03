@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Zoom Animation - Scale objects dramatically for emphasis.
+缩放动画 - 大幅缩放对象以强调效果。
 
-Creates zoom in, zoom out, and dramatic scaling effects.
+创建放大、缩小和戏剧性的缩放效果。
 """
 
 import sys
@@ -21,7 +21,7 @@ def create_zoom_animation(
     object_type: str = 'emoji',
     object_data: dict | None = None,
     num_frames: int = 30,
-    zoom_type: str = 'in',  # 'in', 'out', 'in_out', 'punch'
+    zoom_type: str = 'in',  # 'in'（放大）、'out'（缩小）、'in_out'（放大缩小）、'punch'（冲击）
     scale_range: tuple[float, float] = (0.1, 2.0),
     easing: str = 'ease_out',
     add_motion_blur: bool = False,
@@ -31,27 +31,27 @@ def create_zoom_animation(
     bg_color: tuple[int, int, int] = (255, 255, 255)
 ) -> list[Image.Image]:
     """
-    Create zoom animation.
+    创建缩放动画。
 
-    Args:
-        object_type: 'emoji', 'text', 'image'
-        object_data: Object configuration
-        num_frames: Number of frames
-        zoom_type: Type of zoom effect
-        scale_range: (start_scale, end_scale) tuple
-        easing: Easing function
-        add_motion_blur: Add blur for speed effect
-        center_pos: Center position
-        frame_width: Frame width
-        frame_height: Frame height
-        bg_color: Background color
+    参数：
+        object_type: 'emoji'（表情符号）、'text'（文本）、'image'（图像）
+        object_data: 对象配置
+        num_frames: 帧数
+        zoom_type: 缩放效果类型
+        scale_range: (start_scale, end_scale)元组
+        easing: 缓动函数
+        add_motion_blur: 为速度效果添加模糊
+        center_pos: 中心位置
+        frame_width: 帧宽度
+        frame_height: 帧高度
+        bg_color: 背景颜色
 
-    Returns:
-        List of frames
+    返回：
+        帧列表
     """
     frames = []
 
-    # Default object data
+    # 默认对象数据
     if object_data is None:
         if object_type == 'emoji':
             object_data = {'emoji': '🔍', 'size': 100}
@@ -62,7 +62,7 @@ def create_zoom_animation(
     for i in range(num_frames):
         t = i / (num_frames - 1) if num_frames > 1 else 0
 
-        # Calculate scale based on zoom type
+        # 根据缩放类型计算缩放
         if zoom_type == 'in':
             scale = interpolate(start_scale, end_scale, t, easing)
         elif zoom_type == 'out':
@@ -73,7 +73,7 @@ def create_zoom_animation(
             else:
                 scale = interpolate(end_scale, start_scale, (t - 0.5) * 2, easing)
         elif zoom_type == 'punch':
-            # Quick zoom in with overshoot then settle
+            # 快速放大并带有过冲，然后稳定
             if t < 0.3:
                 scale = interpolate(start_scale, end_scale * 1.2, t / 0.3, 'ease_out')
             else:
@@ -81,16 +81,16 @@ def create_zoom_animation(
         else:
             scale = interpolate(start_scale, end_scale, t, easing)
 
-        # Create frame
+        # 创建帧
         frame = create_blank_frame(frame_width, frame_height, bg_color)
 
         if object_type == 'emoji':
             current_size = int(base_size * scale)
 
-            # Clamp size to reasonable bounds
+            # 将大小限制在合理范围内
             current_size = max(12, min(current_size, frame_width * 2))
 
-            # Create emoji on transparent background
+            # 在透明背景上创建表情符号
             canvas_size = max(frame_width, frame_height, current_size) * 2
             emoji_canvas = Image.new('RGBA', (canvas_size, canvas_size), (0, 0, 0, 0))
 
@@ -102,17 +102,17 @@ def create_zoom_animation(
                 shadow=False
             )
 
-            # Optional motion blur for fast zooms
+            # 可选的运动模糊用于快速缩放
             if add_motion_blur and abs(scale - 1.0) > 0.5:
                 blur_amount = min(5, int(abs(scale - 1.0) * 3))
                 emoji_canvas = emoji_canvas.filter(ImageFilter.GaussianBlur(blur_amount))
 
-            # Crop to frame size centered
+            # 裁剪到以中心为基准的帧大小
             left = (canvas_size - frame_width) // 2
             top = (canvas_size - frame_height) // 2
             emoji_cropped = emoji_canvas.crop((left, top, left + frame_width, top + frame_height))
 
-            # Composite
+            # 合成
             frame_rgba = frame.convert('RGBA')
             frame = Image.alpha_composite(frame_rgba, emoji_cropped)
             frame = frame.convert('RGB')
@@ -123,7 +123,7 @@ def create_zoom_animation(
             current_size = int(base_size * scale)
             current_size = max(10, min(current_size, 500))
 
-            # Create oversized canvas for large text
+            # 为大文本创建超大画布
             canvas_size = max(frame_width, frame_height, current_size * 10)
             text_canvas = Image.new('RGB', (canvas_size, canvas_size), bg_color)
 
@@ -138,7 +138,7 @@ def create_zoom_animation(
                 centered=True
             )
 
-            # Crop to frame
+            # 裁剪到帧
             left = (canvas_size - frame_width) // 2
             top = (canvas_size - frame_height) // 2
             frame = text_canvas.crop((left, top, left + frame_width, top + frame_height))
@@ -156,27 +156,27 @@ def create_explosion_zoom(
     bg_color: tuple[int, int, int] = (255, 255, 255)
 ) -> list[Image.Image]:
     """
-    Create dramatic explosion zoom effect.
+    创建戏剧性的爆炸缩放效果。
 
-    Args:
-        emoji: Emoji to explode
-        num_frames: Number of frames
-        frame_width: Frame width
-        frame_height: Frame height
-        bg_color: Background color
+    参数：
+        emoji: 要爆炸的表情符号
+        num_frames: 帧数
+        frame_width: 帧宽度
+        frame_height: 帧高度
+        bg_color: 背景颜色
 
-    Returns:
-        List of frames
+    返回：
+        帧列表
     """
     frames = []
 
     for i in range(num_frames):
         t = i / (num_frames - 1) if num_frames > 1 else 0
 
-        # Exponential zoom
+        # 指数缩放
         scale = 0.1 * math.exp(t * 5)
 
-        # Add rotation for drama
+        # 添加旋转以增强戏剧效果
         angle = t * 360 * 2
 
         frame = create_blank_frame(frame_width, frame_height, bg_color)
@@ -184,7 +184,7 @@ def create_explosion_zoom(
         current_size = int(100 * scale)
         current_size = max(12, min(current_size, frame_width * 3))
 
-        # Create emoji
+        # 创建表情符号
         canvas_size = max(frame_width, frame_height, current_size) * 2
         emoji_canvas = Image.new('RGBA', (canvas_size, canvas_size), (0, 0, 0, 0))
 
@@ -196,15 +196,15 @@ def create_explosion_zoom(
             shadow=False
         )
 
-        # Rotate
+        # 旋转
         emoji_canvas = emoji_canvas.rotate(angle, center=(canvas_size // 2, canvas_size // 2), resample=Image.BICUBIC)
 
-        # Add motion blur for later frames
+        # 为后期的帧添加运动模糊
         if t > 0.5:
             blur_amount = int((t - 0.5) * 10)
             emoji_canvas = emoji_canvas.filter(ImageFilter.GaussianBlur(blur_amount))
 
-        # Crop and composite
+        # 裁剪并合成
         left = (canvas_size - frame_width) // 2
         top = (canvas_size - frame_height) // 2
         emoji_cropped = emoji_canvas.crop((left, top, left + frame_width, top + frame_height))
@@ -226,31 +226,31 @@ def create_mind_blown_zoom(
     bg_color: tuple[int, int, int] = (255, 255, 255)
 ) -> list[Image.Image]:
     """
-    Create "mind blown" dramatic zoom with shake.
+    创建"震惊"的戏剧性缩放并带有抖动。
 
-    Args:
-        emoji: Emoji to use
-        num_frames: Number of frames
-        frame_width: Frame width
-        frame_height: Frame height
-        bg_color: Background color
+    参数：
+        emoji: 要使用的表情符号
+        num_frames: 帧数
+        frame_width: 帧宽度
+        frame_height: 帧高度
+        bg_color: 背景颜色
 
-    Returns:
-        List of frames
+    返回：
+        帧列表
     """
     frames = []
 
     for i in range(num_frames):
         t = i / (num_frames - 1) if num_frames > 1 else 0
 
-        # Zoom in then shake
+        # 放大然后抖动
         if t < 0.5:
             scale = interpolate(0.3, 1.2, t * 2, 'ease_out')
             shake_x = 0
             shake_y = 0
         else:
             scale = 1.2
-            # Shake intensifies
+            # 抖动加剧
             shake_intensity = (t - 0.5) * 40
             shake_x = int(math.sin(t * 50) * shake_intensity)
             shake_y = int(math.cos(t * 45) * shake_intensity)
@@ -279,13 +279,13 @@ def create_mind_blown_zoom(
     return frames
 
 
-# Example usage
+# 示例用法
 if __name__ == '__main__':
-    print("Creating zoom animations...")
+    print("创建缩放动画...")
 
     builder = GIFBuilder(width=480, height=480, fps=20)
 
-    # Example 1: Zoom in
+    # 示例1：放大
     frames = create_zoom_animation(
         object_type='emoji',
         object_data={'emoji': '🔍', 'size': 100},
@@ -297,16 +297,16 @@ if __name__ == '__main__':
     builder.add_frames(frames)
     builder.save('zoom_in.gif', num_colors=128)
 
-    # Example 2: Explosion zoom
+    # 示例2：爆炸缩放
     builder.clear()
     frames = create_explosion_zoom(emoji='💥', num_frames=20)
     builder.add_frames(frames)
     builder.save('zoom_explosion.gif', num_colors=128)
 
-    # Example 3: Mind blown
+    # 示例3：震惊
     builder.clear()
     frames = create_mind_blown_zoom(emoji='🤯', num_frames=30)
     builder.add_frames(frames)
     builder.save('zoom_mind_blown.gif', num_colors=128)
 
-    print("Created zoom animations!")
+    print("已创建缩放动画！")

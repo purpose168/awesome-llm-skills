@@ -1,74 +1,74 @@
-# Status Update Meeting Template
+# 状态更新会议模板
 
-Use this template for regular project status updates and check-ins.
+使用此模板进行定期项目状态更新和检查。
 
 ```markdown
-# [Project Name] Status Update - [Date]
+# [项目名称] 状态更新 - [日期]
 
-## Meeting Details
-**Date**: [Date and time]
-**Attendees**: [List]
-**Project**: <mention-page url="...">Project Page</mention-page>
+## 会议详情
+**日期**：[日期和时间]
+**参会者**：[列表]
+**项目**：<mention-page url="...">项目页面</mention-page>
 
-## Executive Summary
+## 执行摘要
 
-**Status**: 🟢 On Track / 🟡 At Risk / 🔴 Behind
+**状态**：🟢 按计划进行 / 🟡 有风险 / 🔴 落后
 
-**Progress**: [Percentage] complete
-**Timeline**: [Status vs original plan]
+**进度**：[百分比] 完成
+**时间表**：[状态 vs 原计划]
 
-## Progress Since Last Meeting
+## 自上次会议以来的进展
 
-### Completed
-- [Accomplishment with specifics]
-- [Accomplishment with specifics]
+### 已完成
+- [具体成就]
+- [具体成就]
 
-### In Progress
-- [Work item and status]
-- [Work item and status]
+### 进行中
+- [工作项和状态]
+- [工作项和状态]
 
-## Metrics
+## 指标
 
-| Metric | Current | Target | Status |
-|--------|---------|--------|--------|
-| [Metric] | [Value] | [Value] | [Icon] |
-| [Metric] | [Value] | [Value] | [Icon] |
+| 指标 | 当前值 | 目标值 | 状态 |
+|------|--------|--------|------|
+| [指标] | [值] | [值] | [图标] |
+| [指标] | [值] | [值] | [图标] |
 
-## Upcoming Work
+## 即将进行的工作
 
-**Next 2 Weeks**:
-- [Planned work]
-- [Planned work]
+**接下来 2 周**：
+- [计划工作]
+- [计划工作]
 
-**Next Month**:
-- [Milestone or major work]
+**下个月**：
+- [里程碑或主要工作]
 
-## Blockers & Risks
+## 阻碍因素和风险
 
-### Active Blockers
-- **[Blocker]**: [Description and impact]
-  - Action: [What's being done]
+### 活跃的阻碍因素
+- **[阻碍因素]**：[描述和影响]
+  - 行动：[正在做什么]
 
-### Risks
-- **[Risk]**: [Description]
-  - Mitigation: [Strategy]
+### 风险
+- **[风险]**：[描述]
+  - 缓解措施：[策略]
 
-## Discussion Topics
+## 讨论主题
 
-1. [Topic requiring input]
-2. [Topic for alignment]
+1. [需要输入的主题]
+2. [需要达成一致的主题]
 
-## Decisions Needed
+## 需要决策
 
-- [Decision] or None
+- [决策] 或 无
 
-## Action Items
+## 行动项
 
-- [ ] [Action] - @[Owner] - Due: [Date]
+- [ ] [行动] - @[负责人] - 截止日期：[日期]
 
-## Next Meeting
+## 下次会议
 
-**Date**: [Date]
-**Focus**: [What next meeting will cover]
+**日期**：[日期]
+**重点**：[下次会议将涵盖的内容]
 ```
 

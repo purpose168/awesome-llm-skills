@@ -1,190 +1,189 @@
-# Citation Styles
+# 引用样式
 
-## Basic Page Citation
+## 基础页面引用
 
-Always cite sources using Notion page mentions:
+始终使用 Notion 页面提及（page mentions）来引用来源：
 
 ```markdown
 <mention-page url="https://notion.so/workspace/Page-Title-uuid">Page Title</mention-page>
 ```
 
-The URL must be provided. The title is optional but improves readability:
+必须提供 URL。标题是可选的，但可以提高可读性：
 
 ```markdown
 <mention-page url="https://notion.so/workspace/Page-Title-uuid"/>
 ```
 
-## Inline Citations
+## 行内引用
 
-Cite immediately after referenced information:
+在引用的信息后立即引用：
 
 ```markdown
-The Q4 revenue increased by 23% quarter-over-quarter (<mention-page url="...">Q4 Financial Report</mention-page>).
+Q4 收入环比增长 23%（<mention-page url="...">Q4 财务报告</mention-page>）。
 ```
 
-## Multiple Sources
+## 多个来源
 
-When information comes from multiple sources:
+当信息来自多个来源时：
 
 ```markdown
-Customer satisfaction has improved across all metrics (<mention-page url="...">Q3 Survey Results</mention-page>, <mention-page url="...">Support Analysis</mention-page>).
+客户满意度在所有指标上都有所提升（<mention-page url="...">Q3 调查结果</mention-page>、<mention-page url="...">支持分析</mention-page>）。
 ```
 
-## Section-Level Citations
+## 章节级引用
 
-For longer sections derived from one source:
+对于来自一个来源的较长章节：
 
 ```markdown
-### Engineering Priorities
+### 工程优先级
 
-According to the <mention-page url="...">Engineering Roadmap 2025</mention-page>:
+根据 <mention-page url="...">2025 年工程路线图</mention-page>：
 
-- Focus on API scalability
-- Improve developer experience
-- Migrate to microservices architecture
+- 专注于 API 可扩展性
+- 改善开发者体验
+- 迁移到微服务架构
 ```
 
-## Sources Section
+## 来源章节
 
-Always include a "Sources" section at document end:
+始终在文档末尾包含"来源"（Sources）章节：
 
 ```markdown
-## Sources
+## 来源
 
-- <mention-page url="...">Strategic Plan 2025</mention-page>
-- <mention-page url="...">Market Analysis Report</mention-page>
-- <mention-page url="...">Competitor Research: Q3</mention-page>
-- <mention-page url="...">Customer Interview Notes</mention-page>
+- <mention-page url="...">2025 年战略计划</mention-page>
+- <mention-page url="...">市场分析报告</mention-page>
+- <mention-page url="...">竞争对手研究：Q3</mention-page>
+- <mention-page url="...">客户访谈笔记</mention-page>
 ```
 
-Group by category for long lists:
+对于长列表，按类别分组：
 
 ```markdown
-## Sources
+## 来源
 
-### Primary Sources
-- <mention-page url="...">Official Roadmap</mention-page>
-- <mention-page url="...">Strategy Document</mention-page>
+### 主要来源
+- <mention-page url="...">官方路线图</mention-page>
+- <mention-page url="...">战略文档</mention-page>
 
-### Supporting Research
-- <mention-page url="...">Market Trends</mention-page>
-- <mention-page url="...">Customer Feedback</mention-page>
+### 支持性研究
+- <mention-page url="...">市场趋势</mention-page>
+- <mention-page url="...">客户反馈</mention-page>
 
-### Background Context
-- <mention-page url="...">Historical Analysis</mention-page>
+### 背景上下文
+- <mention-page url="...">历史分析</mention-page>
 ```
 
-## Quoting Content
+## 引用内容
 
-When quoting directly from source:
+当直接引用来源时：
 
 ```markdown
-The product team noted: "We need to prioritize mobile experience improvements" (<mention-page url="...">Product Meeting Notes</mention-page>).
+产品团队指出："我们需要优先改善移动端体验"（<mention-page url="...">产品会议笔记</mention-page>）。
 ```
 
-For block quotes:
+对于块引用（block quotes）：
 
 ```markdown
-> We need to prioritize mobile experience improvements to meet our Q4 goals. This includes performance optimization and UI refresh.
+> 我们需要优先改善移动端体验以实现 Q4 目标。这包括性能优化和 UI 刷新。
 >
-> — <mention-page url="...">Product Meeting Notes - Oct 2025</mention-page>
+> — <mention-page url="...">产品会议笔记 - 2025 年 10 月</mention-page>
 ```
 
-## Data Citations
+## 数据引用
 
-When presenting data, cite the source:
+当呈现数据时，引用来源：
 
 ```markdown
-| Metric | Q3 | Q4 | Change |
+| 指标 | Q3 | Q4 | 变化 |
 |--------|----|----|--------|
-| Revenue | $2.3M | $2.8M | +21.7% |
-| Users | 12.4K | 15.1K | +21.8% |
+| 收入 | $2.3M | $2.8M | +21.7% |
+| 用户数 | 12.4K | 15.1K | +21.8% |
 
-Source: <mention-page url="...">Financial Dashboard</mention-page>
+来源：<mention-page url="...">财务仪表板</mention-page>
 ```
 
-## Database Citations
+## 数据库引用
 
-When referencing database content:
+当引用数据库内容时：
 
 ```markdown
-Based on analysis of the <mention-database url="...">Projects Database</mention-database>, 67% of projects are on track.
+基于对 <mention-database url="...">项目数据库</mention-database> 的分析，67% 的项目按计划进行。
 ```
 
-## User Citations
+## 用户引用
 
-When attributing information to specific people:
+当将信息归因于特定人员时：
 
 ```markdown
-<mention-user url="...">Sarah Chen</mention-user> noted in <mention-page url="...">Architecture Review</mention-page> that the microservices migration is ahead of schedule.
+<mention-user url="...">Sarah Chen</mention-user> 在 <mention-page url="...">架构评审</mention-page> 中指出，微服务迁移进度超前。
 ```
 
-## Citation Frequency
+## 引用频率
 
-**Over-citing** (every sentence):
+**过度引用**（每句话）：
 ```markdown
-The revenue increased (<mention-page url="...">Report</mention-page>). 
-Costs decreased (<mention-page url="...">Report</mention-page>). 
-Margin improved (<mention-page url="...">Report</mention-page>).
+收入增加（<mention-page url="...">报告</mention-page>）。
+成本下降（<mention-page url="...">报告</mention-page>）。
+利润率改善（<mention-page url="...">报告</mention-page>）。
 ```
 
-**Under-citing** (no attribution):
+**引用不足**（无归因）：
 ```markdown
-The revenue increased, costs decreased, and margin improved.
+收入增加，成本下降，利润率改善。
 ```
 
-**Right balance** (grouped citation):
+**适当平衡**（分组引用）：
 ```markdown
-The revenue increased, costs decreased, and margin improved (<mention-page url="...">Q4 Financial Report</mention-page>).
+收入增加，成本下降，利润率改善（<mention-page url="...">Q4 财务报告</mention-page>）。
 ```
 
-## Outdated Information
+## 过时信息
 
-Note when source information might be outdated:
-
-```markdown
-The original API design (<mention-page url="...">API Spec v1</mention-page>, last updated January 2024) has been superseded by the new architecture in <mention-page url="...">API Spec v2</mention-page>.
-```
-
-## Cross-References
-
-Link to related research documents:
+当来源信息可能过时时进行标注：
 
 ```markdown
-## Related Research
-
-This research builds on previous findings:
-- <mention-page url="...">Market Analysis - Q2 2025</mention-page>
-- <mention-page url="...">Competitor Landscape Review</mention-page>
-
-For implementation details, see:
-- <mention-page url="...">Technical Implementation Guide</mention-page>
+原始 API 设计（<mention-page url="...">API 规范 v1</mention-page>，最后更新于 2024 年 1 月）已被 <mention-page url="...">API 规范 v2</mention-page> 中的新架构取代。
 ```
 
-## Citation Validation
+## 交叉引用
 
-Before finalizing research:
+链接到相关研究文档：
 
-✓ Every key claim has a source citation
-✓ All page mentions have valid URLs
-✓ Sources section includes all cited pages
-✓ Outdated sources are noted as such
-✓ Direct quotes are clearly marked
-✓ Data sources are attributed
-
-## Citation Style Consistency
-
-Choose one citation style and use throughout:
-
-**Inline style** (lightweight):
 ```markdown
-Revenue grew 23% (Financial Report). Customer count increased 18% (Metrics Dashboard).
+## 相关研究
+
+本研究基于之前的发现：
+- <mention-page url="...">市场分析 - 2025 年 Q2</mention-page>
+- <mention-page url="...">竞争对手格局评审</mention-page>
+
+有关实施细节，请参阅：
+- <mention-page url="...">技术实施指南</mention-page>
 ```
 
-**Formal style** (full mentions):
+## 引用验证
+
+在完成研究之前：
+
+✓ 每个关键声明都有来源引用
+✓ 所有页面提及都有有效的 URL
+✓ 来源章节包含所有引用的页面
+✓ 过时的来源已标注
+✓ 直接引用已清晰标记
+✓ 数据来源已归因
+
+## 引用样式一致性
+
+选择一种引用样式并在全文中使用：
+
+**行内样式**（轻量级）：
 ```markdown
-Revenue grew 23% (<mention-page url="...">Q4 Financial Report</mention-page>). Customer count increased 18% (<mention-page url="...">Metrics Dashboard</mention-page>).
+收入增长 23%（财务报告）。客户数量增加 18%（指标仪表板）。
 ```
 
-**Recommend formal style** for most research documentation as it provides clickable navigation.
+**正式样式**（完整提及）：
+```markdown
+收入增长 23%（<mention-page url="...">Q4 财务报告</mention-page>）。客户数量增加 18%（<mention-page url="...">指标仪表板</mention-page>）。
+```
 
+**推荐使用正式样式**用于大多数研究文档，因为它提供可点击的导航。

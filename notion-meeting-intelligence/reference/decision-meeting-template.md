@@ -1,94 +1,94 @@
-# Decision Meeting Template
+# 决策会议模板
 
-Use this template when you need to make an important decision with your team.
+当您需要与团队做出重要决策时，请使用此模板。
 
 ```markdown
-# [Decision Topic] - [Date]
+# [决策主题] - [日期]
 
-## Meeting Details
-**Date & Time**: [Date and time]
-**Duration**: [Length]
-**Attendees**: [List of attendees with roles]
-**Location**: [Physical location or video link]
-**Facilitator**: [Name]
+## 会议详情
+**日期和时间**：[日期和时间]
+**时长**：[时长]
+**参会者**：[参会者列表及角色]
+**地点**：[物理位置或视频链接]
+**主持人**：[姓名]
 
-## Pre-Read Summary
+## 预读摘要
 
-### Background
-[2-3 sentences providing context from related project pages]
+### 背景
+[来自相关项目页面的上下文，2-3 句话]
 
-**Related Pages**:
-- <mention-page url="...">Project Overview</mention-page>
-- <mention-page url="...">Previous Discussion</mention-page>
+**相关页面**：
+- <mention-page url="...">项目概述</mention-page>
+- <mention-page url="...">先前讨论</mention-page>
 
-### Current Situation
-[What brings us to this decision point]
+### 当前情况
+[什么促使我们到达这个决策点]
 
-## Decision Required
+## 需要决策
 
-**Question**: [Clear statement of decision needed]
+**问题**：[需要决策的清晰陈述]
 
-**Timeline**: [When decision needs to be made]
+**时间表**：[何时需要做出决策]
 
-**Impact**: [Who/what is affected by this decision]
+**影响**：[谁/什么受到此决策的影响]
 
-## Options Analysis
+## 选项分析
 
-### Option A: [Name]
-**Description**: [What this option entails]
+### 选项 A：[名称]
+**描述**：[此选项包含的内容]
 
-**Pros**:
-- [Advantage]
-- [Advantage]
+**优点**：
+- [优势]
+- [优势]
 
-**Cons**:
-- [Disadvantage]
-- [Disadvantage]
+**缺点**：
+- [劣势]
+- [劣势]
 
-**Cost/Effort**: [Estimate]
-**Risk**: [Risk assessment]
+**成本/工作量**：[估算]
+**风险**：[风险评估]
 
-### Option B: [Name]
-[Repeat structure]
+### 选项 B：[名称]
+[重复结构]
 
-### Option C: Do Nothing
-**Description**: What happens if we don't decide
-**Implications**: [Consequences]
+### 选项 C：不采取任何行动
+**描述**：如果我们不做决定会发生什么
+**影响**：[后果]
 
-## Recommendation
+## 建议
 
-[If there is a recommended option, state it with rationale]
+[如果有推荐的选项，请陈述及其理由]
 
-## Discussion Topics
+## 讨论主题
 
-1. [Topic to discuss]
-2. [Clarification needed on]
-3. [Trade-offs to consider]
+1. [要讨论的主题]
+2. [需要澄清的内容]
+3. [要考虑的权衡]
 
-## Decision Framework
+## 决策框架
 
-**Criteria for evaluation**:
-- [Criterion 1]
-- [Criterion 2]
-- [Criterion 3]
+**评估标准**：
+- [标准 1]
+- [标准 2]
+- [标准 3]
 
-## Decision
+## 决策
 
-[To be filled during meeting]
+[会议期间填写]
 
-**Selected Option**: [Option chosen]
-**Rationale**: [Why]
-**Owner**: [Who will implement]
-**Timeline**: [When]
+**选择的选项**：[选择的选项]
+**理由**：[为什么]
+**负责人**：[谁将实施]
+**时间表**：[何时]
 
-## Action Items
+## 行动项
 
-- [ ] [Action] - @[Owner] - Due: [Date]
-- [ ] [Action] - @[Owner] - Due: [Date]
+- [ ] [行动] - @[负责人] - 截止日期：[日期]
+- [ ] [行动] - @[负责人] - 截止日期：[日期]
 
-## Follow-up
+## 跟进
 
-**Next review**: [Date]
-**Success metrics**: [How we'll know this worked]
+**下次审查**：[日期]
+**成功指标**：[我们如何知道这是否有效]
 ```
 

@@ -1,81 +1,81 @@
-# Example: Database Migration Implementation
+# 示例：数据库迁移实施
 
-**User Request**: "Plan and implement the database migration for user preferences schema"
+**用户请求**："规划和实施用户偏好架构的数据库迁移"
 
-## Workflow
+## 工作流程
 
-### 1. Find & Fetch Spec
+### 1. 查找和获取规范
 ```
-Notion:notion-search → Found "User Preferences Schema Migration Spec"
-Notion:notion-fetch → Extracted requirements
+Notion:notion-search → 找到"用户偏好架构迁移规范"
+Notion:notion-fetch → 提取需求
 ```
 
-**Spec Summary**: Migrate from JSON blob to structured schema for better performance and data integrity.
+**规范摘要**：从 JSON blob 迁移到结构化架构，以提高性能和数据完整性。
 
-### 2. Parse Requirements
-- **Current**: JSONB preferences column
-- **Target**: Separate `user_preferences` and `notification_preferences` tables
-- **Must maintain**: Backward compatibility during migration
-- **Performance**: Support 1M+ users with zero downtime
+### 2. 解析需求
+- **当前**：JSONB 偏好列
+- **目标**：单独的 `user_preferences` 和 `notification_preferences` 表
+- **必须维护**：迁移期间的向后兼容性
+- **性能**：支持 100 万+ 用户，零停机时间
 
-### 3. Create Implementation Plan
+### 3. 创建实施计划
 ```
 Notion:notion-create-pages
 pages: [{
   properties: {
-    title: "Implementation Plan: User Preferences Migration"
+    title: "实施计划：用户偏好迁移"
   },
-  content: "[Full implementation plan with phases]"
+  content: "[带有阶段的完整实施计划]"
 }]
 ```
 
-**Plan included**:
-- **Phase 1**: Create new tables with indexes
-- **Phase 2**: Backfill data from JSONB
-- **Phase 3**: Dual-write mode (both old and new)
-- **Phase 4**: Switch reads to new schema
-- **Phase 5**: Drop old JSONB column
+**计划包括**：
+- **阶段 1**：创建带有索引的新表
+- **阶段 2**：从 JSONB 回填数据
+- **阶段 3**：双写模式（旧的和新的）
+- **阶段 4**：将读取切换到新架构
+- **阶段 5**：删除旧的 JSONB 列
 
-### 4. Find Task Database & Create Tasks
+### 4. 查找任务数据库和创建任务
 ```
-Notion:notion-search → Found "Engineering Tasks" database
-Notion:notion-fetch → Got schema (Task, Status, Priority, Assignee, etc.)
+Notion:notion-search → 找到"工程任务"数据库
+Notion:notion-fetch → 获取架构（任务、状态、优先级、负责人等）
 
 Notion:notion-create-pages
 parent: { data_source_id: "collection://xyz" }
 pages: [
   {
     properties: {
-      "Task": "Write migration SQL scripts",
-      "Status": "To Do",
-      "Priority": "High",
+      "Task": "编写迁移 SQL 脚本",
+      "Status": "待办",
+      "Priority": "高",
       "Sprint": "Sprint 25"
     },
-    content: "## Context\nPart of User Preferences Migration...\n\n## Acceptance Criteria\n- [ ] Migration script creates tables\n- [ ] Indexes defined..."
+    content: "## 上下文\n用户偏好迁移的一部分...\n\n## 验收标准\n- [ ] 迁移脚本创建表\n- [ ] 定义索引..."
   },
-  // ... 4 more tasks
+  // ... 4 个更多任务
 ]
 ```
 
-**Tasks created**:
-1. Write migration SQL scripts
-2. Implement backfill job
-3. Add dual-write logic to API
-4. Update read queries
-5. Rollback plan & monitoring
+**创建的任务**：
+1. 编写迁移 SQL 脚本
+2. 实施回填作业
+3. 向 API 添加双写逻辑
+4. 更新读取查询
+5. 回滚计划和监控
 
-### 5. Track Progress
-Regular updates to implementation plan with status, blockers, and completion notes.
+### 5. 跟踪进度
+定期更新实施计划，包括状态、阻碍因素和完成说明。
 
-## Key Outputs
+## 关键输出
 
-**Implementation Plan Page** (linked to spec)
-**5 Tasks in Database** (with dependencies, acceptance criteria)
-**Progress Tracking** (updated as work progresses)
+**实施计划页面**（链接到规范）
+**数据库中的 5 个任务**（带有依赖关系、验收标准）
+**进度跟踪**（随着工作进展更新）
 
-## Success Factors
-- Broke down complex migration into clear phases
-- Created tasks with specific acceptance criteria
-- Established dependencies (Phase 1 → 2 → 3 → 4 → 5)
-- Zero-downtime approach with rollback plan
-- Linked all work back to original spec
+## 成功因素
+- 将复杂的迁移分解为清晰的阶段
+- 创建具有特定验收标准的任务
+- 建立依赖关系（阶段 1 → 2 → 3 → 4 → 5）
+- 零停机时间方法和回滚计划
+- 将所有工作链接回原始规范

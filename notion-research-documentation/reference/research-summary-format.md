@@ -1,33 +1,32 @@
-# Research Summary Format
+# 研究摘要格式
 
-**When to use**: General research requests, most common format
+**何时使用**：一般研究请求，最常见的格式
 
-## Characteristics
+## 特征
 
-**Length**: 500-1000 words typically
+**长度**：通常 500-1000 字
 
-**Structure**:
-- Executive summary (2-3 sentences)
-- 3-5 key findings with supporting evidence
-- Detailed analysis section
-- Conclusions and next steps
-- Source citations
+**结构**：
+- 执行摘要（2-3 句话）
+- 3-5 个带有支持证据的关键发现
+- 详细分析章节
+- 结论和后续步骤
+- 来源引用
 
-## Template
+## 模板
 
-See [research-summary-template.md](research-summary-template.md) for the full template.
+完整模板请参阅 [research-summary-template.md](research-summary-template.md)。
 
-## Best For
+## 最适用于
 
-- Most general-purpose research requests
-- Standard documentation needs
-- Balanced depth and readability
-- When you need comprehensive but accessible information
+- 大多数通用研究请求
+- 标准文档需求
+- 平衡深度和可读性
+- 当您需要全面但易于理解的信息时
 
-## Example Use Cases
+## 示例用例
 
-- "Research our authentication options"
-- "What does our project documentation say about the API redesign?"
-- "Summarize the team's discussion about mobile strategy"
-- "Compile information about our deployment process"
-
+- "研究我们的身份验证选项"
+- "我们的项目文档关于 API 重新设计说了什么？"
+- "总结团队关于移动策略的讨论"
+- "编译关于我们部署流程的信息"

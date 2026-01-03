@@ -1,69 +1,69 @@
-# General Documentation Database
+# 通用文档数据库
 
-**Purpose**: Store all types of documentation in a searchable, organized database.
+**目的**：在可搜索、有组织的数据库中存储所有类型的文档。
 
-## Schema
+## 模式
 
-| Property | Type | Options | Purpose |
+| 属性 | 类型 | 选项 | 目的 |
 |----------|------|---------|---------|
-| **Title** | title | - | Document name |
-| **Type** | select | How-To, Concept, Reference, FAQ, Decision, Post-Mortem | Categorize content type |
-| **Category** | select | Engineering, Product, Design, Operations, General | Organize by department/topic |
-| **Tags** | multi_select | - | Additional categorization (languages, tools, topics) |
-| **Status** | select | Draft, In Review, Final, Deprecated | Track document lifecycle |
-| **Owner** | people | - | Document maintainer |
-| **Created** | created_time | - | Auto-populated creation date |
-| **Last Updated** | last_edited_time | - | Auto-populated last edit |
-| **Last Reviewed** | date | - | Manual review tracking |
+| **标题** | 标题 | - | 文档名称 |
+| **类型** | 选择 | 操作指南、概念、参考、常见问题、决策、事后分析 | 内容类型分类 |
+| **类别** | 选择 | 工程、产品、设计、运营、通用 | 按部门/主题组织 |
+| **标签** | 多选 | - | 额外分类（语言、工具、主题） |
+| **状态** | 选择 | 草稿、审查中、最终、已弃用 | 跟踪文档生命周期 |
+| **所有者** | 人员 | - | 文档维护者 |
+| **创建时间** | 创建时间 | - | 自动填充创建日期 |
+| **最后更新** | 最后编辑时间 | - | 自动填充最后编辑 |
+| **最后审查** | 日期 | - | 手动审查跟踪 |
 
-## Usage
+## 使用
 
 ```
-Create pages with properties:
+使用属性创建页面：
 {
-  "Title": "How to Deploy to Production",
-  "Type": "How-To",
-  "Category": "Engineering",
-  "Tags": "deployment, production, DevOps",
-  "Status": "Final",
+  "Title": "如何部署到生产环境",
+  "Type": "操作指南",
+  "Category": "工程",
+  "Tags": "部署, 生产环境, DevOps",
+  "Status": "最终",
   "Owner": [current_user],
   "Last Reviewed": "2025-10-01"
 }
 ```
 
-## Views
+## 视图
 
-**By Type**: Group by Type property
-**By Category**: Group by Category property  
-**Recent Updates**: Sort by Last Updated descending
-**Needs Review**: Filter where Last Reviewed > 90 days ago
-**Draft Docs**: Filter where Status = "Draft"
+**按类型**：按类型属性分组
+**按类别**：按类别属性分组
+**最近更新**：按最后更新降序排序
+**需要审查**：筛选最后审查 > 90 天前
+**草稿文档**：筛选状态 = "草稿"
 
-## Creating This Database
+## 创建此数据库
 
-Use `Notion:notion-create-database`:
+使用 `Notion:notion-create-database`：
 
 ```javascript
 {
   "parent": {"page_id": "wiki-page-id"},
-  "title": [{"text": {"content": "Team Documentation"}}],
+  "title": [{"text": {"content": "团队文档"}}],
   "properties": {
     "Type": {
       "select": {
         "options": [
-          {"name": "How-To", "color": "blue"},
-          {"name": "Concept", "color": "green"},
-          {"name": "Reference", "color": "gray"},
-          {"name": "FAQ", "color": "yellow"}
+          {"name": "操作指南", "color": "blue"},
+          {"name": "概念", "color": "green"},
+          {"name": "参考", "color": "gray"},
+          {"name": "常见问题", "color": "yellow"}
         ]
       }
     },
     "Category": {
       "select": {
         "options": [
-          {"name": "Engineering", "color": "red"},
-          {"name": "Product", "color": "purple"},
-          {"name": "Design", "color": "pink"}
+          {"name": "工程", "color": "red"},
+          {"name": "产品", "color": "purple"},
+          {"name": "设计", "color": "pink"}
         ]
       }
     },
@@ -72,9 +72,9 @@ Use `Notion:notion-create-database`:
     "Status": {
       "select": {
         "options": [
-          {"name": "Draft", "color": "gray"},
-          {"name": "Final", "color": "green"},
-          {"name": "Deprecated", "color": "red"}
+          {"name": "草稿", "color": "gray"},
+          {"name": "最终", "color": "green"},
+          {"name": "已弃用", "color": "red"}
         ]
       }
     }
@@ -82,12 +82,11 @@ Use `Notion:notion-create-database`:
 }
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Start with this schema** - most flexible for general documentation
-2. **Use relations** to connect related docs
-3. **Create views** for common use cases
-4. **Review properties** quarterly - remove unused ones
-5. **Document the schema** in database description
-6. **Train team** on property usage and conventions
-
+1. **从此模式开始** - 对通用文档最灵活
+2. **使用关系**连接相关文档
+3. **创建视图**用于常见用例
+4. **每季度审查属性** - 删除未使用的属性
+5. **在数据库描述中记录模式**
+6. **培训团队**关于属性使用和约定

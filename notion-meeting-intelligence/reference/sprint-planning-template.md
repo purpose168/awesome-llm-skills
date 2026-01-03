@@ -1,68 +1,68 @@
-# Sprint Planning Template
+# 冲刺规划模板
 
-Use this template for agile sprint planning meetings.
+使用此模板进行敏捷冲刺规划会议。
 
 ```markdown
-# Sprint [#] Planning - [Date]
+# 冲刺 [#] 规划 - [日期]
 
-## Meeting Details
-**Date**: [Date]
-**Team**: [Team name]
-**Sprint Duration**: [Dates]
+## 会议详情
+**日期**：[日期]
+**团队**：[团队名称]
+**冲刺时长**：[日期]
 
-## Sprint Goal
+## 冲刺目标
 
-[Clear statement of what this sprint aims to accomplish]
+[此冲刺旨在完成的清晰陈述]
 
-## Capacity
+## 容量
 
-| Team Member | Availability | Capacity (points) |
-|-------------|--------------|-------------------|
-| [Name] | [%] | [#] |
-| **Total** | | [#] |
+| 团队成员 | 可用性 | 容量（点） |
+|---------|--------|-----------|
+| [姓名] | [%] | [#] |
+| **总计** | | [#] |
 
-## Backlog Review
+## 待办事项审查
 
-### High Priority Items
+### 高优先级项目
 
-[From product backlog, linked from task database]
+[来自产品待办事项，从任务数据库链接]
 
-- <mention-page url="...">Task 1</mention-page> - [Points]
-- <mention-page url="...">Task 2</mention-page> - [Points]
+- <mention-page url="...">任务 1</mention-page> - [点]
+- <mention-page url="...">任务 2</mention-page> - [点]
 
-## Sprint Backlog
+## 冲刺待办事项
 
-### Committed Items
+### 承诺项目
 
-- [x] <mention-page url="...">Task</mention-page> - [Points] - @[Owner]
-- [ ] <mention-page url="...">Task</mention-page> - [Points] - @[Owner]
+- [x] <mention-page url="...">任务</mention-page> - [点] - @[负责人]
+- [ ] <mention-page url="...">任务</mention-page> - [点] - @[负责人]
 
-**Total committed**: [Points]
+**总计承诺**：[点]
 
-### Stretch Goals
+### 延伸目标
 
-- [ ] <mention-page url="...">Task</mention-page> - [Points]
+- [ ] <mention-page url="...">任务</mention-page> - [点]
 
-## Dependencies & Risks
+## 依赖关系和风险
 
-**Dependencies**:
-- [Dependency]
+**依赖关系**：
+- [依赖关系]
 
-**Risks**:
-- [Risk]
+**风险**：
+- [风险]
 
-## Definition of Done
+## 完成定义
 
-- [ ] Code complete and reviewed
-- [ ] Tests written and passing
-- [ ] Documentation updated
-- [ ] Deployed to staging
-- [ ] QA approved
+- [ ] 代码完成并已审查
+- [ ] 测试编写并通过
+- [ ] 文档已更新
+- [ ] 已部署到预发布环境
+- [ ] QA 已批准
 
-## Next Steps
+## 后续步骤
 
-- Team begins sprint work
-- Daily standups at [Time]
-- Sprint review on [Date]
+- 团队开始冲刺工作
+- 每日站会于 [时间]
+- 冲刺审查于 [日期]
 ```
 

@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-GIF Builder - Core module for assembling frames into GIFs optimized for Slack.
+GIF构建器 - 用于将帧组装成针对Slack优化的GIF的核心模块。
 
-This module provides the main interface for creating GIFs from programmatically
-generated frames, with automatic optimization for Slack's requirements.
+该模块提供了从程序生成的帧创建GIF的主要接口，并自动针对Slack的要求进行优化。
 """
 
 from pathlib import Path
@@ -14,16 +13,16 @@ import numpy as np
 
 
 class GIFBuilder:
-    """Builder for creating optimized GIFs from frames."""
+    """用于从帧创建优化GIF的构建器。"""
 
     def __init__(self, width: int = 480, height: int = 480, fps: int = 15):
         """
-        Initialize GIF builder.
+        初始化GIF构建器。
 
-        Args:
-            width: Frame width in pixels
-            height: Frame height in pixels
-            fps: Frames per second
+        参数：
+            width: 帧宽度（像素）
+            height: 帧高度（像素）
+            fps: 每秒帧数
         """
         self.width = width
         self.height = height
@@ -32,15 +31,15 @@ class GIFBuilder:
 
     def add_frame(self, frame: np.ndarray | Image.Image):
         """
-        Add a frame to the GIF.
+        向GIF添加一帧。
 
-        Args:
-            frame: Frame as numpy array or PIL Image (will be converted to RGB)
+        参数：
+            frame: 帧作为numpy数组或PIL图像（将转换为RGB）
         """
         if isinstance(frame, Image.Image):
             frame = np.array(frame.convert('RGB'))
 
-        # Ensure frame is correct size
+        # 确保帧大小正确
         if frame.shape[:2] != (self.height, self.width):
             pil_frame = Image.fromarray(frame)
             pil_frame = pil_frame.resize((self.width, self.height), Image.Resampling.LANCZOS)
@@ -49,60 +48,60 @@ class GIFBuilder:
         self.frames.append(frame)
 
     def add_frames(self, frames: list[np.ndarray | Image.Image]):
-        """Add multiple frames at once."""
+        """一次添加多帧。"""
         for frame in frames:
             self.add_frame(frame)
 
     def optimize_colors(self, num_colors: int = 128, use_global_palette: bool = True) -> list[np.ndarray]:
         """
-        Reduce colors in all frames using quantization.
+        使用量化减少所有帧的颜色。
 
-        Args:
-            num_colors: Target number of colors (8-256)
-            use_global_palette: Use a single palette for all frames (better compression)
+        参数：
+            num_colors: 目标颜色数（8-256）
+            use_global_palette: 对所有帧使用单一调色板（更好的压缩）
 
-        Returns:
-            List of color-optimized frames
+        返回：
+            颜色优化后的帧列表
         """
         optimized = []
 
         if use_global_palette and len(self.frames) > 1:
-            # Create a global palette from all frames
-            # Sample frames to build palette
+            # 从所有帧创建全局调色板
+            # 采样帧以构建调色板
             sample_size = min(5, len(self.frames))
             sample_indices = [int(i * len(self.frames) / sample_size) for i in range(sample_size)]
             sample_frames = [self.frames[i] for i in sample_indices]
 
-            # Combine sample frames into a single image for palette generation
-            # Flatten each frame to get all pixels, then stack them
+            # 将采样帧组合成单个图像以生成调色板
+            # 展平每个帧以获取所有像素，然后堆叠它们
             all_pixels = np.vstack([f.reshape(-1, 3) for f in sample_frames])  # (total_pixels, 3)
 
-            # Create a properly-shaped RGB image from the pixel data
-            # We'll make a roughly square image from all the pixels
+            # 从像素数据创建正确形状的RGB图像
+            # 我们将从所有像素创建一个大致为正方形的图像
             total_pixels = len(all_pixels)
-            width = min(512, int(np.sqrt(total_pixels)))  # Reasonable width, max 512
-            height = (total_pixels + width - 1) // width  # Ceiling division
+            width = min(512, int(np.sqrt(total_pixels)))  # 合理的宽度，最大512
+            height = (total_pixels + width - 1) // width  # 向上取整
 
-            # Pad if necessary to fill the rectangle
+            # 如有必要，填充以填充矩形
             pixels_needed = width * height
             if pixels_needed > total_pixels:
                 padding = np.zeros((pixels_needed - total_pixels, 3), dtype=np.uint8)
                 all_pixels = np.vstack([all_pixels, padding])
 
-            # Reshape to proper RGB image format (H, W, 3)
+            # 重塑为正确的RGB图像格式（H, W, 3）
             img_array = all_pixels[:pixels_needed].reshape(height, width, 3).astype(np.uint8)
             combined_img = Image.fromarray(img_array, mode='RGB')
 
-            # Generate global palette
+            # 生成全局调色板
             global_palette = combined_img.quantize(colors=num_colors, method=2)
 
-            # Apply global palette to all frames
+            # 将全局调色板应用于所有帧
             for frame in self.frames:
                 pil_frame = Image.fromarray(frame)
                 quantized = pil_frame.quantize(palette=global_palette, dither=1)
                 optimized.append(np.array(quantized.convert('RGB')))
         else:
-            # Use per-frame quantization
+            # 使用逐帧量化
             for frame in self.frames:
                 pil_frame = Image.fromarray(frame)
                 quantized = pil_frame.quantize(colors=num_colors, method=2, dither=1)
@@ -112,13 +111,13 @@ class GIFBuilder:
 
     def deduplicate_frames(self, threshold: float = 0.995) -> int:
         """
-        Remove duplicate or near-duplicate consecutive frames.
+        删除重复或近乎重复的连续帧。
 
-        Args:
-            threshold: Similarity threshold (0.0-1.0). Higher = more strict (0.995 = very similar).
+        参数：
+            threshold: 相似度阈值（0.0-1.0）。越高越严格（0.995 = 非常相似）。
 
-        Returns:
-            Number of frames removed
+        返回：
+            删除的帧数
         """
         if len(self.frames) < 2:
             return 0
@@ -127,16 +126,16 @@ class GIFBuilder:
         removed_count = 0
 
         for i in range(1, len(self.frames)):
-            # Compare with previous frame
+            # 与前一帧比较
             prev_frame = np.array(deduplicated[-1], dtype=np.float32)
             curr_frame = np.array(self.frames[i], dtype=np.float32)
 
-            # Calculate similarity (normalized)
+            # 计算相似度（归一化）
             diff = np.abs(prev_frame - curr_frame)
             similarity = 1.0 - (np.mean(diff) / 255.0)
 
-            # Keep frame if sufficiently different
-            # High threshold (0.995) means only remove truly identical frames
+            # 如果足够不同则保留帧
+            # 高阈值（0.995）意味着只删除真正相同的帧
             if similarity < threshold:
                 deduplicated.append(self.frames[i])
             else:
@@ -148,66 +147,66 @@ class GIFBuilder:
     def save(self, output_path: str | Path, num_colors: int = 128,
              optimize_for_emoji: bool = False, remove_duplicates: bool = True) -> dict:
         """
-        Save frames as optimized GIF for Slack.
+        将帧保存为针对Slack优化的GIF。
 
-        Args:
-            output_path: Where to save the GIF
-            num_colors: Number of colors to use (fewer = smaller file)
-            optimize_for_emoji: If True, optimize for <64KB emoji size
-            remove_duplicates: Remove duplicate consecutive frames
+        参数：
+            output_path: 保存GIF的位置
+            num_colors: 使用的颜色数（越少 = 文件越小）
+            optimize_for_emoji: 如果为True，则优化为<64KB的表情符号大小
+            remove_duplicates: 删除重复的连续帧
 
-        Returns:
-            Dictionary with file info (path, size, dimensions, frame_count)
+        返回：
+            包含文件信息的字典（路径、大小、尺寸、帧数）
         """
         if not self.frames:
-            raise ValueError("No frames to save. Add frames with add_frame() first.")
+            raise ValueError("没有帧可保存。请先使用add_frame()添加帧。")
 
         output_path = Path(output_path)
         original_frame_count = len(self.frames)
 
-        # Remove duplicate frames to reduce file size
+        # 删除重复帧以减小文件大小
         if remove_duplicates:
             removed = self.deduplicate_frames(threshold=0.98)
             if removed > 0:
-                print(f"  Removed {removed} duplicate frames")
+                print(f"  删除了{removed}个重复帧")
 
-        # Optimize for emoji if requested
+        # 如果请求，优化表情符号
         if optimize_for_emoji:
             if self.width > 128 or self.height > 128:
-                print(f"  Resizing from {self.width}x{self.height} to 128x128 for emoji")
+                print(f"  将尺寸从{self.width}x{self.height}调整为128x128以用于表情符号")
                 self.width = 128
                 self.height = 128
-                # Resize all frames
+                # 调整所有帧的大小
                 resized_frames = []
                 for frame in self.frames:
                     pil_frame = Image.fromarray(frame)
                     pil_frame = pil_frame.resize((128, 128), Image.Resampling.LANCZOS)
                     resized_frames.append(np.array(pil_frame))
                 self.frames = resized_frames
-            num_colors = min(num_colors, 48)  # More aggressive color limit for emoji
+            num_colors = min(num_colors, 48)  # 对表情符号使用更激进的颜色限制
 
-            # More aggressive FPS reduction for emoji
+            # 对表情符号进行更激进的FPS降低
             if len(self.frames) > 12:
-                print(f"  Reducing frames from {len(self.frames)} to ~12 for emoji size")
-                # Keep every nth frame to get close to 12 frames
+                print(f"  将帧数从{len(self.frames)}减少到约12以用于表情符号大小")
+                # 保留每第n帧以接近12帧
                 keep_every = max(1, len(self.frames) // 12)
                 self.frames = [self.frames[i] for i in range(0, len(self.frames), keep_every)]
 
-        # Optimize colors with global palette
+        # 使用全局调色板优化颜色
         optimized_frames = self.optimize_colors(num_colors, use_global_palette=True)
 
-        # Calculate frame duration in milliseconds
+        # 计算帧持续时间（毫秒）
         frame_duration = 1000 / self.fps
 
-        # Save GIF
+        # 保存GIF
         imageio.imwrite(
             output_path,
             optimized_frames,
             duration=frame_duration,
-            loop=0  # Infinite loop
+            loop=0  # 无限循环
         )
 
-        # Get file info
+        # 获取文件信息
         file_size_kb = output_path.stat().st_size / 1024
         file_size_mb = file_size_kb / 1024
 
@@ -222,25 +221,25 @@ class GIFBuilder:
             'colors': num_colors
         }
 
-        # Print info
-        print(f"\n✓ GIF created successfully!")
-        print(f"  Path: {output_path}")
-        print(f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)")
-        print(f"  Dimensions: {self.width}x{self.height}")
-        print(f"  Frames: {len(optimized_frames)} @ {self.fps} fps")
-        print(f"  Duration: {info['duration_seconds']:.1f}s")
-        print(f"  Colors: {num_colors}")
+        # 打印信息
+        print(f"\n✓ GIF创建成功！")
+        print(f"  路径：{output_path}")
+        print(f"  大小：{file_size_kb:.1f} KB ({file_size_mb:.2f} MB)")
+        print(f"  尺寸：{self.width}x{self.height}")
+        print(f"  帧数：{len(optimized_frames)} @ {self.fps} fps")
+        print(f"  持续时间：{info['duration_seconds']:.1f}s")
+        print(f"  颜色数：{num_colors}")
 
-        # Warnings
+        # 警告
         if optimize_for_emoji and file_size_kb > 64:
-            print(f"\n⚠️  WARNING: Emoji file size ({file_size_kb:.1f} KB) exceeds 64 KB limit")
-            print("   Try: fewer frames, fewer colors, or simpler design")
+            print(f"\n⚠️  警告：表情符号文件大小（{file_size_kb:.1f} KB）超过64 KB限制")
+            print("   尝试：减少帧数、减少颜色或简化设计")
         elif not optimize_for_emoji and file_size_kb > 2048:
-            print(f"\n⚠️  WARNING: File size ({file_size_kb:.1f} KB) is large for Slack")
-            print("   Try: fewer frames, smaller dimensions, or fewer colors")
+            print(f"\n⚠️  警告：文件大小（{file_size_kb:.1f} KB）对于Slack来说很大")
+            print("   尝试：减少帧数、减小尺寸或减少颜色")
 
         return info
 
     def clear(self):
-        """Clear all frames (useful for creating multiple GIFs)."""
+        """清除所有帧（对于创建多个GIF很有用）。"""
         self.frames = []

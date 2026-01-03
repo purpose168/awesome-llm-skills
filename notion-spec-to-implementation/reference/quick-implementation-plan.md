@@ -1,26 +1,25 @@
-# Quick Implementation Plan Template
+# 快速实施计划模板
 
-For simpler features or small changes.
+用于简单的功能或小的更改。
 
 ```markdown
-# Implementation: [Feature Name]
+# 实施：[功能名称]
 
-## Spec
-<mention-page url="...">Specification</mention-page>
+## 规范
+<mention-page url="...">规范</mention-page>
 
-## Summary
-[Quick description]
+## 摘要
+[快速描述]
 
-## Tasks
-- [ ] <mention-page url="...">Task 1</mention-page>
-- [ ] <mention-page url="...">Task 2</mention-page>
-- [ ] <mention-page url="...">Task 3</mention-page>
+## 任务
+- [ ] <mention-page url="...">任务 1</mention-page>
+- [ ] <mention-page url="...">任务 2</mention-page>
+- [ ] <mention-page url="...">任务 3</mention-page>
 
-## Timeline
-Start: [Date]
-Target completion: [Date]
+## 时间线
+开始：[日期]
+目标完成：[日期]
 
-## Status
-[Update as work progresses]
+## 状态
+[随着工作进展更新]
 ```
-

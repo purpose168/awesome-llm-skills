@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
-Visual Effects - Particles, motion blur, impacts, and other effects for GIFs.
+视觉效果 - 用于GIF的粒子、运动模糊、冲击和其他效果。
 
-This module provides high-impact visual effects that make animations feel
-professional and dynamic while keeping file sizes reasonable.
+该模块提供高冲击力的视觉效果，使动画看起来专业且动态，同时保持合理的文件大小。
 """
 
 from PIL import Image, ImageDraw, ImageFilter
@@ -14,21 +13,21 @@ from typing import Optional
 
 
 class Particle:
-    """A single particle in a particle system."""
+    """粒子系统中的单个粒子。"""
 
     def __init__(self, x: float, y: float, vx: float, vy: float,
                  lifetime: float, color: tuple[int, int, int],
                  size: int = 3, shape: str = 'circle'):
         """
-        Initialize a particle.
+        初始化粒子。
 
-        Args:
-            x, y: Starting position
-            vx, vy: Velocity
-            lifetime: How long particle lives (in frames)
-            color: RGB color
-            size: Particle size in pixels
-            shape: 'circle', 'square', or 'star'
+        参数：
+            x, y: 起始位置
+            vx, vy: 速度
+            lifetime: 粒子存活时间（帧数）
+            color: RGB颜色
+            size: 粒子大小（像素）
+            shape: 'circle'（圆形）、'square'（方形）或'star'（星形）
         """
         self.x = x
         self.y = y
@@ -39,37 +38,37 @@ class Particle:
         self.color = color
         self.size = size
         self.shape = shape
-        self.gravity = 0.5  # Pixels per frame squared
-        self.drag = 0.98    # Velocity multiplier per frame
+        self.gravity = 0.5  # 每帧平方的像素数
+        self.drag = 0.98    # 每帧速度乘数
 
     def update(self):
-        """Update particle position and lifetime."""
-        # Apply physics
+        """更新粒子位置和生命周期。"""
+        # 应用物理
         self.vy += self.gravity
         self.vx *= self.drag
         self.vy *= self.drag
 
-        # Update position
+        # 更新位置
         self.x += self.vx
         self.y += self.vy
 
-        # Decrease lifetime
+        # 减少生命周期
         self.lifetime -= 1
 
     def is_alive(self) -> bool:
-        """Check if particle is still alive."""
+        """检查粒子是否仍然存活。"""
         return self.lifetime > 0
 
     def get_alpha(self) -> float:
-        """Get particle opacity based on lifetime."""
+        """根据生命周期获取粒子不透明度。"""
         return max(0, min(1, self.lifetime / self.max_lifetime))
 
     def render(self, frame: Image.Image):
         """
-        Render particle to frame.
+        将粒子渲染到帧上。
 
-        Args:
-            frame: PIL Image to draw on
+        参数：
+            frame: 要绘制的PIL图像
         """
         if not self.is_alive():
             return
@@ -77,10 +76,10 @@ class Particle:
         draw = ImageDraw.Draw(frame)
         alpha = self.get_alpha()
 
-        # Calculate faded color
+        # 计算淡出颜色
         color = tuple(int(c * alpha) for c in self.color)
 
-        # Draw based on shape
+        # 根据形状绘制
         x, y = int(self.x), int(self.y)
         size = max(1, int(self.size * alpha))
 
@@ -91,7 +90,7 @@ class Particle:
             bbox = [x - size, y - size, x + size, y + size]
             draw.rectangle(bbox, fill=color)
         elif self.shape == 'star':
-            # Simple 4-point star
+            # 简单的四角星
             points = [
                 (x, y - size),
                 (x - size // 2, y),
@@ -104,10 +103,10 @@ class Particle:
 
 
 class ParticleSystem:
-    """Manages a collection of particles."""
+    """管理粒子集合。"""
 
     def __init__(self):
-        """Initialize particle system."""
+        """初始化粒子系统。"""
         self.particles: list[Particle] = []
 
     def emit(self, x: int, y: int, count: int = 10,
@@ -115,26 +114,26 @@ class ParticleSystem:
              color: tuple[int, int, int] = (255, 200, 0),
              lifetime: float = 20.0, size: int = 3, shape: str = 'circle'):
         """
-        Emit a burst of particles.
+        发射粒子爆发。
 
-        Args:
-            x, y: Emission position
-            count: Number of particles to emit
-            spread: Angle spread (radians)
-            speed: Initial speed
-            color: Particle color
-            lifetime: Particle lifetime in frames
-            size: Particle size
-            shape: Particle shape
+        参数：
+            x, y: 发射位置
+            count: 要发射的粒子数
+            spread: 角度扩散（弧度）
+            speed: 初始速度
+            color: 粒子颜色
+            lifetime: 粒子生命周期（帧）
+            size: 粒子大小
+            shape: 粒子形状
         """
         for _ in range(count):
-            # Random angle and speed
+            # 随机角度和速度
             angle = random.uniform(0, 2 * math.pi)
             vel_mag = random.uniform(speed * 0.5, speed * 1.5)
             vx = math.cos(angle) * vel_mag
             vy = math.sin(angle) * vel_mag
 
-            # Random lifetime variation
+            # 随机生命周期变化
             life = random.uniform(lifetime * 0.7, lifetime * 1.3)
 
             particle = Particle(x, y, vx, vy, life, color, size, shape)
@@ -143,12 +142,12 @@ class ParticleSystem:
     def emit_confetti(self, x: int, y: int, count: int = 20,
                       colors: Optional[list[tuple[int, int, int]]] = None):
         """
-        Emit confetti particles (colorful, falling).
+        发射彩纸粒子（多彩、下落）。
 
-        Args:
-            x, y: Emission position
-            count: Number of confetti pieces
-            colors: List of colors (random if None)
+        参数：
+            x, y: 发射位置
+            count: 彩纸数量
+            colors: 颜色列表（如果为None则随机）
         """
         if colors is None:
             colors = [
@@ -165,16 +164,16 @@ class ParticleSystem:
             lifetime = random.uniform(40, 60)
 
             particle = Particle(x, y, vx, vy, lifetime, color, size, shape)
-            particle.gravity = 0.3  # Lighter gravity for confetti
+            particle.gravity = 0.3  # 彩纸使用更轻的重力
             self.particles.append(particle)
 
     def emit_sparkles(self, x: int, y: int, count: int = 15):
         """
-        Emit sparkle particles (twinkling stars).
+        发射闪光粒子（闪烁的星星）。
 
-        Args:
-            x, y: Emission position
-            count: Number of sparkles
+        参数：
+            x, y: 发射位置
+            count: 闪光数量
         """
         colors = [(255, 255, 200), (255, 255, 255), (255, 255, 150)]
 
@@ -192,41 +191,41 @@ class ParticleSystem:
             self.particles.append(particle)
 
     def update(self):
-        """Update all particles."""
-        # Update alive particles
+        """更新所有粒子。"""
+        # 更新存活粒子
         for particle in self.particles:
             particle.update()
 
-        # Remove dead particles
+        # 移除死亡粒子
         self.particles = [p for p in self.particles if p.is_alive()]
 
     def render(self, frame: Image.Image):
-        """Render all particles to frame."""
+        """将所有粒子渲染到帧上。"""
         for particle in self.particles:
             particle.render(frame)
 
     def get_particle_count(self) -> int:
-        """Get number of active particles."""
+        """获取活动粒子数。"""
         return len(self.particles)
 
 
 def add_motion_blur(frame: Image.Image, prev_frame: Optional[Image.Image],
                     blur_amount: float = 0.5) -> Image.Image:
     """
-    Add motion blur by blending with previous frame.
+    通过与前一帧混合来添加运动模糊。
 
-    Args:
-        frame: Current frame
-        prev_frame: Previous frame (None for first frame)
-        blur_amount: Amount of blur (0.0-1.0)
+    参数：
+        frame: 当前帧
+        prev_frame: 前一帧（第一帧为None）
+        blur_amount: 模糊量（0.0-1.0）
 
-    Returns:
-        Frame with motion blur applied
+    返回：
+        应用了运动模糊的帧
     """
     if prev_frame is None:
         return frame
 
-    # Blend current frame with previous frame
+    # 将当前帧与前一帧混合
     frame_array = np.array(frame, dtype=np.float32)
     prev_array = np.array(prev_frame, dtype=np.float32)
 
@@ -239,34 +238,34 @@ def add_motion_blur(frame: Image.Image, prev_frame: Optional[Image.Image],
 def create_impact_flash(frame: Image.Image, position: tuple[int, int],
                         radius: int = 100, intensity: float = 0.7) -> Image.Image:
     """
-    Create a bright flash effect at impact point.
+    在冲击点创建明亮的闪光效果。
 
-    Args:
-        frame: PIL Image to draw on
-        position: Center of flash
-        radius: Flash radius
-        intensity: Flash intensity (0.0-1.0)
+    参数：
+        frame: 要绘制的PIL图像
+        position: 闪光中心
+        radius: 闪光半径
+        intensity: 闪光强度（0.0-1.0）
 
-    Returns:
-        Modified frame
+    返回：
+        修改后的帧
     """
-    # Create overlay
+    # 创建覆盖层
     overlay = Image.new('RGBA', frame.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
 
     x, y = position
 
-    # Draw concentric circles with decreasing opacity
+    # 绘制具有递减不透明度的同心圆
     num_circles = 5
     for i in range(num_circles):
         alpha = int(255 * intensity * (1 - i / num_circles))
         r = radius * (1 - i / num_circles)
-        color = (255, 255, 240, alpha)  # Warm white
+        color = (255, 255, 240, alpha)  # 暖白色
 
         bbox = [x - r, y - r, x + r, y + r]
         draw.ellipse(bbox, fill=color)
 
-    # Composite onto frame
+    # 合成到帧上
     frame_rgba = frame.convert('RGBA')
     frame_rgba = Image.alpha_composite(frame_rgba, overlay)
     return frame_rgba.convert('RGB')
@@ -276,17 +275,17 @@ def create_shockwave_rings(frame: Image.Image, position: tuple[int, int],
                            radii: list[int], color: tuple[int, int, int] = (255, 200, 0),
                            width: int = 3) -> Image.Image:
     """
-    Create expanding ring effects.
+    创建扩散环形效果。
 
-    Args:
-        frame: PIL Image to draw on
-        position: Center of rings
-        radii: List of ring radii
-        color: Ring color
-        width: Ring width
+    参数：
+        frame: 要绘制的PIL图像
+        position: 环的中心
+        radii: 环半径列表
+        color: 环颜色
+        width: 环宽度
 
-    Returns:
-        Modified frame
+    返回：
+        修改后的帧
     """
     draw = ImageDraw.Draw(frame)
     x, y = position
@@ -302,28 +301,28 @@ def create_explosion_effect(frame: Image.Image, position: tuple[int, int],
                             radius: int, progress: float,
                             color: tuple[int, int, int] = (255, 150, 0)) -> Image.Image:
     """
-    Create an explosion effect that expands and fades.
+    创建扩散和淡出的爆炸效果。
 
-    Args:
-        frame: PIL Image to draw on
-        position: Explosion center
-        radius: Maximum radius
-        progress: Animation progress (0.0-1.0)
-        color: Explosion color
+    参数：
+        frame: 要绘制的PIL图像
+        position: 爆炸中心
+        radius: 最大半径
+        progress: 动画进度（0.0-1.0）
+        color: 爆炸颜色
 
-    Returns:
-        Modified frame
+    返回：
+        修改后的帧
     """
     current_radius = int(radius * progress)
     fade = 1 - progress
 
-    # Create overlay
+    # 创建覆盖层
     overlay = Image.new('RGBA', frame.size, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
 
     x, y = position
 
-    # Draw expanding circle with fade
+    # 绘制具有淡出的扩散圆
     alpha = int(255 * fade)
     r, g, b = color
     circle_color = (r, g, b, alpha)
@@ -331,7 +330,7 @@ def create_explosion_effect(frame: Image.Image, position: tuple[int, int],
     bbox = [x - current_radius, y - current_radius, x + current_radius, y + current_radius]
     draw.ellipse(bbox, fill=circle_color)
 
-    # Composite
+    # 合成
     frame_rgba = frame.convert('RGBA')
     frame_rgba = Image.alpha_composite(frame_rgba, overlay)
     return frame_rgba.convert('RGB')
@@ -341,67 +340,67 @@ def add_glow_effect(frame: Image.Image, mask_color: tuple[int, int, int],
                     glow_color: tuple[int, int, int],
                     blur_radius: int = 10) -> Image.Image:
     """
-    Add a glow effect to areas of a specific color.
+    为特定颜色的区域添加发光效果。
 
-    Args:
-        frame: PIL Image
-        mask_color: Color to create glow around
-        glow_color: Color of glow
-        blur_radius: Blur amount
+    参数：
+        frame: PIL图像
+        mask_color: 要在其周围创建发光的颜色
+        glow_color: 发光颜色
+        blur_radius: 模糊量
 
-    Returns:
-        Frame with glow
+    返回：
+        带有发光的帧
     """
-    # Create mask of target color
+    # 创建目标颜色的蒙版
     frame_array = np.array(frame)
     mask = np.all(frame_array == mask_color, axis=-1)
 
-    # Create glow layer
+    # 创建发光层
     glow = Image.new('RGB', frame.size, (0, 0, 0))
     glow_array = np.array(glow)
     glow_array[mask] = glow_color
     glow = Image.fromarray(glow_array)
 
-    # Blur the glow
+    # 模糊发光
     glow = glow.filter(ImageFilter.GaussianBlur(blur_radius))
 
-    # Blend with original
+    # 与原始图像混合
     blended = Image.blend(frame, glow, 0.5)
     return blended
 
 
 def add_drop_shadow(frame: Image.Image, object_bounds: tuple[int, int, int, int],
-                    shadow_offset: tuple[int, int] = (5, 5),
+                    shadow_offset: tuple[int, int] = (5,5),
                     shadow_color: tuple[int, int, int] = (0, 0, 0),
                     blur: int = 5) -> Image.Image:
     """
-    Add drop shadow to an object.
+    为对象添加投影。
 
-    Args:
-        frame: PIL Image
-        object_bounds: (x1, y1, x2, y2) bounds of object
-        shadow_offset: (x, y) offset of shadow
-        shadow_color: Shadow color
-        blur: Shadow blur amount
+    参数：
+        frame: PIL图像
+        object_bounds: 对象的边界 (x1, y1, x2, y2)
+        shadow_offset: 阴影的偏移 (x, y)
+        shadow_color: 阴影颜色
+        blur: 阴影模糊量
 
-    Returns:
-        Frame with shadow
+    返回：
+        带有阴影的帧
     """
-    # Extract object
+    # 提取对象
     x1, y1, x2, y2 = object_bounds
     obj = frame.crop((x1, y1, x2, y2))
 
-    # Create shadow
+    # 创建阴影
     shadow = Image.new('RGBA', obj.size, (*shadow_color, 180))
 
-    # Create frame with alpha
+    # 创建带有alpha的帧
     frame_rgba = frame.convert('RGBA')
 
-    # Paste shadow
+    # 粘贴阴影
     shadow_pos = (x1 + shadow_offset[0], y1 + shadow_offset[1])
     frame_rgba.paste(shadow, shadow_pos, shadow)
 
-    # Paste object on top
+    # 在顶部粘贴对象
     frame_rgba.paste(obj, (x1, y1))
 
     return frame_rgba.convert('RGB')
@@ -411,42 +410,42 @@ def create_speed_lines(frame: Image.Image, position: tuple[int, int],
                        direction: float, length: int = 50,
                        count: int = 5, color: tuple[int, int, int] = (200, 200, 200)) -> Image.Image:
     """
-    Create speed lines for motion effect.
+    创建速度线以产生运动效果。
 
-    Args:
-        frame: PIL Image to draw on
-        position: Center position
-        direction: Angle in radians (0 = right, pi/2 = down)
-        length: Line length
-        count: Number of lines
-        color: Line color
+    参数：
+        frame: 要绘制的PIL图像
+        position: 中心位置
+        direction: 角度（弧度）（0 = 右，pi/2 = 下）
+        length: 线条长度
+        count: 线条数量
+        color: 线条颜色
 
-    Returns:
-        Modified frame
+    返回：
+        修改后的帧
     """
     draw = ImageDraw.Draw(frame)
     x, y = position
 
-    # Opposite direction (lines trail behind)
+    # 相反方向（线条拖在后面）
     trail_angle = direction + math.pi
 
     for i in range(count):
-        # Offset from center
+        # 从中心的偏移
         offset_angle = trail_angle + random.uniform(-0.3, 0.3)
         offset_dist = random.uniform(10, 30)
         start_x = x + math.cos(offset_angle) * offset_dist
         start_y = y + math.sin(offset_angle) * offset_dist
 
-        # End point
+        # 终点
         line_length = random.uniform(length * 0.7, length * 1.3)
         end_x = start_x + math.cos(trail_angle) * line_length
         end_y = start_y + math.sin(trail_angle) * line_length
 
-        # Draw line with varying opacity
+        # 绘制具有不同不透明度的线条
         alpha = random.randint(100, 200)
         width = random.randint(1, 3)
 
-        # Simple line (full opacity simulation)
+        # 简单线条（完全不透明度模拟）
         draw.line([(start_x, start_y), (end_x, end_y)], fill=color, width=width)
 
     return frame
@@ -454,41 +453,41 @@ def create_speed_lines(frame: Image.Image, position: tuple[int, int],
 
 def create_screen_shake_offset(intensity: int, frame_index: int) -> tuple[int, int]:
     """
-    Calculate screen shake offset for a frame.
+    计算帧的屏幕震动偏移。
 
-    Args:
-        intensity: Shake intensity in pixels
-        frame_index: Current frame number
+    参数：
+        intensity: 震动强度（像素）
+        frame_index: 当前帧号
 
-    Returns:
-        (x, y) offset tuple
+    返回：
+        (x, y) 偏移元组
     """
-    # Use frame index for deterministic but random-looking shake
+    # 使用帧索引进行确定性但看起来随机的震动
     random.seed(frame_index)
     offset_x = random.randint(-intensity, intensity)
     offset_y = random.randint(-intensity, intensity)
-    random.seed()  # Reset seed
+    random.seed()  # 重置种子
     return (offset_x, offset_y)
 
 
 def apply_screen_shake(frame: Image.Image, intensity: int, frame_index: int) -> Image.Image:
     """
-    Apply screen shake effect to entire frame.
+    对整个帧应用屏幕震动效果。
 
-    Args:
-        frame: PIL Image
-        intensity: Shake intensity
-        frame_index: Current frame number
+    参数：
+        frame: PIL图像
+        intensity: 震动强度
+        frame_index: 当前帧号
 
-    Returns:
-        Shaken frame
+    返回：
+        震动后的帧
     """
     offset_x, offset_y = create_screen_shake_offset(intensity, frame_index)
 
-    # Create new frame with background
+    # 创建带有背景的新帧
     shaken = Image.new('RGB', frame.size, (0, 0, 0))
 
-    # Paste original frame with offset
+    # 以偏移量粘贴原始帧
     shaken.paste(frame, (offset_x, offset_y))
 
     return shaken

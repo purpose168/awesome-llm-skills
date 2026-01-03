@@ -1,19 +1,19 @@
-# Golden Hour
+# 黄金时刻
 
-A rich and warm autumnal palette that creates an inviting and sophisticated atmosphere.
+一个丰富温暖的秋季调色板，营造热情精致的氛围。
 
-## Color Palette
+## 色彩调色板
 
-- **Mustard Yellow**: `#f4a900` - Bold primary accent
-- **Terracotta**: `#c1666b` - Warm secondary color
-- **Warm Beige**: `#d4b896` - Neutral backgrounds
-- **Chocolate Brown**: `#4a403a` - Dark text and anchors
+- **芥末黄**: `#f4a900` - 大胆的主要强调色
+- **赤陶色**: `#c1666b` - 温暖的次要颜色
+- **暖米色**: `#d4b896` - 中性背景
+- **巧克力棕**: `#4a403a` - 深色文本和锚点
 
-## Typography
+## 字体排版
 
-- **Headers**: FreeSans Bold
-- **Body Text**: FreeSans
+- **标题**: FreeSans Bold（粗体）
+- **正文**: FreeSans
 
-## Best Used For
+## 适用场景
 
-Restaurant presentations, hospitality brands, fall campaigns, cozy lifestyle content, artisan products.
+餐厅演示、酒店品牌、秋季活动、舒适生活方式内容、手工艺品。

@@ -1,37 +1,36 @@
-# Quick Brief Format
+# 快速简报格式
 
-**When to use**:
-- Time-sensitive requests
-- Simple topics
-- Status updates
-- Quick reference needs
+**何时使用**：
+- 时间敏感的请求
+- 简单主题
+- 状态更新
+- 快速参考需求
 
-## Characteristics
+## 特征
 
-**Length**: 200-400 words
+**长度**：200-400 字
 
-**Structure**:
-- 3-4 sentence summary
-- 3-5 bullet key points
-- Short action items list
-- Brief source list
+**结构**：
+- 3-4 句话摘要
+- 3-5 个关键要点
+- 简短行动项列表
+- 简短来源列表
 
-## Template
+## 模板
 
-See [quick-brief-template.md](quick-brief-template.md) for the full template.
+完整模板请参阅 [quick-brief-template.md](quick-brief-template.md)。
 
-## Best For
+## 最适用于
 
-- Fast turnaround requests
-- Simple, straightforward topics
-- Quick status updates
-- When time is more important than depth
-- Initial exploration before deeper research
+- 快速周转请求
+- 简单、直接的主题
+- 快速状态更新
+- 当时间比深度更重要时
+- 深入研究之前的初步探索
 
-## Example Use Cases
+## 示例用例
 
-- "Quick summary of what's in our API docs"
-- "Fast brief on the meeting notes from yesterday"
-- "What are the key points from that spec?"
-- "Give me a quick overview of the project status"
-
+- "快速总结我们的 API 文档中的内容"
+- "快速简报昨天的会议笔记"
+- "那个规范的关键点是什么？"
+- "给我一个项目状态的快速概述"

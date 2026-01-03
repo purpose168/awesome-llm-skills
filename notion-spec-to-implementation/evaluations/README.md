@@ -1,120 +1,119 @@
-# Spec to Implementation Skill Evaluations
+# 规范到实现技能评估
 
-Evaluation scenarios for testing the Spec to Implementation skill across different Claude models.
+用于测试不同 Claude 模型的规范到实现技能的评估场景。
 
-## Purpose
+## 目的
 
-These evaluations ensure the Spec to Implementation skill:
-- Finds and parses specification pages accurately
-- Breaks down specs into actionable implementation plans
-- Creates tasks that Claude can implement with clear acceptance criteria
-- Tracks progress and updates implementation status
-- Works consistently across Haiku, Sonnet, and Opus
+这些评估确保规范到实现技能：
+- 准确查找和解析规范页面
+- 将规范分解为可操作的实施计划
+- 创建 Claude 可以实施的任务，并具有清晰的验收标准
+- 跟踪进度并更新实施状态
+- 在 Haiku、Sonnet 和 Opus 之间保持一致的工作
 
-## Evaluation Files
+## 评估文件
 
 ### basic-spec-implementation.json
-Tests basic workflow of turning a spec into an implementation plan.
+测试将规范转换为实施计划的基本工作流程。
 
-**Scenario**: Implement user authentication feature from spec  
-**Key Behaviors**:
-- Searches for and finds the authentication spec page
-- Fetches spec and extracts requirements
-- Parses requirements into phases (setup, core features, polish)
-- Creates implementation plan page linked to original spec
-- Breaks down into clear phases with deliverables
-- Includes timeline and dependencies
+**场景**：从规范实施用户身份验证功能  
+**关键行为**：
+- 搜索并找到身份验证规范页面
+- 获取规范并提取需求
+- 将需求解析为阶段（设置、核心功能、完善）
+- 创建链接到原始规范的实施计划页面
+- 分解为具有交付物的清晰阶段
+- 包括时间线和依赖关系
 
 ### spec-to-tasks.json
-Tests creating concrete tasks from a specification in a task database.
+测试在任务数据库中从规范创建具体任务。
 
-**Scenario**: Create tasks from API redesign spec  
-**Key Behaviors**:
-- Finds spec page in Notion
-- Extracts specific requirements and acceptance criteria
-- Searches for or creates task database
-- Fetches task database schema
-- Creates multiple tasks with proper properties (Status, Priority, Sprint, etc.)
-- Each task has clear title, description, and acceptance criteria
-- Tasks have dependencies where appropriate
-- Links all tasks back to original spec
+**场景**：从 API 重新设计规范创建任务  
+**关键行为**：
+- 在 Notion 中查找规范页面
+- 提取特定需求和验收标准
+- 搜索或创建任务数据库
+- 获取任务数据库架构
+- 创建具有适当属性（状态、优先级、冲刺等）的多个任务
+- 每个任务都有清晰的标题、描述和验收标准
+- 任务在适当的地方具有依赖关系
+- 将所有任务链接回原始规范
 
-## Running Evaluations
+## 运行评估
 
-1. Enable the `spec-to-implementation` skill
-2. Submit the query from the evaluation file
-3. Verify the skill finds the spec page via search
-4. Check that requirements are accurately parsed
-5. Confirm implementation plan is created with phases
-6. Verify tasks have clear, implementable acceptance criteria
-7. Check that tasks link back to spec
-8. Test with Haiku, Sonnet, and Opus
+1. 启用 `spec-to-implementation` 技能
+2. 提交评估文件中的查询
+3. 验证技能通过搜索找到规范页面
+4. 检查需求是否被准确解析
+5. 确认创建了带有阶段的实施计划
+6. 验证任务具有清晰的、可实施的验收标准
+7. 检查任务是否链接回规范
+8. 使用 Haiku、Sonnet 和 Opus 进行测试
 
-## Expected Skill Behaviors
+## 预期技能行为
 
-Spec to Implementation evaluations should verify:
+规范到实现评估应验证：
 
-### Spec Discovery & Parsing
-- Searches Notion for specification pages
-- Fetches complete spec content
-- Extracts all requirements accurately
-- Identifies technical dependencies
-- Understands acceptance criteria
-- Notes any ambiguities or missing details
+### 规范发现与解析
+- 在 Notion 中搜索规范页面
+- 获取完整的规范内容
+- 准确提取所有需求
+- 识别技术依赖关系
+- 理解验收标准
+- 注意任何歧义或缺失的细节
 
-### Implementation Planning
-- Creates implementation plan page
-- Breaks work into logical phases:
-  - Phase 1: Foundation/Setup
-  - Phase 2: Core Implementation
-  - Phase 3: Testing & Polish
-- Includes timeline estimates
-- Identifies dependencies between phases
-- Links back to original spec
+### 实施计划
+- 创建实施计划页面
+- 将工作分解为逻辑阶段：
+  - 阶段 1：基础/设置
+  - 阶段 2：核心实施
+  - 阶段 3：测试与完善
+- 包括时间估算
+- 识别阶段之间的依赖关系
+- 链接回原始规范
 
-### Task Creation
-- Finds or identifies task database
-- Fetches database schema for property names
-- Creates tasks with correct properties
-- Each task has:
-  - Clear, specific title
-  - Context and description
-  - Acceptance criteria (checklist format)
-  - Appropriate priority and status
-  - Link to spec page
-- Tasks are right-sized (not too big, not too small)
-- Dependencies between tasks are noted
+### 任务创建
+- 查找或识别任务数据库
+- 获取数据库架构以获取属性名称
+- 创建具有正确属性的任务
+- 每个任务都有：
+  - 清晰、具体的标题
+  - 上下文和描述
+  - 验收标准（清单格式）
+  - 适当的优先级和状态
+  - 链接到规范页面
+- 任务大小适当（不太大，不太小）
+- 注意任务之间的依赖关系
 
-### Progress Tracking
-- Implementation plan includes progress markers
-- Tasks can be updated as work progresses
-- Status updates link to completed work
-- Blockers or changes are noted
+### 进度跟踪
+- 实施计划包括进度标记
+- 随着工作进展可以更新任务
+- 状态更新链接到已完成的工作
+- 注意阻碍因素或变更
 
-## Creating New Evaluations
+## 创建新评估
 
-When adding Spec to Implementation evaluations:
+添加规范到实现评估时：
 
-1. **Test different spec types** - Features, migrations, refactors, API changes, UI components
-2. **Vary complexity** - Simple 1-phase vs. complex multi-phase implementations
-3. **Test task granularity** - Does it create appropriately-sized tasks?
-4. **Include edge cases** - Vague specs, conflicting requirements, missing details
-5. **Test database integration** - Creating tasks in existing task databases with various schemas
-6. **Progress tracking** - Updating implementation plans as tasks complete
+1. **测试不同的规范类型** - 功能、迁移、重构、API 变更、UI 组件
+2. **变化复杂度** - 简单的单阶段与复杂的多阶段实施
+3. **测试任务粒度** - 它是否创建适当大小的任务？
+4. **包括边缘情况** - 模糊的规范、冲突的需求、缺失的细节
+5. **测试数据库集成** - 在具有各种架构的现有任务数据库中创建任务
+6. **进度跟踪** - 随着任务完成更新实施计划
 
-## Example Success Criteria
+## 示例成功标准
 
-**Good** (specific, testable):
-- "Searches Notion for spec page using feature name"
-- "Creates implementation plan with 3 phases: Setup → Core → Polish"
-- "Creates 5-8 tasks in task database with properties: Task (title), Status, Priority, Sprint"
-- "Each task has acceptance criteria in checklist format (- [ ] ...)"
-- "Tasks link back to spec using mention-page tag"
-- "Task titles are specific and actionable (e.g., 'Create login API endpoint' not 'Authentication')"
+**良好**（具体、可测试）：
+- "使用功能名称在 Notion 中搜索规范页面"
+- "创建具有 3 个阶段的实施计划：设置 → 核心 → 完善"
+- "在任务数据库中创建 5-8 个任务，具有属性：任务（标题）、状态、优先级、冲刺"
+- "每个任务都有清单格式的验收标准（- [ ] ...）"
+- "任务使用 mention-page 标签链接回规范"
+- "任务标题具体且可操作（例如，'创建登录 API 端点'而不是'身份验证'）"
 
-**Bad** (vague, untestable):
-- "Creates good implementation plan"
-- "Tasks are well-structured"
-- "Breaks down spec appropriately"
-- "Links to spec"
-
+**不良**（模糊、不可测试）：
+- "创建良好的实施计划"
+- "任务结构良好"
+- "适当分解规范"
+- "链接到规范"

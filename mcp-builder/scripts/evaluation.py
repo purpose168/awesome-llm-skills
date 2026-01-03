@@ -1,6 +1,6 @@
-"""MCP Server Evaluation Harness
+"""MCP 服务器评估工具
 
-This script evaluates MCP servers by running test questions against them using Claude.
+此脚本通过使用 Claude 运行测试问题来评估 MCP 服务器。
 """
 
 import argparse
@@ -18,43 +18,43 @@ from anthropic import Anthropic
 
 from connections import create_connection
 
-EVALUATION_PROMPT = """You are an AI assistant with access to tools.
+EVALUATION_PROMPT = """您是一个可以访问工具的 AI 助手。
 
-When given a task, you MUST:
-1. Use the available tools to complete the task
-2. Provide summary of each step in your approach, wrapped in <summary> tags
-3. Provide feedback on the tools provided, wrapped in <feedback> tags
-4. Provide your final response, wrapped in <response> tags
+当收到任务时，您必须：
+1. 使用可用工具完成任务
+2. 在 <summary> 标签中提供您方法的每个步骤的摘要
+3. 在 <feedback> 标签中提供对所提供工具的反馈
+4. 在 <response> 标签中提供您的最终响应
 
-Summary Requirements:
-- In your <summary> tags, you must explain:
-  - The steps you took to complete the task
-  - Which tools you used, in what order, and why
-  - The inputs you provided to each tool
-  - The outputs you received from each tool
-  - A summary for how you arrived at the response
+摘要要求：
+- 在您的 <summary> 标签中，您必须解释：
+  - 您完成任务所采取的步骤
+  - 您使用了哪些工具、按什么顺序使用以及为什么
+  - 您为每个工具提供的输入
+  - 您从每个工具收到的输出
+  - 您如何得出响应的摘要
 
-Feedback Requirements:
-- In your <feedback> tags, provide constructive feedback on the tools:
-  - Comment on tool names: Are they clear and descriptive?
-  - Comment on input parameters: Are they well-documented? Are required vs optional parameters clear?
-  - Comment on descriptions: Do they accurately describe what the tool does?
-  - Comment on any errors encountered during tool usage: Did the tool fail to execute? Did the tool return too many tokens?
-  - Identify specific areas for improvement and explain WHY they would help
-  - Be specific and actionable in your suggestions
+反馈要求：
+- 在您的 <feedback> 标签中，提供对工具的建设性反馈：
+  - 评论工具名称：它们是否清晰且具有描述性？
+  - 评论输入参数：它们是否有良好的文档记录？必需参数和可选参数是否清晰？
+  - 评论描述：它们是否准确描述了工具的功能？
+  - 评论工具使用过程中遇到的任何错误：工具是否执行失败？工具是否返回了过多的 token？
+  - 识别需要改进的具体领域并解释为什么它们会有所帮助
+  - 在您的建议中要具体且可操作
 
-Response Requirements:
-- Your response should be concise and directly address what was asked
-- Always wrap your final response in <response> tags
-- If you cannot solve the task return <response>NOT_FOUND</response>
-- For numeric responses, provide just the number
-- For IDs, provide just the ID
-- For names or text, provide the exact text requested
-- Your response should go last"""
+响应要求：
+- 您的响应应简洁并直接回答所问内容
+- 始终将最终响应包装在 <response> 标签中
+- 如果您无法解决任务，返回 <response>NOT_FOUND</response>
+- 对于数字响应，仅提供数字
+- 对于 ID，仅提供 ID
+- 对于名称或文本，提供所请求的确切文本
+- 您的响应应放在最后"""
 
 
 def parse_evaluation_file(file_path: Path) -> list[dict[str, Any]]:
-    """Parse XML evaluation file with qa_pair elements."""
+    """解析包含 qa_pair 元素的 XML 评估文件。"""
     try:
         tree = ET.parse(file_path)
         root = tree.getroot()
@@ -72,12 +72,12 @@ def parse_evaluation_file(file_path: Path) -> list[dict[str, Any]]:
 
         return evaluations
     except Exception as e:
-        print(f"Error parsing evaluation file {file_path}: {e}")
+        print(f"解析评估文件 {file_path} 时出错：{e}")
         return []
 
 
 def extract_xml_content(text: str, tag: str) -> str | None:
-    """Extract content from XML tags."""
+    """从 XML 标签中提取内容。"""
     pattern = rf"<{tag}>(.*?)</{tag}>"
     matches = re.findall(pattern, text, re.DOTALL)
     return matches[-1].strip() if matches else None
@@ -90,7 +90,7 @@ async def agent_loop(
     tools: list[dict[str, Any]],
     connection: Any,
 ) -> tuple[str, dict[str, Any]]:
-    """Run the agent loop with MCP tools."""
+    """使用 MCP 工具运行代理循环。"""
     messages = [{"role": "user", "content": question}]
 
     response = await asyncio.to_thread(
@@ -116,7 +116,7 @@ async def agent_loop(
             tool_result = await connection.call_tool(tool_name, tool_input)
             tool_response = json.dumps(tool_result) if isinstance(tool_result, (dict, list)) else str(tool_result)
         except Exception as e:
-            tool_response = f"Error executing tool {tool_name}: {str(e)}\n"
+            tool_response = f"执行工具 {tool_name} 时出错：{str(e)}\n"
             tool_response += traceback.format_exc()
         tool_duration = time.time() - tool_start_ts
 
@@ -159,10 +159,10 @@ async def evaluate_single_task(
     connection: Any,
     task_index: int,
 ) -> dict[str, Any]:
-    """Evaluate a single QA pair with the given tools."""
+    """使用给定工具评估单个问答对。"""
     start_time = time.time()
 
-    print(f"Task {task_index + 1}: Running task with question: {qa_pair['question']}")
+    print(f"任务 {task_index + 1}：正在运行任务，问题：{qa_pair['question']}")
     response, tool_metrics = await agent_loop(client, model, qa_pair["question"], tools, connection)
 
     response_value = extract_xml_content(response, "response")
@@ -185,32 +185,32 @@ async def evaluate_single_task(
 
 
 REPORT_HEADER = """
-# Evaluation Report
+# 评估报告
 
-## Summary
+## 摘要
 
-- **Accuracy**: {correct}/{total} ({accuracy:.1f}%)
-- **Average Task Duration**: {average_duration_s:.2f}s
-- **Average Tool Calls per Task**: {average_tool_calls:.2f}
-- **Total Tool Calls**: {total_tool_calls}
+- **准确率**：{correct}/{total} ({accuracy:.1f}%)
+- **平均任务持续时间**：{average_duration_s:.2f}s
+- **每个任务的平均工具调用次数**：{average_tool_calls:.2f}
+- **总工具调用次数**：{total_tool_calls}
 
 ---
 """
 
 TASK_TEMPLATE = """
-### Task {task_num}
+### 任务 {task_num}
 
-**Question**: {question}
-**Ground Truth Answer**: `{expected_answer}`
-**Actual Answer**: `{actual_answer}`
-**Correct**: {correct_indicator}
-**Duration**: {total_duration:.2f}s
-**Tool Calls**: {tool_calls}
+**问题**：{question}
+**真实答案**：`{expected_answer}`
+**实际答案**：`{actual_answer}`
+**正确**：{correct_indicator}
+**持续时间**：{total_duration:.2f}s
+**工具调用**：{tool_calls}
 
-**Summary**
+**摘要**
 {summary}
 
-**Feedback**
+**反馈**
 {feedback}
 
 ---
@@ -222,20 +222,20 @@ async def run_evaluation(
     connection: Any,
     model: str = "claude-3-7-sonnet-20250219",
 ) -> str:
-    """Run evaluation with MCP server tools."""
-    print("🚀 Starting Evaluation")
+    """使用 MCP 服务器工具运行评估。"""
+    print("🚀 开始评估")
 
     client = Anthropic()
 
     tools = await connection.list_tools()
-    print(f"📋 Loaded {len(tools)} tools from MCP server")
+    print(f"📋 从 MCP 服务器加载了 {len(tools)} 个工具")
 
     qa_pairs = parse_evaluation_file(eval_path)
-    print(f"📋 Loaded {len(qa_pairs)} evaluation tasks")
+    print(f"📋 加载了 {len(qa_pairs)} 个评估任务")
 
     results = []
     for i, qa_pair in enumerate(qa_pairs):
-        print(f"Processing task {i + 1}/{len(qa_pairs)}")
+        print(f"正在处理任务 {i + 1}/{len(qa_pairs)}")
         result = await evaluate_single_task(client, model, qa_pair, tools, connection, i)
         results.append(result)
 
@@ -273,7 +273,7 @@ async def run_evaluation(
 
 
 def parse_headers(header_list: list[str]) -> dict[str, str]:
-    """Parse header strings in format 'Key: Value' into a dictionary."""
+    """将格式为 'Key: Value' 的头部字符串解析为字典。"""
     headers = {}
     if not header_list:
         return headers
@@ -283,12 +283,12 @@ def parse_headers(header_list: list[str]) -> dict[str, str]:
             key, value = header.split(":", 1)
             headers[key.strip()] = value.strip()
         else:
-            print(f"Warning: Ignoring malformed header: {header}")
+            print(f"警告：忽略格式错误的头部：{header}")
     return headers
 
 
 def parse_env_vars(env_list: list[str]) -> dict[str, str]:
-    """Parse environment variable strings in format 'KEY=VALUE' into a dictionary."""
+    """将格式为 'KEY=VALUE' 的环境变量字符串解析为字典。"""
     env = {}
     if not env_list:
         return env
@@ -298,46 +298,46 @@ def parse_env_vars(env_list: list[str]) -> dict[str, str]:
             key, value = env_var.split("=", 1)
             env[key.strip()] = value.strip()
         else:
-            print(f"Warning: Ignoring malformed environment variable: {env_var}")
+            print(f"警告：忽略格式错误的环境变量：{env_var}")
     return env
 
 
 async def main():
     parser = argparse.ArgumentParser(
-        description="Evaluate MCP servers using test questions",
+        description="使用测试问题评估 MCP 服务器",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-Examples:
-  # Evaluate a local stdio MCP server
+示例：
+  # 评估本地 stdio MCP 服务器
   python evaluation.py -t stdio -c python -a my_server.py eval.xml
 
-  # Evaluate an SSE MCP server
+  # 评估 SSE MCP 服务器
   python evaluation.py -t sse -u https://example.com/mcp -H "Authorization: Bearer token" eval.xml
 
-  # Evaluate an HTTP MCP server with custom model
+  # 使用自定义模型评估 HTTP MCP 服务器
   python evaluation.py -t http -u https://example.com/mcp -m claude-3-5-sonnet-20241022 eval.xml
         """,
     )
 
-    parser.add_argument("eval_file", type=Path, help="Path to evaluation XML file")
-    parser.add_argument("-t", "--transport", choices=["stdio", "sse", "http"], default="stdio", help="Transport type (default: stdio)")
-    parser.add_argument("-m", "--model", default="claude-3-7-sonnet-20250219", help="Claude model to use (default: claude-3-7-sonnet-20250219)")
+    parser.add_argument("eval_file", type=Path, help="评估 XML 文件的路径")
+    parser.add_argument("-t", "--transport", choices=["stdio", "sse", "http"], default="stdio", help="传输类型（默认：stdio）")
+    parser.add_argument("-m", "--model", default="claude-3-7-sonnet-20250219", help="要使用的 Claude 模型（默认：claude-3-7-sonnet-20250219）")
 
-    stdio_group = parser.add_argument_group("stdio options")
-    stdio_group.add_argument("-c", "--command", help="Command to run MCP server (stdio only)")
-    stdio_group.add_argument("-a", "--args", nargs="+", help="Arguments for the command (stdio only)")
-    stdio_group.add_argument("-e", "--env", nargs="+", help="Environment variables in KEY=VALUE format (stdio only)")
+    stdio_group = parser.add_argument_group("stdio 选项")
+    stdio_group.add_argument("-c", "--command", help="运行 MCP 服务器的命令（仅 stdio）")
+    stdio_group.add_argument("-a", "--args", nargs="+", help="命令的参数（仅 stdio）")
+    stdio_group.add_argument("-e", "--env", nargs="+", help="格式为 KEY=VALUE 的环境变量（仅 stdio）")
 
-    remote_group = parser.add_argument_group("sse/http options")
-    remote_group.add_argument("-u", "--url", help="MCP server URL (sse/http only)")
-    remote_group.add_argument("-H", "--header", nargs="+", dest="headers", help="HTTP headers in 'Key: Value' format (sse/http only)")
+    remote_group = parser.add_argument_group("sse/http 选项")
+    remote_group.add_argument("-u", "--url", help="MCP 服务器 URL（仅 sse/http）")
+    remote_group.add_argument("-H", "--header", nargs="+", dest="headers", help="格式为 'Key: Value' 的 HTTP 头部（仅 sse/http）")
 
-    parser.add_argument("-o", "--output", type=Path, help="Output file for evaluation report (default: stdout)")
+    parser.add_argument("-o", "--output", type=Path, help="评估报告的输出文件（默认：stdout）")
 
     args = parser.parse_args()
 
     if not args.eval_file.exists():
-        print(f"Error: Evaluation file not found: {args.eval_file}")
+        print(f"错误：未找到评估文件：{args.eval_file}")
         sys.exit(1)
 
     headers = parse_headers(args.headers) if args.headers else None
@@ -353,18 +353,18 @@ Examples:
             headers=headers,
         )
     except ValueError as e:
-        print(f"Error: {e}")
+        print(f"错误：{e}")
         sys.exit(1)
 
-    print(f"🔗 Connecting to MCP server via {args.transport}...")
+    print(f"🔗 正在通过 {args.transport} 连接到 MCP 服务器...")
 
     async with connection:
-        print("✅ Connected successfully")
+        print("✅ 连接成功")
         report = await run_evaluation(args.eval_file, connection, args.model)
 
         if args.output:
             args.output.write_text(report)
-            print(f"\n✅ Report saved to {args.output}")
+            print(f"\n✅ 报告已保存到 {args.output}")
         else:
             print("\n" + report)
 

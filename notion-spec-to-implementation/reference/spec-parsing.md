@@ -1,383 +1,382 @@
-# Specification Parsing
+# 规范解析
 
-## Finding the Specification
+## 查找规范
 
-Before parsing, locate the spec page:
+在解析之前，定位规范页面：
 
 ```
-1. Search for spec:
+1. 搜索规范：
    Notion:notion-search
-   query: "[Feature Name] spec" or "[Feature Name] specification"
+   query: "[功能名称] 规范"或"[功能名称] specification"
    
-2. Handle results:
-   - If found → use page URL/ID
-   - If multiple → ask user which one
-   - If not found → ask user for URL/ID
+2. 处理结果：
+   - 如果找到 → 使用页面 URL/ID
+   - 如果有多个 → 询问用户哪一个
+   - 如果未找到 → 询问用户 URL/ID
 
-Example:
+示例：
 Notion:notion-search
-query: "User Profile API spec"
+query: "用户配置文件 API 规范"
 query_type: "internal"
 ```
 
-## Reading Specifications
+## 读取规范
 
-After finding the spec, fetch it with `Notion:notion-fetch`:
+找到规范后，使用 `Notion:notion-fetch` 获取它：
 
-1. Read the full content
-2. Identify key sections
-3. Extract structured information
-4. Note ambiguities or gaps
+1. 读取完整内容
+2. 识别关键章节
+3. 提取结构化信息
+4. 注意歧义或空白
 
 ```
 Notion:notion-fetch
 id: "spec-page-id-from-search"
 ```
 
-## Common Spec Structures
+## 常见规范结构
 
-### Requirements-Based Spec
-
-```
-# Feature Spec
-## Overview
-[Feature description]
-
-## Requirements
-### Functional
-- REQ-1: [Requirement]
-- REQ-2: [Requirement]
-
-### Non-Functional
-- PERF-1: [Performance requirement]
-- SEC-1: [Security requirement]
-
-## Acceptance Criteria
-- AC-1: [Criterion]
-- AC-2: [Criterion]
-```
-
-Extract:
-- List of functional requirements
-- List of non-functional requirements
-- List of acceptance criteria
-
-### User Story Based Spec
+### 基于需求的规范
 
 ```
-# Feature Spec
-## User Stories
-### As a [user type]
-I want [goal]
-So that [benefit]
+# 功能规范
+## 概述
+[功能描述]
 
-**Acceptance Criteria**:
-- [Criterion]
-- [Criterion]
+## 需求
+### 功能需求
+- REQ-1：[需求]
+- REQ-2：[需求]
+
+### 非功能需求
+- PERF-1：[性能需求]
+- SEC-1：[安全需求]
+
+## 验收标准
+- AC-1：[标准]
+- AC-2：[标准]
 ```
 
-Extract:
-- User personas
-- Goals/capabilities needed
-- Acceptance criteria per story
+提取：
+- 功能需求列表
+- 非功能需求列表
+- 验收标准列表
 
-### Technical Design Doc
-
-```
-# Technical Design
-## Problem Statement
-[Problem description]
-
-## Proposed Solution
-[Solution approach]
-
-## Architecture
-[Architecture details]
-
-## Implementation Plan
-[Implementation approach]
-```
-
-Extract:
-- Problem being solved
-- Proposed solution approach
-- Architectural decisions
-- Implementation guidance
-
-### Product Requirements Document (PRD)
+### 基于用户故事的规范
 
 ```
-# PRD: [Feature]
-## Goals
-[Business goals]
+# 功能规范
+## 用户故事
+### 作为 [用户类型]
+我想要 [目标]
+以便 [利益]
 
-## User Needs
-[User problems being solved]
-
-## Features
-[Feature list]
-
-## Success Metrics
-[How to measure success]
+**验收标准**：
+- [标准]
+- [标准]
 ```
 
-Extract:
-- Business goals
-- User needs
-- Feature list
-- Success metrics
+提取：
+- 用户角色
+- 需要的目标/能力
+- 每个故事的验收标准
 
-## Extraction Strategies
+### 技术设计文档
 
-### Requirement Identification
+```
+# 技术设计
+## 问题陈述
+[问题描述]
 
-Look for:
-- "Must", "Should", "Will" statements
-- Numbered requirements (REQ-1, etc.)
-- User stories (As a... I want...)
-- Acceptance criteria sections
-- Feature lists
+## 提议的解决方案
+[解决方案方法]
 
-### Categorization
+## 架构
+[架构详细信息]
 
-Group requirements by:
+## 实施计划
+[实施方法]
+```
 
-**Functional**: What the system does
-- User capabilities
-- System behaviors
-- Data operations
+提取：
+- 要解决的问题
+- 提议的解决方案方法
+- 架构决策
+- 实施指导
 
-**Non-Functional**: How the system performs
-- Performance targets
-- Security requirements
-- Scalability needs
-- Availability requirements
-- Compliance requirements
+### 产品需求文档（PRD）
 
-**Constraints**: Limitations
-- Technical constraints
-- Business constraints
-- Timeline constraints
+```
+# PRD：[功能]
+## 目标
+[业务目标]
 
-### Priority Extraction
+## 用户需求
+[正在解决的用户问题]
 
-Identify priority indicators:
-- "Critical", "Must have", "P0"
-- "Important", "Should have", "P1"
-- "Nice to have", "Could have", "P2"
-- "Future", "Won't have", "P3"
+## 功能
+[功能列表]
 
-Map to implementation phases based on priority.
+## 成功指标
+[如何衡量成功]
+```
 
-## Handling Ambiguity
+提取：
+- 业务目标
+- 用户需求
+- 功能列表
+- 成功指标
 
-### Unclear Requirements
+## 提取策略
 
-When requirement is ambiguous:
+### 需求识别
+
+查找：
+- "必须"、"应该"、"将"等陈述
+- 编号的需求（REQ-1 等）
+- 用户故事（作为...我想要...）
+- 验收标准章节
+- 功能列表
+
+### 分类
+
+按以下方式对需求进行分组：
+
+**功能需求**：系统做什么
+- 用户能力
+- 系统行为
+- 数据操作
+
+**非功能需求**：系统如何执行
+- 性能目标
+- 安全要求
+- 可扩展性需求
+- 可用性要求
+- 合规性要求
+
+**约束**：限制
+- 技术约束
+- 业务约束
+- 时间线约束
+
+### 优先级提取
+
+识别优先级指示器：
+- "关键"、"必须有"、"P0"
+- "重要"、"应该有"、"P1"
+- "最好有"、"可以有"、"P2"
+- "未来"、"不会有"、"P3"
+
+根据优先级映射到实施阶段。
+
+## 处理歧义
+
+### 不明确的需求
+
+当需求不明确时：
 
 ```markdown
-## Clarifications Needed
+## 需要澄清
 
-### [Requirement ID/Description]
-**Current text**: "[Ambiguous requirement]"
-**Question**: [What needs clarification]
-**Impact**: [Why this matters for implementation]
-**Assumed for now**: [Working assumption if any]
+### [需求 ID/描述]
+**当前文本**："[不明确的需求]"
+**问题**：[需要澄清的内容]
+**影响**：[这对实施为何重要]
+**当前假设**：[如果有，工作假设]
 ```
 
-Create clarification task or add comment to spec.
+创建澄清任务或向规范添加评论。
 
-### Missing Information
+### 缺失信息
 
-When critical info is missing:
+当关键信息缺失时：
 
 ```markdown
-## Missing Information
+## 缺失信息
 
-- **[Topic]**: Spec doesn't specify [what's missing]
-- **Impact**: Blocks [affected tasks]
-- **Action**: Need to [how to resolve]
+- **[主题]**：规范未指定[缺失的内容]
+- **影响**：阻塞[受影响的任务]
+- **行动**：需要[如何解决]
 ```
 
-### Conflicting Requirements
+### 冲突的需求
 
-When requirements conflict:
+当需求冲突时：
 
 ```markdown
-## Conflicting Requirements
+## 冲突的需求
 
-**Conflict**: REQ-1 says [X] but REQ-5 says [Y]
-**Impact**: [Implementation impact]
-**Resolution needed**: [Decision needed]
+**冲突**：REQ-1 说 [X] 但 REQ-5 说 [Y]
+**影响**：[实施影响]
+**需要解决方案**：[需要决策]
 ```
 
-## Acceptance Criteria Parsing
+## 验收标准解析
 
-### Explicit Criteria
+### 明确的标准
 
-Direct acceptance criteria:
-
-```
-## Acceptance Criteria
-- User can log in with email and password
-- System sends confirmation email
-- Session expires after 24 hours
-```
-
-Convert to checklist:
-- [ ] User can log in with email and password
-- [ ] System sends confirmation email
-- [ ] Session expires after 24 hours
-
-### Implicit Criteria
-
-Derive from requirements:
+直接的验收标准：
 
 ```
-Requirement: "Users can upload files up to 100MB"
-
-Implied acceptance criteria:
-- [ ] Files up to 100MB upload successfully
-- [ ] Files over 100MB are rejected with error message
-- [ ] Progress indicator shows during upload
-- [ ] Upload can be cancelled
+## 验收标准
+- 用户可以使用电子邮件和密码登录
+- 系统发送确认电子邮件
+- 会话在 24 小时后过期
 ```
 
-### Testable Criteria
+转换为清单：
+- [ ] 用户可以使用电子邮件和密码登录
+- [ ] 系统发送确认电子邮件
+- [ ] 会话在 24 小时后过期
 
-Ensure criteria are testable:
+### 隐含的标准
 
-❌ **Not testable**: "System is fast"
-✓ **Testable**: "Page loads in < 2 seconds"
+从需求推导：
 
-❌ **Not testable**: "Users like the interface"
-✓ **Testable**: "90% of test users complete task successfully"
+```
+需求："用户可以上传最大 100MB 的文件"
 
-## Technical Detail Extraction
+隐含的验收标准：
+- [ ] 最大 100MB 的文件成功上传
+- [ ] 超过 100MB 的文件被拒绝并显示错误消息
+- [ ] 上传期间显示进度指示器
+- [ ] 上传可以取消
+```
 
-### Architecture Information
+### 可测试的标准
 
-Extract:
-- System components
-- Data models
-- APIs/interfaces
-- Integration points
-- Technology choices
+确保标准是可测试的：
 
-### Design Decisions
+❌ **不可测试**："系统很快"
+✓ **可测试**："页面在 < 2 秒内加载"
 
-Note:
-- Technology selections
-- Architecture patterns
-- Trade-offs made
-- Rationale provided
+❌ **不可测试**："用户喜欢界面"
+✓ **可测试**："90% 的测试用户成功完成任务"
 
-### Implementation Guidance
+## 技术细节提取
 
-Look for:
-- Suggested approach
-- Code examples
-- Library recommendations
-- Best practices mentioned
+### 架构信息
 
-## Dependency Identification
+提取：
+- 系统组件
+- 数据模型
+- API/接口
+- 集成点
+- 技术选择
 
-### External Dependencies
+### 设计决策
 
-From spec, identify:
-- Third-party services required
-- External APIs needed
-- Infrastructure requirements
-- Tool/library dependencies
+注意：
+- 技术选择
+- 架构模式
+- 做出的权衡
+- 提供的理由
 
-### Internal Dependencies
+### 实施指导
 
-Identify:
-- Other features needed first
-- Shared components required
-- Team dependencies
-- Data dependencies
+查找：
+- 建议的方法
+- 代码示例
+- 库推荐
+- 提到的最佳实践
 
-### Timeline Dependencies
+## 依赖关系识别
 
-Note:
-- Hard deadlines
-- Milestone dependencies
-- Sequencing requirements
+### 外部依赖
 
-## Scope Extraction
+从规范中识别：
+- 需要的第三方服务
+- 需要的外部 API
+- 基础设施要求
+- 工具/库依赖
 
-### In Scope
+### 内部依赖
 
-What's explicitly included:
-- Features to build
-- Use cases to support
-- Users/personas to serve
+识别：
+- 首先需要的其他功能
+- 需要的共享组件
+- 团队依赖
+- 数据依赖
 
-### Out of Scope
+### 时间线依赖
 
-What's explicitly excluded:
-- Features deferred
-- Use cases not supported
-- Edge cases not handled
+注意：
+- 硬性截止日期
+- 里程碑依赖
+- 排序需求
 
-### Assumptions
+## 范围提取
 
-What's assumed:
-- Environment assumptions
-- User assumptions
-- System state assumptions
+### 范围内
 
-## Risk Identification
+明确包含的内容：
+- 要构建的功能
+- 要支持的用例
+- 要服务的用户/角色
 
-Extract risk information:
+### 范围外
 
-### Technical Risks
-- Unproven technology
-- Complex integration
-- Performance concerns
-- Scalability unknowns
+明确排除的内容：
+- 延期的功能
+- 不支持的用例
+- 未处理的边缘情况
 
-### Business Risks
-- Market timing
-- Resource availability
-- Dependency on others
+### 假设
 
-### Mitigation Strategies
+假设的内容：
+- 环境假设
+- 用户假设
+- 系统状态假设
 
-Note any mitigation approaches mentioned in spec.
+## 风险识别
 
-## Spec Quality Assessment
+提取风险信息：
 
-Evaluate spec completeness:
+### 技术风险
+- 未经验证的技术
+- 复杂的集成
+- 性能问题
+- 可扩展性未知
 
-✓ **Good spec**:
-- Clear requirements
-- Explicit acceptance criteria
-- Priorities defined
-- Risks identified
-- Technical approach outlined
+### 业务风险
+- 市场时机
+- 资源可用性
+- 对他人的依赖
 
-⚠️ **Incomplete spec**:
-- Vague requirements
-- Missing acceptance criteria
-- Unclear priorities
-- No risk analysis
-- Technical details absent
+### 缓解策略
 
-Document gaps and create clarification tasks.
+注意规范中提到的任何缓解方法。
 
-## Parsing Checklist
+## 规范质量评估
 
-Before creating implementation plan:
+评估规范的完整性：
 
-☐ All functional requirements identified
-☐ Non-functional requirements noted
-☐ Acceptance criteria extracted
-☐ Dependencies identified
-☐ Risks noted
-☐ Ambiguities documented
-☐ Technical approach understood
-☐ Scope is clear
-☐ Priorities are defined
+✓ **良好的规范**：
+- 清晰的需求
+- 明确的验收标准
+- 定义的优先级
+- 识别的风险
+- 概述的技术方法
 
+⚠️ **不完整的规范**：
+- 模糊的需求
+- 缺失的验收标准
+- 不明确的优先级
+- 无风险分析
+- 缺少技术细节
+
+记录空白并创建澄清任务。
+
+## 解析清单
+
+在创建实施计划之前：
+
+☐ 识别所有功能需求
+☐ 注意非功能需求
+☐ 提取验收标准
+☐ 识别依赖关系
+☐ 注意风险
+☐ 记录歧义
+☐ 理解技术方法
+☐ 范围清晰
+☐ 定义优先级

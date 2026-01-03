@@ -1,78 +1,78 @@
-# Example: Executive Review Prep
+# 示例：执行审查准备
 
-**User Request**: "Prep for quarterly executive review on Friday"
+**用户请求**："为周五的季度执行审查做准备"
 
-## Workflow
+## 工作流程
 
-### 1. Search for Context
+### 1. 搜索上下文
 ```
 Notion:notion-search
-query: "Q4 objectives" + "KPIs" + "quarterly results"
+query: "第四季度目标" + "KPI" + "季度结果"
 ```
 
-Found:
-- Q4 OKRs and progress
-- Product metrics dashboard
-- Engineering velocity reports
-- Customer feedback summary
+找到：
+- 第四季度 OKR 和进展
+- 产品指标仪表板
+- 工程速度报告
+- 客户反馈摘要
 
-### 2. Fetch & Analyze
+### 2. 获取和分析
 ```
-Notion:notion-fetch (5 pages)
-```
-
-**Key metrics**:
-- **Revenue**: $2.4M ARR (96% of Q4 target)
-- **Customer Growth**: 145 new customers (exceeds 120 target)
-- **Churn**: 3.2% (below 5% target)
-- **Product**: 3 major features shipped, 2 in beta
-- **Engineering**: 94% uptime (above 95% SLA)
-
-### 3. Add Claude Research Context
-Added context on:
-- Industry benchmarks for SaaS metrics
-- Typical Q4 sales patterns
-- Best practices for executive presentations
-
-### 4. Create Pre-Read (Internal)
-```
-Notion:notion-create-pages
-title: "Q4 Review - Pre-Read (Internal)"
+Notion:notion-fetch (5 个页面)
 ```
 
-**Pre-read sections**:
-- **Executive Summary**: Strong quarter, missed revenue by 4% but exceeded customer growth
-- **Detailed Metrics**: All KPIs with trend lines
-- **Wins**: Product launches, key customer acquisitions
-- **Challenges**: Sales pipeline conversion, engineering hiring
-- **Q1 Preview**: Strategic priorities
+**关键指标**：
+- **收入**：240 万美元 ARR（第四季度目标的 96%）
+- **客户增长**：145 个新客户（超过 120 个目标）
+- **流失率**：3.2%（低于 5% 目标）
+- **产品**：3 个主要功能已发布，2 个在测试中
+- **工程**：94% 正常运行时间（高于 95% SLA）
 
-### 5. Create Presentation Agenda
+### 3. 添加 Claude 研究上下文
+添加了以下上下文：
+- SaaS 指标的行业基准
+- 典型的第四季度销售模式
+- 执行演示的最佳实践
+
+### 4. 创建预读（内部）
 ```
 Notion:notion-create-pages
-title: "Q4 Executive Review - Agenda"
+title: "第四季度审查 - 预读（内部）"
 ```
 
-**Agenda** (90 min):
-- Q4 Results Overview (15 min)
-- Revenue & Growth Deep Dive (20 min)
-- Product & Engineering Update (20 min)
-- Customer Success Highlights (15 min)
-- Q1 Strategic Plan (15 min)
-- Discussion & Questions (15 min)
+**预读章节**：
+- **执行摘要**：强劲的季度，收入未达标 4% 但客户增长超出目标
+- **详细指标**：所有 KPI 带趋势线
+- **胜利**：产品发布、关键客户获取
+- **挑战**：销售管道转化、工程招聘
+- **第一季度预览**：战略优先级
 
-### 6. Link Supporting Docs
-Connected to OKRs, metrics dashboards, and Q1 planning docs.
+### 5. 创建演示议程
+```
+Notion:notion-create-pages
+title: "第四季度执行审查 - 议程"
+```
 
-## Outputs
+**议程**（90 分钟）：
+- 第四季度结果概述（15 分钟）
+- 收入和增长深入分析（20 分钟）
+- 产品和工程更新（20 分钟）
+- 客户成功亮点（15 分钟）
+- 第一季度战略计划（15 分钟）
+- 讨论和问题（15 分钟）
 
-**Internal Pre-Read**: Comprehensive context with honest assessment
-**Executive Agenda**: Structured 90-min presentation
-**Both in Notion** with links to supporting data
+### 6. 链接支持文档
+连接到 OKR、指标仪表板和第一季度规划文档。
 
-## Key Success Factors
-- Synthesized data from multiple sources (OKRs, metrics, feedback)
-- Added industry context and benchmarks
-- Created honest internal assessment (not just wins)
-- Structured agenda with time allocations
-- Linked to source data for drill-down during Q&A
+## 输出
+
+**内部预读**：带有诚实评估的全面上下文
+**执行议程**：结构化的 90 分钟演示
+**两者都在 Notion 中**并链接到支持数据
+
+## 关键成功因素
+- 从多个来源综合数据（OKR、指标、反馈）
+- 添加了行业上下文和基准
+- 创建了诚实的内部评估（不仅仅是胜利）
+- 创建了带时间分配的结构化议程
+- 链接到源数据以便在问答期间深入分析

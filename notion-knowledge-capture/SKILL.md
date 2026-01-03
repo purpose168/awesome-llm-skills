@@ -1,203 +1,210 @@
 ---
 name: notion-knowledge-capture
-description: Transforms conversations and discussions into structured documentation pages in Notion. Captures insights, decisions, and knowledge from chat context, formats appropriately, and saves to wikis or databases with proper organization and linking for easy discovery.
+description: 将对话和讨论转换为 Notion 中的结构化文档页面。从聊天上下文中捕获见解、决策和知识，进行适当格式化，并以适当的组织和链接方式保存到 wiki 或数据库中，以便于发现。
 ---
 
-# Knowledge Capture
+# 知识捕获
 
-Transforms conversations, discussions, and insights into structured documentation in your Notion workspace. Captures knowledge from chat context, formats it appropriately, and saves it to the right location with proper organization and linking.
+将对话、讨论和见解转换为 Notion 工作区中的结构化文档。从聊天上下文中捕获知识，对其进行适当格式化，并将其保存到正确的位置，同时进行适当的组织和链接。
 
-## Quick Start
+## 快速开始
 
-When asked to save information to Notion:
+当被要求将信息保存到 Notion 时：
 
-1. **Extract content**: Identify key information from conversation context
-2. **Structure information**: Organize into appropriate documentation format
-3. **Determine location**: Use `Notion:notion-search` to find appropriate wiki page/database
-4. **Create page**: Use `Notion:notion-create-pages` to save content
-5. **Make discoverable**: Link from relevant hub pages, add to databases, or update wiki navigation so others can find it
+1. **提取内容**：从对话上下文中识别关键信息
+2. **结构化信息**：组织成适当的文档格式
+3. **确定位置**：使用 `Notion:notion-search` 查找合适的 wiki 页面/数据库
+4. **创建页面**：使用 `Notion:notion-create-pages` 保存内容
+5. **使其可发现**：从相关中心页面链接，添加到数据库，或更新 wiki 导航，以便其他人可以找到它
 
-## Knowledge Capture Workflow
+## 知识捕获工作流程
 
-### Step 1: Identify content to capture
-
-```
-From conversation context, extract:
-- Key concepts and definitions
-- Decisions made and rationale
-- How-to information and procedures
-- Important insights or learnings
-- Q&A pairs
-- Examples and use cases
-```
-
-### Step 2: Determine content type
+### 步骤 1：识别要捕获的内容
 
 ```
-Classify the knowledge:
-- Concept/Definition
-- How-to Guide
-- Decision Record
-- FAQ Entry
-- Meeting Summary
-- Learning/Post-mortem
-- Reference Documentation
+从对话上下文中提取：
+- 关键概念和定义
+- 做出的决策及其理由
+- 操作信息和程序
+- 重要见解或学习成果
+- 问答对
+- 示例和用例
 ```
 
-
-### Step 3: Structure the content
+### 步骤 2：确定内容类型
 
 ```
-Format appropriately based on content type:
-- Use templates for consistency
-- Add clear headings and sections
-- Include examples where helpful
-- Add relevant metadata
-- Link to related pages
+对知识进行分类：
+- 概念/定义
+- 操作指南
+- 决策记录
+- 常见问题条目
+- 会议摘要
+- 学习/事后分析
+- 参考文档
 ```
 
 
-### Step 4: Determine destination
+### 步骤 3：结构化内容
 
 ```
-Where to save:
-- Wiki page (general knowledge base)
-- Specific project page (project-specific knowledge)
-- Documentation database (structured docs)
-- FAQ database (questions and answers)
-- Decision log (architecture/product decisions)
-- Team wiki (team-specific knowledge)
+根据内容类型进行适当格式化：
+- 使用模板以保持一致性
+- 添加清晰的标题和章节
+- 在有帮助的地方包含示例
+- 添加相关元数据
+- 链接到相关页面
 ```
 
-### Step 5: Create the page
+
+### 步骤 4：确定目标位置
 
 ```
-Use Notion:notion-create-pages:
-- Set appropriate title
-- Use structured content from template
-- Set properties if in database
-- Add tags/categories
-- Link to related pages
+保存位置：
+- Wiki 页面（通用知识库）
+- 特定项目页面（项目特定知识）
+- 文档数据库（结构化文档）
+- 常见问题数据库（问题和答案）
+- 决策日志（架构/产品决策）
+- 团队 wiki（团队特定知识）
 ```
 
-### Step 6: Make content discoverable
+### 步骤 5：创建页面
 
 ```
-Link the new page so others can find it:
+使用 Notion:notion-create-pages：
+- 设置适当的标题
+- 使用模板中的结构化内容
+- 如果在数据库中，设置属性
+- 添加标签/类别
+- 链接到相关页面
+```
 
-1. Update hub/index pages:
-   - Add link to wiki table of contents page
-   - Add link from relevant project page
-   - Add link from category/topic page (e.g., "Engineering Docs")
+### 步骤 6：使内容可发现
+
+```
+链接新页面以便其他人可以找到它：
+
+1. 更新中心/索引页面：
+   - 添加到 wiki 目录页面的链接
+   - 从相关项目页面添加链接
+   - 从类别/主题页面添加链接（例如，"工程文档"）
    
-2. If page is in a database:
-   - Set appropriate tags/categories
-   - Set status (e.g., "Published")
-   - Add to relevant views
+2. 如果页面在数据库中：
+   - 设置适当的标签/类别
+   - 设置状态（例如，"已发布"）
+   - 添加到相关视图
    
-3. Optionally update parent page:
-   - If saved under a project, add to project's "Documentation" section
-   - If in team wiki, ensure it's linked from team homepage
+3. 可选更新父页面：
+   - 如果保存在项目下，添加到项目的"文档"部分
+   - 如果在团队 wiki 中，确保从团队主页链接
 
-Example:
+示例：
 Notion:notion-update-page
 page_id: "team-wiki-homepage-id"
 command: "insert_content_after"
-selection_with_ellipsis: "## How-To Guides..."
-new_str: "- <mention-page url='...'>How to Deploy to Production</mention-page>"
+selection_with_ellipsis: "## 操作指南..."
+new_str: "- <mention-page url='...'>如何部署到生产环境</mention-page>"
 ```
 
-This step ensures the knowledge doesn't become "orphaned" - it's properly connected to your workspace's navigation structure.
+此步骤确保知识不会成为"孤岛" - 它与工作区的导航结构正确连接。
 
-## Content Types
+## 内容类型
 
-Choose appropriate structure based on content:
+根据内容选择适当的结构：
 
-**Concept**: Overview → Definition → Characteristics → Examples → Use Cases → Related
-**How-To**: Overview → Prerequisites → Steps (numbered) → Verification → Troubleshooting → Related
-**Decision**: Context → Decision → Rationale → Options Considered → Consequences → Implementation
-**FAQ**: Short Answer → Detailed Explanation → Examples → When to Use → Related Questions
-**Learning**: What Happened → What Went Well → What Didn't → Root Causes → Learnings → Actions
+**概念**：概述 → 定义 → 特征 → 示例 → 用例 → 相关内容
+
+**操作指南**：概述 → 先决条件 → 步骤（编号）→ 验证 → 故障排除 → 相关内容
+
+**决策**：背景 → 决策 → 理由 → 考虑的选项 → 后果 → 实施
+
+**常见问题**：简短回答 → 详细解释 → 示例 → 何时使用 → 相关问题
+
+**学习**：发生了什么 → 做得好的地方 → 不足之处 → 根本原因 → 学习成果 → 行动
 
 
-## Destination Patterns
+## 目标位置模式
 
-**General Wiki**: Standalone page → add to index → tag → link from related pages
+**通用 Wiki**：独立页面 → 添加到索引 → 标记 → 从相关页面链接
 
-**Project Wiki**: Child of project page → link from project overview → tag with project name
+**项目 Wiki**：项目页面的子页面 → 从项目概述链接 → 用项目名称标记
 
-**Documentation Database**: Use properties (Title, Type, Category, Tags, Last Updated, Owner)
+**文档数据库**：使用属性（标题、类型、类别、标签、最后更新、所有者）
 
-**Decision Log Database**: Use properties (Decision, Date, Status, Domain, Deciders, Impact)
+**决策日志数据库**：使用属性（决策、日期、状态、领域、决策者、影响）
 
-**FAQ Database**: Use properties (Question, Category, Tags, Last Reviewed, Useful Count)
+**常见问题数据库**：使用属性（问题、类别、标签、最后审查、有用计数）
 
-See [reference/database-best-practices.md](reference/database-best-practices.md) for database selection guide and individual schema files.
+有关数据库选择指南和单独的模式文件，请参阅 [reference/database-best-practices.md](reference/database-best-practices.md)。
 
-## Content Extraction from Conversations
+## 从对话中提取内容
 
-**Chat Discussion**: Key points, conclusions, resources, action items, Q&A
+**聊天讨论**：关键点、结论、资源、行动项、问答
 
-**Problem-Solving**: Problem statement, approaches tried, solution, why it worked, future considerations
+**问题解决**：问题陈述、尝试的方法、解决方案、为什么有效、未来考虑
 
-**Knowledge Sharing**: Concept explained, examples, best practices, common pitfalls, resources
+**知识分享**：解释的概念、示例、最佳实践、常见陷阱、资源
 
-**Decision Discussion**: Question, options, trade-offs, decision, rationale, next steps
+**决策讨论**：问题、选项、权衡、决策、理由、下一步
 
-## Formatting Best Practices
+## 格式化最佳实践
 
-**Structure**: Use `#` (title), `##` (sections), `###` (subsections) consistently
+**结构**：一致使用 `#`（标题）、`##`（章节）、`###`（小节）
 
-**Writing**: Start with overview, use bullets, keep paragraphs short, add examples
+**写作**：从概述开始，使用项目符号，保持段落简短，添加示例
 
-**Linking**: Link related pages, mention people, reference resources, create bidirectional links
+**链接**：链接相关页面、提及人员、引用资源、创建双向链接
 
-**Metadata**: Include date, author, tags, status
+**元数据**：包括日期、作者、标签、状态
 
-**Searchability**: Clear titles, natural keywords, common search tags, image alt-text
+**可搜索性**：清晰的标题、自然关键词、常见搜索标签、图片替代文本
 
-## Indexing and Organization
+## 索引和组织
 
-**Wiki Index**: Organize by sections (Getting Started, How-To Guides, Reference, FAQs, Decisions) with page links
+**Wiki 索引**：按章节组织（入门、操作指南、参考、常见问题、决策）并包含页面链接
 
-**Category Pages**: Create landing pages with overview, doc links, and recent updates
+**类别页面**：创建包含概述、文档链接和最近更新的着陆页面
 
-**Tagging Strategy**: Use consistent tags for technology/tools, topics, audience, and status
+**标记策略**：为技术/工具、主题、受众和状态使用一致的标签
 
-## Update Management
+## 更新管理
 
-**Create New**: Content is substantive (>2 paragraphs), will be referenced multiple times, part of knowledge base, needs independent discovery
+**创建新内容**：内容充实（>2 段）、将被多次引用、知识库的一部分、需要独立发现
 
-**Update Existing**: Adding to existing topic, correcting info, expanding concept, updating for changes
+**更新现有内容**：添加到现有主题、更正信息、扩展概念、更新变更
 
-**Versioning**: Add update history section for significant changes (date, author, what changed, why)
+**版本控制**：为重大变更添加更新历史部分（日期、作者、更改内容、原因）
 
-## Best Practices
+## 最佳实践
 
-1. **Capture promptly**: Document while context is fresh
-2. **Structure consistently**: Use templates for similar content
-3. **Link extensively**: Connect related knowledge
-4. **Write for discovery**: Use searchable titles and tags
-5. **Include context**: Why this matters, when to use
-6. **Add examples**: Concrete examples aid understanding
-7. **Maintain**: Review and update periodically
-8. **Get feedback**: Ask if documentation is helpful
+1. **及时捕获**：在上下文新鲜时记录
+2. **一致结构**：对相似内容使用模板
+3. **广泛链接**：连接相关知识
+4. **为发现而写**：使用可搜索的标题和标签
+5. **包含上下文**：为什么这很重要、何时使用
+6. **添加示例**：具体示例有助于理解
+7. **维护**：定期审查和更新
+8. **获取反馈**：询问文档是否有帮助
 
-## Advanced Features
+## 高级功能
 
-**Documentation databases**: See [reference/database-best-practices.md](reference/database-best-practices.md) for database schema patterns.
+**文档数据库**：有关数据库模式，请参阅 [reference/database-best-practices.md](reference/database-best-practices.md)。
 
-## Common Issues
+## 常见问题
 
-**"Not sure where to save"**: Default to general wiki, can move later
-**"Content is fragmentary"**: Group related fragments into cohesive doc
-**"Already exists"**: Search first, update existing if appropriate
-**"Too informal"**: Clean up language while preserving insights
+**"不确定保存到哪里"**：默认为通用 wiki，可以稍后移动
 
-## Examples
+**"内容零散"**：将相关片段组合成连贯的文档
 
-See [examples/](examples/) for complete workflows:
-- [examples/conversation-to-faq.md](examples/conversation-to-faq.md) - FAQ from Q&A
-- [examples/decision-capture.md](examples/decision-capture.md) - Decision record
-- [examples/how-to-guide.md](examples/how-to-guide.md) - How-to from discussion
+**"已存在"**：先搜索，如果合适则更新现有内容
+
+**"太非正式"**：在保留见解的同时清理语言
+
+## 示例
+
+有关完整工作流程，请参阅 [examples/](examples/)：
+- [examples/conversation-to-faq.md](examples/conversation-to-faq.md) - 从问答创建常见问题
+- [examples/decision-capture.md](examples/decision-capture.md) - 决策记录
+- [examples/how-to-guide.md](examples/how-to-guide.md) - 从讨论创建操作指南
 

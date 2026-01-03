@@ -1,37 +1,36 @@
-# Comparison Format
+# 比较格式
 
-**When to use**:
-- Evaluating multiple options
-- Tool/vendor selection
-- Approach comparison
-- Decision support
+**何时使用**：
+- 评估多个选项
+- 工具/供应商选择
+- 方法比较
+- 决策支持
 
-## Characteristics
+## 特征
 
-**Length**: 800-1200 words typically
+**长度**：通常 800-1200 字
 
-**Structure**:
-- Overview of what's being compared
-- Comparison matrix table
-- Detailed analysis per option (pros/cons)
-- Clear recommendation with rationale
-- Sources
+**结构**：
+- 比较内容概述
+- 比较矩阵表
+- 每个选项的详细分析（优缺点）
+- 带有理由的明确建议
+- 来源
 
-## Template
+## 模板
 
-See [comparison-template.md](comparison-template.md) for the full template.
+完整模板请参阅 [comparison-template.md](comparison-template.md)。
 
-## Best For
+## 最适用于
 
-- Decision support with multiple options
-- Tool or vendor selection
-- Comparing different technical approaches
-- Evaluating trade-offs between alternatives
+- 具有多个选项的决策支持
+- 工具或供应商选择
+- 比较不同的技术方法
+- 评估替代方案之间的权衡
 
-## Example Use Cases
+## 示例用例
 
-- "Compare the three database options discussed in our tech docs"
-- "What are the pros and cons of each deployment approach?"
-- "Compare the vendor proposals"
-- "Evaluate the different authentication methods we've documented"
-
+- "比较我们技术文档中讨论的三个数据库选项"
+- "每种部署方法的优缺点是什么？"
+- "比较供应商提案"
+- "评估我们已记录的不同身份验证方法"

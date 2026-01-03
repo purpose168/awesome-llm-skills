@@ -1,159 +1,154 @@
 ---
 name: raffle-winner-picker
-description: Picks random winners from lists, spreadsheets, or Google Sheets for giveaways, raffles, and contests. Ensures fair, unbiased selection with transparency.
+description: 从列表、电子表格或Google Sheets中随机选择获奖者，用于赠品、抽奖和比赛。确保公平、无偏见的选择，并保持透明度。
 ---
 
-# Raffle Winner Picker
+# 抽奖获奖者选择器
 
-This skill randomly selects winners from lists, spreadsheets, or Google Sheets for giveaways and contests.
+此技能从列表、电子表格或Google Sheets中随机选择获奖者，用于赠品和比赛。
 
-## When to Use This Skill
+## 何时使用此技能
 
-- Running social media giveaways
-- Picking raffle winners at events
-- Randomly selecting participants for surveys or tests
-- Choosing winners from contest submissions
-- Fair distribution of limited spots or resources
-- Random team assignments
+- 运行社交媒体赠品活动
+- 在活动中抽取抽奖获奖者
+- 随机选择调查或测试的参与者
+- 从比赛提交作品中选择获奖者
+- 公平分配有限名额或资源
+- 随机团队分配
 
-## What This Skill Does
+## 此技能的功能
 
-1. **Random Selection**: Uses cryptographically random selection
-2. **Multiple Sources**: Works with CSV, Excel, Google Sheets, or plain lists
-3. **Multiple Winners**: Can pick one or multiple winners
-4. **Duplicate Prevention**: Ensures the same person can't win twice
-5. **Transparent Results**: Shows the selection process clearly
-6. **Winner Details**: Displays all relevant information about winners
+1. **随机选择**：使用加密随机选择
+2. **多种来源**：支持CSV、Excel、Google Sheets或纯列表
+3. **多个获奖者**：可以选择一个或多个获奖者
+4. **防止重复**：确保同一人不能两次获奖
+5. **透明结果**：清晰显示选择过程
+6. **获奖者详情**：显示关于获奖者的所有相关信息
 
-## How to Use
+## 如何使用
 
-### From Google Sheets
-
-```
-Pick a random row from this Google Sheet to select a winner 
-for a giveaway: [Sheet URL]
-```
-
-### From Local File
+### 从Google Sheets
 
 ```
-Pick 3 random winners from entries.csv
+从此Google Sheet中随机选择一行以选择赠品获奖者：[Sheet URL]
 ```
 
-### From List
+### 从本地文件
 
 ```
-Pick a random winner from this list:
+从entries.csv中随机选择3个获奖者
+```
+
+### 从列表
+
+```
+从此列表中随机选择一个获奖者：
 - Alice (alice@email.com)
 - Bob (bob@email.com)
 - Carol (carol@email.com)
 ...
 ```
 
-### Multiple Winners
+### 多个获奖者
 
 ```
-Pick 5 random winners from contest-entries.xlsx, 
-make sure no duplicates
+从contest-entries.xlsx中随机选择5个获奖者，确保无重复
 ```
 
-## Example
+## 示例
 
-**User**: "Pick a random row from this Google Sheet to select a winner for a giveaway."
+**用户**："从此Google Sheet中随机选择一行以选择赠品获奖者。"
 
-**Output**:
+**输出**：
 ```
-Accessing Google Sheet...
-Total entries found: 247
+正在访问Google Sheet...
+找到的总条目数：247
 
-Randomly selecting winner...
+正在随机选择获奖者...
 
-🎉 WINNER SELECTED! 🎉
+🎉 已选择获奖者！🎉
 
-Row #142
-Name: Sarah Johnson
-Email: sarah.j@email.com
-Entry Date: March 10, 2024
-Comment: "Love your newsletter!"
+第142行
+姓名：Sarah Johnson
+邮箱：sarah.j@email.com
+参与日期：2024年3月10日
+评论："喜欢您的通讯！"
 
-Selection method: Cryptographically random
-Timestamp: 2024-03-15 14:32:18 UTC
+选择方法：加密随机
+时间戳：2024-03-15 14:32:18 UTC
 
-Would you like to:
-- Pick another winner (excluding Sarah)?
-- Export winner details?
-- Pick runner-ups?
-```
-
-**Inspired by:** Lenny's use case - picking a Sora 2 giveaway winner from his subscriber Slack community
-
-## Features
-
-### Fair Selection
-- Uses secure random number generation
-- No bias or patterns
-- Transparent process
-- Repeatable with seed (for verification)
-
-### Exclusions
-```
-Pick a random winner excluding previous winners: 
-Alice, Bob, Carol
+您想要：
+- 选择另一个获奖者（排除Sarah）？
+- 导出获奖者详情？
+- 选择候补获奖者？
 ```
 
-### Weighted Selection
+**灵感来源**：Lenny的使用案例 - 从他的订阅者Slack社区中选择Sora 2赠品获奖者
+
+## 功能
+
+### 公平选择
+- 使用安全随机数生成
+- 无偏见或模式
+- 透明过程
+- 可使用种子重复（用于验证）
+
+### 排除
 ```
-Pick a winner with weighted probability based on 
-the "entries" column (1 entry = 1 ticket)
+随机选择一个获奖者，排除之前的获奖者：Alice, Bob, Carol
 ```
 
-### Runner-ups
+### 加权选择
 ```
-Pick 1 winner and 3 runner-ups from the list
+根据"entries"列选择加权概率的获奖者（1个条目=1张票）
 ```
 
-## Example Workflows
+### 候补获奖者
+```
+从列表中选择1个获奖者和3个候补获奖者
+```
 
-### Social Media Giveaway
-1. Export entries from Google Form to Sheets
-2. "Pick a random winner from [Sheet URL]"
-3. Verify winner details
-4. Announce publicly with timestamp
+## 示例工作流程
 
-### Event Raffle
-1. Create CSV of attendee names and emails
-2. "Pick 10 random winners from attendees.csv"
-3. Export winner list
-4. Email winners directly
+### 社交媒体赠品
+1. 将Google表单中的条目导出到Sheets
+2. "从[Sheet URL]中随机选择一个获奖者"
+3. 验证获奖者详情
+4. 带时间戳公开发布
 
-### Team Assignment
-1. Have list of participants
-2. "Randomly split this list into 4 equal teams"
-3. Review assignments
-4. Share team rosters
+### 活动抽奖
+1. 创建参与者姓名和邮箱的CSV
+2. "从attendees.csv中随机选择10个获奖者"
+3. 导出获奖者列表
+4. 直接给获奖者发送邮件
 
-## Tips
+### 团队分配
+1. 获取参与者列表
+2. "将此列表随机分成4个相等的团队"
+3. 审查分配
+4. 分享团队名单
 
-- **Document the process**: Save the timestamp and method
-- **Public announcement**: Share selection details for transparency
-- **Check eligibility**: Verify winner meets contest rules
-- **Have backups**: Pick runner-ups in case winner is ineligible
-- **Export results**: Save winner list for records
+## 提示
 
-## Privacy & Fairness
+- **记录过程**：保存时间戳和方法
+- **公开发布**：分享选择细节以保持透明度
+- **检查资格**：验证获奖者符合比赛规则
+- **准备备选**：选择候补获奖者以防获奖者不符合资格
+- **导出结果**：保存获奖者列表以供记录
 
-✓ Uses cryptographically secure randomness
-✓ No manipulation possible
-✓ Timestamp recorded for verification
-✓ Can provide seed for third-party verification
-✓ Respects data privacy
+## 隐私与公平性
 
-## Common Use Cases
+✓ 使用加密安全的随机性
+✓ 无法操纵
+✓ 记录时间戳以供验证
+✓ 可提供种子供第三方验证
+✓ 尊重数据隐私
 
-- Newsletter subscriber giveaways
-- Product launch raffles
-- Conference ticket drawings
-- Beta tester selection
-- Focus group participant selection
-- Random prize distribution at events
+## 常见用例
 
+- 通讯订阅者赠品
+- 产品发布抽奖
+- 会议门票抽奖
+- Beta测试者选择
+- 焦点小组参与者选择
+- 活动中的随机奖品分发

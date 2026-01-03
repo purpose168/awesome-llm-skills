@@ -1,10 +1,10 @@
-# Advanced Search Techniques
+# 高级搜索技术
 
-## Search Filtering
+## 搜索过滤
 
-### By Date Range
+### 按日期范围
 
-Use `created_date_range` to find recent content:
+使用 `created_date_range` 查找近期内容：
 
 ```
 filters: {
@@ -15,14 +15,14 @@ filters: {
 }
 ```
 
-**When to use**:
-- Finding recent updates on a topic
-- Focusing on current information
-- Excluding outdated content
+**何时使用**：
+- 查找主题的近期更新
+- 专注于当前信息
+- 排除过时内容
 
-### By Creator
+### 按创建者
 
-Use `created_by_user_ids` to find content from specific people:
+使用 `created_by_user_ids` 查找特定人员的内容：
 
 ```
 filters: {
@@ -30,14 +30,14 @@ filters: {
 }
 ```
 
-**When to use**:
-- Research from subject matter experts
-- Team-specific information
-- Attribution tracking
+**何时使用**：
+- 从主题专家研究
+- 团队特定信息
+- 归因跟踪
 
-### Combined Filters
+### 组合过滤
 
-Stack filters for precision:
+堆叠过滤器以提高精确度：
 
 ```
 filters: {
@@ -48,165 +48,165 @@ filters: {
 }
 ```
 
-## Scoped Searches
+## 范围搜索
 
-### Teamspace Scoping
+### 团队空间范围
 
-Restrict search to specific teamspace:
+将搜索限制到特定团队空间：
 
 ```
 teamspace_id: "teamspace-uuid"
 ```
 
-**When to use**:
-- Project-specific research
-- Department-focused information
-- Reducing noise from irrelevant results
+**何时使用**：
+- 项目特定研究
+- 部门专注信息
+- 减少来自不相关结果的噪音
 
-### Page Scoping
+### 页面范围
 
-Search within a specific page and its subpages:
+在特定页面及其子页面内搜索：
 
 ```
 page_url: "https://notion.so/workspace/Page-Title-uuid"
 ```
 
-**When to use**:
-- Research within a project hierarchy
-- Documentation updates
-- Focused investigation
+**何时使用**：
+- 在项目层次结构内研究
+- 文档更新
+- 专注调查
 
-### Database Scoping
+### 数据库范围
 
-Search within a database's content:
+在数据库内容内搜索：
 
 ```
 data_source_url: "collection://data-source-uuid"
 ```
 
-**When to use**:
-- Task/project database research
-- Structured data investigation
-- Finding specific entries
+**何时使用**：
+- 任务/项目数据库研究
+- 结构化数据调查
+- 查找特定条目
 
-## Search Strategies
+## 搜索策略
 
-### Broad to Narrow
+### 从宽泛到精确
 
-1. Start with general search term
-2. Review results for relevant teamspaces/pages
-3. Re-search with scope filters
-4. Fetch detailed content from top results
+1. 从通用搜索词开始
+2. 审查相关团队空间/页面的结果
+3. 使用范围过滤器重新搜索
+4. 从顶级结果获取详细内容
 
-**Example**:
+**示例**：
 ```
-Search 1: query="API integration" → 50 results across workspace
-Search 2: query="API integration", teamspace_id="engineering" → 12 results
-Fetch: Top 3-5 most relevant pages
-```
-
-### Multi-Query Approach
-
-Run parallel searches with related terms:
-
-```
-Query 1: "API integration"
-Query 2: "API authentication"
-Query 3: "API documentation"
+搜索 1：query="API integration" → 工作区 50 个结果
+搜索 2：query="API integration", teamspace_id="engineering" → 12 个结果
+获取：最相关的 3-5 个页面
 ```
 
-Combine results to build comprehensive picture.
+### 多查询方法
 
-### Temporal Research
-
-Search across time periods to track evolution:
+使用相关术语运行并行搜索：
 
 ```
-Search 1: created_date_range 2023 → Historical context
-Search 2: created_date_range 2024 → Recent developments
-Search 3: created_date_range 2025 → Current state
+查询 1："API integration"
+查询 2："API authentication"
+查询 3："API documentation"
 ```
 
-## Result Processing
+结合结果以构建全面图景。
 
-### Identifying Relevant Results
+### 时间研究
 
-Look for:
-- **High semantic match**: Result summary closely matches query intent
-- **Recent updates**: Last-edited date is recent
-- **Authoritative sources**: Created by known experts or in official locations
-- **Comprehensive content**: Result summary suggests detailed information
+跨时间段搜索以跟踪演变：
 
-### Prioritizing Fetches
+```
+搜索 1：created_date_range 2023 → 历史上下文
+搜索 2：created_date_range 2024 → 近期发展
+搜索 3：created_date_range 2025 → 当前状态
+```
 
-Fetch pages in order of relevance:
+## 结果处理
 
-1. **Primary sources**: Direct documentation, official pages
-2. **Recent updates**: Newly edited content
-3. **Related context**: Supporting information
-4. **Historical reference**: Background and context
+### 识别相关结果
 
-Don't fetch everything - be selective based on research needs.
+查找：
+- **高语义匹配**：结果摘要紧密匹配查询意图
+- **近期更新**：最后编辑日期是近期的
+- **权威来源**：由已知专家或在官方位置创建
+- **全面内容**：结果摘要建议详细信息
 
-### Handling Too Many Results
+### 优先获取
 
-If search returns 20+ results:
+按相关性顺序获取页面：
 
-1. **Add filters**: Narrow by date, creator, or teamspace
-2. **Refine query**: Use more specific terms
-3. **Use page scoping**: Search within relevant parent page
-4. **Sample strategically**: Fetch diverse results (recent, popular, authoritative)
+1. **主要来源**：直接文档、官方页面
+2. **近期更新**：新编辑的内容
+3. **相关上下文**：支持信息
+4. **历史参考**：背景和上下文
 
-### Handling Too Few Results
+不要获取所有内容 - 根据研究需求选择性获取。
 
-If search returns < 3 results:
+### 处理过多结果
 
-1. **Broaden query**: Use more general terms
-2. **Remove filters**: Search full workspace
-3. **Try synonyms**: Alternative terminology
-4. **Search in related areas**: Adjacent teamspaces or pages
+如果搜索返回 20+ 个结果：
 
-## Search Quality
+1. **添加过滤器**：按日期、创建者或团队空间缩小范围
+2. **优化查询**：使用更具体的术语
+3. **使用页面范围**：在相关父页面内搜索
+4. **策略性采样**：获取多样化结果（近期、热门、权威）
 
-### Effective Search Queries
+### 处理过少结果
 
-**Good queries** (specific, semantic):
-- "Q4 product roadmap"
-- "authentication implementation guide"
-- "customer feedback themes"
+如果搜索返回 < 3 个结果：
 
-**Weak queries** (too vague):
+1. **扩大查询**：使用更通用的术语
+2. **移除过滤器**：搜索整个工作区
+3. **尝试同义词**：替代术语
+4. **在相关区域搜索**：相邻团队空间或页面
+
+## 搜索质量
+
+### 有效的搜索查询
+
+**好的查询**（具体、语义）：
+- "Q4 产品路线图"
+- "身份验证实施指南"
+- "客户反馈主题"
+
+**弱的查询**（太模糊）：
 - "roadmap"
 - "guide"
 - "feedback"
 
-**Over-specific queries** (too narrow):
-- "Q4 2024 product roadmap for mobile app version 3.2 feature X"
+**过度具体的查询**（太狭窄）：
+- "Q4 2024 年移动应用版本 3.2 功能 X 的产品路线图"
 
-### User Context
+### 用户上下文
 
-Always use available user context:
-- Query should match their terminology
-- Scope to their relevant teamspaces
-- Consider their role/department
-- Reference their recent pages
+始终使用可用的用户上下文：
+- 查询应匹配他们的术语
+- 范围到他们相关的团队空间
+- 考虑他们的角色/部门
+- 引用他们的近期页面
 
-## Connected Sources
+## 连接的来源
 
-### Notion Integrations
+### Notion 集成
 
-Search extends beyond Notion pages to:
-- Slack messages (if connected)
-- Google Drive documents (if connected)
-- GitHub issues/PRs (if connected)
-- Jira tickets (if connected)
+搜索扩展到 Notion 页面之外：
+- Slack 消息（如果已连接）
+- Google Drive 文档（如果已连接）
+- GitHub 问题/PR（如果已连接）
+- Jira 工单（如果已连接）
 
-Be aware results may come from these sources.
+注意结果可能来自这些来源。
 
-### Source Attribution
+### 来源归因
 
-When citing results from connected sources:
-- Note the source type in documentation
-- Use appropriate mention format
-- Verify user has access to the source system
+当引用来自连接来源的结果时：
+- 在文档中注明来源类型
+- 使用适当的提及格式
+- 验证用户对源系统的访问权限
 

@@ -1,62 +1,62 @@
-# Example: Market Research
+# 示例：市场研究
 
-**User Request**: "Research the current state of AI coding assistants market and create a summary document in Notion"
+**用户请求**："研究 AI 编码助手市场的当前状态并在 Notion 中创建摘要文档"
 
-## Workflow
+## 工作流程
 
-### 1. Search
+### 1. 搜索
 ```
 Notion:notion-search
 query: "AI coding assistants market"
 ```
-Found 3 relevant pages across Engineering, Strategy, and Product teamspaces.
+在工程、策略和产品团队空间中找到 3 个相关页面。
 
-### 2. Fetch & Analyze
+### 2. 获取和分析
 ```
 Notion:notion-fetch (3x)
 ```
-Extracted market size, competitive landscape, technology trends from source pages.
+从源页面提取市场规模、竞争格局和技术趋势。
 
-### 3. Create Documentation
+### 3. 创建文档
 ```
 Notion:notion-create-pages
 ```
 
-## Output (Condensed)
+## 输出（精简版）
 
 ```markdown
-# AI Coding Assistants Market Research - Oct 2025
+# AI 编码助手市场研究 - 2025年10月
 
-## Executive Summary
-The AI coding assistant market is experiencing 150%+ YoY growth. GitHub Copilot dominates with 60% share, but specialized tools are gaining traction in specific niches.
+## 执行摘要
+AI 编码助手市场正经历 150%+ 的同比增长。GitHub Copilot 以 60% 的份额占据主导地位，但专业工具在特定细分领域正在获得关注。
 
-## Key Findings
+## 关键发现
 
-### Market Size and Growth
-$800M in 2024 → $2.5B projected by 2026. Developer adoption: 23% (2023) → 47% (2024).
-Source: <mention-page url="...">Market Trends Q3 2025</mention-page>
+### 市场规模和增长
+2024 年 $8 亿 → 2026 年预计 $25 亿。开发者采用率：23%（2023 年）→ 47%（2024 年）。
+来源：<mention-page url="...">市场趋势 Q3 2025</mention-page>
 
-### Competitive Landscape
-- GitHub Copilot: 60% (strong IDE integration)
-- Cursor: 15% (rapid growth, full IDE)
-- Tabnine: 10% (enterprise, on-premise)
-- Cody: 5% (codebase-aware)
-- CodeWhisperer: 8% (AWS integration)
-Source: <mention-page url="...">AI Tools Competitive Analysis</mention-page>
+### 竞争格局
+- GitHub Copilot：60%（强大的 IDE 集成）
+- Cursor：15%（快速增长，完整 IDE）
+- Tabnine：10%（企业，本地部署）
+- Cody：5%（代码库感知）
+- CodeWhisperer：8%（AWS 集成）
+来源：<mention-page url="...">AI 工具竞争分析</mention-page>
 
-### Technology Trends
-Key differentiators: context awareness, customization, multi-modal interfaces, code verification.
-Source: <mention-page url="...">Developer Tools Landscape</mention-page>
+### 技术趋势
+关键差异化因素：上下文感知、定制化、多模态界面、代码验证。
+来源：<mention-page url="...">开发者工具格局</mention-page>
 
-## Next Steps
-1. Monitor Cursor growth and feature releases
-2. Evaluate Cody's codebase-aware capabilities
-3. Document enterprise security/compliance requirements
-4. Track pricing trends
+## 后续步骤
+1. 监控 Cursor 的增长和功能发布
+2. 评估 Cody 的代码库感知能力
+3. 记录企业安全/合规要求
+4. 跟踪定价趋势
 ```
 
-## Key Takeaways
-- Found relevant pages across multiple teamspaces
-- Synthesized competitive, market, and technical perspectives
-- Used proper citations linking to source pages
-- Created actionable recommendations
+## 关键要点
+- 在多个团队空间中找到相关页面
+- 综合了竞争、市场和技术视角
+- 使用适当的引用链接到源页面
+- 创建了可操作的建议

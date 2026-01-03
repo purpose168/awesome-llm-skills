@@ -1,49 +1,48 @@
-# Research Summary Template
+# 研究摘要模板
 
-Use this for most research requests. See [research-summary-format.md](research-summary-format.md) for when to use this format.
+用于大多数研究请求。有关何时使用此格式的信息，请参阅 [research-summary-format.md](research-summary-format.md)。
 
 ```markdown
-# [Topic Name]
+# [主题名称]
 
-## Executive Summary
-[2-3 sentence overview of key findings and implications]
+## 执行摘要
+[2-3 句话概述关键发现和影响]
 
-## Key Findings
+## 关键发现
 
-### Finding 1: [Clear headline]
-[Details and supporting evidence]
-- Source: <mention-page url="...">Original Page</mention-page>
+### 发现 1：[清晰的标题]
+[详细信息和支持证据]
+- 来源：<mention-page url="...">原始页面</mention-page>
 
-### Finding 2: [Clear headline]
-[Details and supporting evidence]
-- Source: <mention-page url="...">Original Page</mention-page>
+### 发现 2：[清晰的标题]
+[详细信息和支持证据]
+- 来源：<mention-page url="...">原始页面</mention-page>
 
-### Finding 3: [Clear headline]
-[Details and supporting evidence]
-- Source: <mention-page url="...">Original Page</mention-page>
+### 发现 3：[清晰的标题]
+[详细信息和支持证据]
+- 来源：<mention-page url="...">原始页面</mention-page>
 
-## Detailed Analysis
+## 详细分析
 
-### [Section 1]
-[In-depth discussion of first major theme]
+### [章节 1]
+[深入讨论第一个主要主题]
 
-### [Section 2]
-[In-depth discussion of second major theme]
+### [章节 2]
+[深入讨论第二个主要主题]
 
-## Conclusions
+## 结论
 
-[Summary of implications and insights]
+[总结影响和见解]
 
-## Next Steps
+## 后续步骤
 
-1. [Actionable recommendation]
-2. [Actionable recommendation]
-3. [Actionable recommendation]
+1. [可操作的建议]
+2. [可操作的建议]
+3. [可操作的建议]
 
-## Sources
+## 来源
 
-- <mention-page url="...">Page Title</mention-page>
-- <mention-page url="...">Page Title</mention-page>
-- <mention-page url="...">Page Title</mention-page>
+- <mention-page url="...">页面标题</mention-page>
+- <mention-page url="...">页面标题</mention-page>
+- <mention-page url="...">页面标题</mention-page>
 ```
-

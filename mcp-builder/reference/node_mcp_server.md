@@ -1,33 +1,33 @@
-# Node/TypeScript MCP Server Implementation Guide
+# Node/TypeScript MCP 服务器实现指南
 
-## Overview
+## 概述
 
-This document provides Node/TypeScript-specific best practices and examples for implementing MCP servers using the MCP TypeScript SDK. It covers project structure, server setup, tool registration patterns, input validation with Zod, error handling, and complete working examples.
+本文档提供了使用 MCP TypeScript SDK 实现 MCP 服务器的 Node/TypeScript 特定最佳实践和示例。它涵盖了项目结构、服务器设置、工具注册模式、使用 Zod 进行输入验证、错误处理以及完整的工作示例。
 
 ---
 
-## Quick Reference
+## 快速参考
 
-### Key Imports
+### 关键导入
 ```typescript
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { z } from "zod";
-import axios, { AxiosError } from "axios";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"; // 导入 MCP 服务器核心类
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"; // 导入标准输入输出传输
+import { z } from "zod"; // 导入 Zod 用于输入验证
+import axios, { AxiosError } from "axios"; // 导入 Axios 用于 HTTP 请求
 ```
 
-### Server Initialization
+### 服务器初始化
 ```typescript
 const server = new McpServer({
-  name: "service-mcp-server",
-  version: "1.0.0"
+  name: "service-mcp-server", // 服务器名称，格式为 {service}-mcp-server
+  version: "1.0.0" // 服务器版本号
 });
 ```
 
-### Tool Registration Pattern
+### 工具注册模式
 ```typescript
 server.registerTool("tool_name", {...config}, async (params) => {
-  // Implementation
+  // 工具实现代码
 });
 ```
 
@@ -35,152 +35,155 @@ server.registerTool("tool_name", {...config}, async (params) => {
 
 ## MCP TypeScript SDK
 
-The official MCP TypeScript SDK provides:
-- `McpServer` class for server initialization
-- `registerTool` method for tool registration
-- Zod schema integration for runtime input validation
-- Type-safe tool handler implementations
+官方 MCP TypeScript SDK 提供以下功能：
+- `McpServer` 类用于服务器初始化
+- `registerTool` 方法用于工具注册
+- Zod 模式集成用于运行时输入验证
+- 类型安全的工具处理器实现
 
-See the MCP SDK documentation in the references for complete details.
+有关完整详细信息，请参阅参考资料中的 MCP SDK 文档。
 
-## Server Naming Convention
+## 服务器命名约定
 
-Node/TypeScript MCP servers must follow this naming pattern:
-- **Format**: `{service}-mcp-server` (lowercase with hyphens)
-- **Examples**: `github-mcp-server`, `jira-mcp-server`, `stripe-mcp-server`
+Node/TypeScript MCP 服务器必须遵循以下命名模式：
+- **格式**：`{service}-mcp-server`（小写，使用连字符分隔）
+- **示例**：`github-mcp-server`、`jira-mcp-server`、`stripe-mcp-server`
 
-The name should be:
-- General (not tied to specific features)
-- Descriptive of the service/API being integrated
-- Easy to infer from the task description
-- Without version numbers or dates
+服务器名称应具备以下特点：
+- 通用性（不与特定功能绑定）
+- 能够描述所集成的服务/API
+- 易于从任务描述中推断
+- 不包含版本号或日期
 
-## Project Structure
+## 项目结构
 
-Create the following structure for Node/TypeScript MCP servers:
+为 Node/TypeScript MCP 服务器创建以下结构：
 
 ```
-{service}-mcp-server/
-├── package.json
-├── tsconfig.json
-├── README.md
-├── src/
-│   ├── index.ts          # Main entry point with McpServer initialization
-│   ├── types.ts          # TypeScript type definitions and interfaces
-│   ├── tools/            # Tool implementations (one file per domain)
-│   ├── services/         # API clients and shared utilities
-│   ├── schemas/          # Zod validation schemas
-│   └── constants.ts      # Shared constants (API_URL, CHARACTER_LIMIT, etc.)
-└── dist/                 # Built JavaScript files (entry point: dist/index.js)
+{service}-mcp-server/          # 项目根目录
+├── package.json              # 项目依赖和脚本配置
+├── tsconfig.json             # TypeScript 配置文件
+├── README.md                 # 项目文档
+├── src/                      # 源代码目录
+│   ├── index.ts              # 主入口文件，包含 McpServer 初始化
+│   ├── types.ts              # TypeScript 类型定义和接口
+│   ├── tools/                # 工具实现（按领域划分文件）
+│   ├── services/             # API 客户端和共享工具
+│   ├── schemas/              # Zod 验证模式
+│   └── constants.ts          # 共享常量（API_URL、CHARACTER_LIMIT 等）
+└── dist/                     # 构建后的 JavaScript 文件（入口点：dist/index.js）
 ```
 
-## Tool Implementation
+## 工具实现
 
-### Tool Naming
+### 工具命名
 
-Use snake_case for tool names (e.g., "search_users", "create_project", "get_channel_info") with clear, action-oriented names.
+工具名称使用 snake_case 格式（例如 "search_users"、"create_project"、"get_channel_info"），并采用清晰、面向动作的名称。
 
-**Avoid Naming Conflicts**: Include the service context to prevent overlaps:
-- Use "slack_send_message" instead of just "send_message"
-- Use "github_create_issue" instead of just "create_issue"
-- Use "asana_list_tasks" instead of just "list_tasks"
+**避免命名冲突**：包含服务上下文以防止重叠：
+- 使用 "slack_send_message" 而不是仅使用 "send_message"
+- 使用 "github_create_issue" 而不是仅使用 "create_issue"
+- 使用 "asana_list_tasks" 而不是仅使用 "list_tasks"
 
-### Tool Structure
+### 工具结构
 
-Tools are registered using the `registerTool` method with the following requirements:
-- Use Zod schemas for runtime input validation and type safety
-- The `description` field must be explicitly provided - JSDoc comments are NOT automatically extracted
-- Explicitly provide `title`, `description`, `inputSchema`, and `annotations`
-- The `inputSchema` must be a Zod schema object (not a JSON schema)
-- Type all parameters and return values explicitly
+使用 `registerTool` 方法注册工具时需满足以下要求：
+- 使用 Zod 模式进行运行时输入验证和类型安全
+- 必须显式提供 `description` 字段 - JSDoc 注释不会自动提取
+- 显式提供 `title`、`description`、`inputSchema` 和 `annotations`
+- `inputSchema` 必须是 Zod 模式对象（不是 JSON 模式）
+- 明确为所有参数和返回值指定类型
 
 ```typescript
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
+// 创建 MCP 服务器实例
 const server = new McpServer({
   name: "example-mcp",
   version: "1.0.0"
 });
 
-// Zod schema for input validation
+// 用户搜索输入的 Zod 验证模式
 const UserSearchInputSchema = z.object({
   query: z.string()
-    .min(2, "Query must be at least 2 characters")
-    .max(200, "Query must not exceed 200 characters")
-    .describe("Search string to match against names/emails"),
+    .min(2, "查询字符串至少需要2个字符")
+    .max(200, "查询字符串不能超过200个字符")
+    .describe("用于匹配姓名/邮箱的搜索字符串"),
   limit: z.number()
     .int()
     .min(1)
     .max(100)
     .default(20)
-    .describe("Maximum results to return"),
+    .describe("返回结果的最大数量"),
   offset: z.number()
     .int()
     .min(0)
     .default(0)
-    .describe("Number of results to skip for pagination"),
+    .describe("分页跳过的结果数量"),
   response_format: z.nativeEnum(ResponseFormat)
     .default(ResponseFormat.MARKDOWN)
-    .describe("Output format: 'markdown' for human-readable or 'json' for machine-readable")
-}).strict();
+    .describe("输出格式：'markdown' 用于人类可读或 'json' 用于机器可读")
+}).strict(); // 使用 .strict() 禁止额外字段
 
-// Type definition from Zod schema
+// 从 Zod 模式推断 TypeScript 类型
 type UserSearchInput = z.infer<typeof UserSearchInputSchema>;
 
+// 注册用户搜索工具
 server.registerTool(
-  "example_search_users",
+  "example_search_users", // 工具名称，使用 snake_case 格式
   {
-    title: "Search Example Users",
-    description: `Search for users in the Example system by name, email, or team.
+    title: "搜索示例用户", // 工具标题
+    description: `在 Example 系统中按姓名、邮箱或团队搜索用户。
 
-This tool searches across all user profiles in the Example platform, supporting partial matches and various search filters. It does NOT create or modify users, only searches existing ones.
+此工具搜索 Example 平台上的所有用户配置文件，支持部分匹配和各种搜索筛选器。它不会创建或修改用户，仅搜索现有用户。
 
-Args:
-  - query (string): Search string to match against names/emails
-  - limit (number): Maximum results to return, between 1-100 (default: 20)
-  - offset (number): Number of results to skip for pagination (default: 0)
-  - response_format ('markdown' | 'json'): Output format (default: 'markdown')
+参数：
+  - query (string)：用于匹配姓名/邮箱的搜索字符串
+  - limit (number)：返回结果的最大数量，范围1-100（默认：20）
+  - offset (number)：分页跳过的结果数量（默认：0）
+  - response_format ('markdown' | 'json')：输出格式（默认：'markdown'）
 
-Returns:
-  For JSON format: Structured data with schema:
+返回值：
+  JSON 格式：结构化数据，具有以下 schema：
   {
-    "total": number,           // Total number of matches found
-    "count": number,           // Number of results in this response
-    "offset": number,          // Current pagination offset
+    "total": number,           // 找到的匹配总数
+    "count": number,           // 当前响应中的结果数量
+    "offset": number,          // 当前分页偏移量
     "users": [
       {
-        "id": string,          // User ID (e.g., "U123456789")
-        "name": string,        // Full name (e.g., "John Doe")
-        "email": string,       // Email address
-        "team": string,        // Team name (optional)
-        "active": boolean      // Whether user is active
+        "id": string,          // 用户 ID（例如："U123456789"）
+        "name": string,        // 全名（例如："John Doe"）
+        "email": string,       // 邮箱地址
+        "team": string,        // 团队名称（可选）
+        "active": boolean      // 用户是否活跃
       }
     ],
-    "has_more": boolean,       // Whether more results are available
-    "next_offset": number      // Offset for next page (if has_more is true)
+    "has_more": boolean,       // 是否还有更多结果
+    "next_offset": number      // 下一页的偏移量（如果 has_more 为 true）
   }
 
-Examples:
-  - Use when: "Find all marketing team members" -> params with query="team:marketing"
-  - Use when: "Search for John's account" -> params with query="john"
-  - Don't use when: You need to create a user (use example_create_user instead)
+示例：
+  - 使用场景："查找所有营销团队成员" -> 参数 query="team:marketing"
+  - 使用场景："搜索 John 的账户" -> 参数 query="john"
+  - 不适合场景：需要创建用户时（请改用 example_create_user）
 
-Error Handling:
-  - Returns "Error: Rate limit exceeded" if too many requests (429 status)
-  - Returns "No users found matching '<query>'" if search returns empty`,
-    inputSchema: UserSearchInputSchema,
-    annotations: {
-      readOnlyHint: true,
-      destructiveHint: false,
-      idempotentHint: true,
-      openWorldHint: true
+错误处理：
+  - 如果请求过多（429 状态），返回 "Error: Rate limit exceeded"
+  - 如果搜索结果为空，返回 "No users found matching '<query>'"`,
+    inputSchema: UserSearchInputSchema, // 输入验证模式
+    annotations: { // 工具属性注释
+      readOnlyHint: true,       // 只读操作（不修改数据）
+      destructiveHint: false,   // 非破坏性操作
+      idempotentHint: true,     // 幂等操作（多次调用效果相同）
+      openWorldHint: true       // 开放世界操作（结果可能随时间变化）
     }
   },
+  // 工具实现函数
   async (params: UserSearchInput) => {
     try {
-      // Input validation is handled by Zod schema
-      // Make API request using validated parameters
+      // 输入验证由 Zod 模式自动处理
+      // 使用验证后的参数发出 API 请求
       const data = await makeApiRequest<any>(
         "users/search",
         "GET",
@@ -195,29 +198,30 @@ Error Handling:
       const users = data.users || [];
       const total = data.total || 0;
 
+      // 如果没有找到用户
       if (!users.length) {
         return {
           content: [{
             type: "text",
-            text: `No users found matching '${params.query}'`
+            text: `未找到匹配 '${params.query}' 的用户`
           }]
         };
       }
 
-      // Format response based on requested format
+      // 根据请求的格式格式化响应
       let result: string;
 
       if (params.response_format === ResponseFormat.MARKDOWN) {
-        // Human-readable markdown format
-        const lines: string[] = [`# User Search Results: '${params.query}'`, ""];
-        lines.push(`Found ${total} users (showing ${users.length})`);
+        // 人类可读的 Markdown 格式
+        const lines: string[] = [`# 用户搜索结果: '${params.query}'`, ""];
+        lines.push(`找到 ${total} 个用户（显示 ${users.length} 个）`);
         lines.push("");
 
         for (const user of users) {
           lines.push(`## ${user.name} (${user.id})`);
-          lines.push(`- **Email**: ${user.email}`);
+          lines.push(`- **邮箱**: ${user.email}`);
           if (user.team) {
-            lines.push(`- **Team**: ${user.team}`);
+            lines.push(`- **团队**: ${user.team}`);
           }
           lines.push("");
         }
@@ -225,7 +229,7 @@ Error Handling:
         result = lines.join("\n");
 
       } else {
-        // Machine-readable JSON format
+        // 机器可读的 JSON 格式
         const response: any = {
           total,
           count: users.length,
@@ -235,19 +239,20 @@ Error Handling:
             name: user.name,
             email: user.email,
             ...(user.team ? { team: user.team } : {}),
-            active: user.active ?? true
+            active: user.active ?? true // 使用空值合并运算符设置默认值
           }))
         };
 
-        // Add pagination info if there are more results
+        // 如果有更多结果，添加分页信息
         if (total > params.offset + users.length) {
           response.has_more = true;
           response.next_offset = params.offset + users.length;
         }
 
-        result = JSON.stringify(response, null, 2);
+        result = JSON.stringify(response, null, 2); // 格式化 JSON 输出
       }
 
+      // 返回响应内容
       return {
         content: [{
           type: "text",
@@ -255,6 +260,7 @@ Error Handling:
         }]
       };
     } catch (error) {
+      // 处理错误并返回错误消息
       return {
         content: [{
           type: "text",
@@ -266,131 +272,138 @@ Error Handling:
 );
 ```
 
-## Zod Schemas for Input Validation
+## Zod 输入验证模式
 
-Zod provides runtime type validation:
+Zod 提供运行时类型验证功能：
 
 ```typescript
-import { z } from "zod";
+import { z } from "zod"; // 导入 Zod 库
 
-// Basic schema with validation
+// 基础验证模式
 const CreateUserSchema = z.object({
   name: z.string()
-    .min(1, "Name is required")
-    .max(100, "Name must not exceed 100 characters"),
+    .min(1, "姓名是必填项")
+    .max(100, "姓名不能超过100个字符"),
   email: z.string()
-    .email("Invalid email format"),
+    .email("无效的邮箱格式"),
   age: z.number()
-    .int("Age must be a whole number")
-    .min(0, "Age cannot be negative")
-    .max(150, "Age cannot be greater than 150")
-}).strict();  // Use .strict() to forbid extra fields
+    .int("年龄必须是整数")
+    .min(0, "年龄不能为负数")
+    .max(150, "年龄不能超过150岁")
+}).strict();  // 使用 .strict() 禁止额外字段
 
-// Enums
+// 枚举类型
 enum ResponseFormat {
-  MARKDOWN = "markdown",
-  JSON = "json"
+  MARKDOWN = "markdown", // Markdown 格式
+  JSON = "json" // JSON 格式
 }
 
+// 使用枚举的模式
 const SearchSchema = z.object({
   response_format: z.nativeEnum(ResponseFormat)
-    .default(ResponseFormat.MARKDOWN)
-    .describe("Output format")
+    .default(ResponseFormat.MARKDOWN) // 默认使用 Markdown 格式
+    .describe("输出格式")
 });
 
-// Optional fields with defaults
+// 带默认值的可选字段
 const PaginationSchema = z.object({
   limit: z.number()
     .int()
     .min(1)
     .max(100)
-    .default(20)
-    .describe("Maximum results to return"),
+    .default(20) // 默认返回20条结果
+    .describe("返回结果的最大数量"),
   offset: z.number()
     .int()
     .min(0)
-    .default(0)
-    .describe("Number of results to skip")
+    .default(0) // 默认从第0条结果开始
+    .describe("跳过的结果数量")
 });
 ```
 
-## Response Format Options
+## 响应格式选项
 
-Support multiple output formats for flexibility:
+支持多种输出格式以提高灵活性：
 
 ```typescript
 enum ResponseFormat {
-  MARKDOWN = "markdown",
-  JSON = "json"
+  MARKDOWN = "markdown", // Markdown 格式（人类可读）
+  JSON = "json" // JSON 格式（机器可读）
 }
 
 const inputSchema = z.object({
   query: z.string(),
   response_format: z.nativeEnum(ResponseFormat)
-    .default(ResponseFormat.MARKDOWN)
-    .describe("Output format: 'markdown' for human-readable or 'json' for machine-readable")
+    .default(ResponseFormat.MARKDOWN) // 默认使用 Markdown 格式
+    .describe("输出格式：'markdown' 用于人类可读或 'json' 用于机器可读")
 });
 ```
 
-**Markdown format**:
-- Use headers, lists, and formatting for clarity
-- Convert timestamps to human-readable format
-- Show display names with IDs in parentheses
-- Omit verbose metadata
-- Group related information logically
+**Markdown 格式**：
+- 使用标题、列表和格式化来提高清晰度
+- 将时间戳转换为人类可读的格式
+- 显示显示名称并在括号中包含 ID
+- 省略冗长的元数据
+- 逻辑上对相关信息进行分组
 
-**JSON format**:
-- Return complete, structured data suitable for programmatic processing
-- Include all available fields and metadata
-- Use consistent field names and types
+**JSON 格式**：
+- 返回完整、结构化的数据，适合程序处理
+- 包含所有可用字段和元数据
+- 使用一致的字段名称和类型
 
-## Pagination Implementation
+## 分页实现
 
-For tools that list resources:
+对于列出资源的工具：
 
 ```typescript
+// 分页参数的验证模式
 const ListSchema = z.object({
-  limit: z.number().int().min(1).max(100).default(20),
-  offset: z.number().int().min(0).default(0)
+  limit: z.number().int().min(1).max(100).default(20), // 每页最大结果数
+  offset: z.number().int().min(0).default(0) // 跳过的结果数
 });
 
+// 实现分页逻辑的函数
 async function listItems(params: z.infer<typeof ListSchema>) {
+  // 调用API获取数据
   const data = await apiRequest(params.limit, params.offset);
 
+  // 构建包含分页信息的响应
   const response = {
-    total: data.total,
-    count: data.items.length,
-    offset: params.offset,
-    items: data.items,
-    has_more: data.total > params.offset + data.items.length,
+    total: data.total, // 总结果数
+    count: data.items.length, // 当前页结果数
+    offset: params.offset, // 当前偏移量
+    items: data.items, // 结果数据
+    has_more: data.total > params.offset + data.items.length, // 是否还有更多结果
     next_offset: data.total > params.offset + data.items.length
-      ? params.offset + data.items.length
+      ? params.offset + data.items.length // 下一页的偏移量
       : undefined
   };
 
+  // 返回格式化的JSON响应
   return JSON.stringify(response, null, 2);
 }
 ```
 
-## Character Limits and Truncation
+## 字符限制和截断
 
-Add a CHARACTER_LIMIT constant to prevent overwhelming responses:
+添加一个 CHARACTER_LIMIT 常量来防止响应内容过大：
 
 ```typescript
-// At module level in constants.ts
-export const CHARACTER_LIMIT = 25000;  // Maximum response size in characters
+// 在 constants.ts 模块级别定义
+export const CHARACTER_LIMIT = 25000;  // 响应的最大字符数
 
 async function searchTool(params: SearchInput) {
   let result = generateResponse(data);
 
-  // Check character limit and truncate if needed
+  // 检查字符限制并在需要时截断
   if (result.length > CHARACTER_LIMIT) {
+    // 截断数据，至少保留1项
     const truncatedData = data.slice(0, Math.max(1, data.length / 2));
     response.data = truncatedData;
-    response.truncated = true;
+    response.truncated = true; // 标记响应已被截断
     response.truncation_message =
-      `Response truncated from ${data.length} to ${truncatedData.length} items. ` +
-      `Use 'offset' parameter or add filters to see more results.`;
+      `响应从 ${data.length} 项截断到 ${truncatedData.length} 项。 ` +
+      `请使用 'offset' 参数或添加筛选条件查看更多结果。`;
     result = JSON.stringify(response, null, 2);
   }
 
@@ -398,9 +411,9 @@ async function searchTool(params: SearchInput) {
 }
 ```
 
-## Error Handling
+## 错误处理
 
-Provide clear, actionable error messages:
+提供清晰、可操作的错误消息：
 
 ```typescript
 import axios, { AxiosError } from "axios";
@@ -410,28 +423,28 @@ function handleApiError(error: unknown): string {
     if (error.response) {
       switch (error.response.status) {
         case 404:
-          return "Error: Resource not found. Please check the ID is correct.";
+          return "错误：资源未找到。请检查ID是否正确。";
         case 403:
-          return "Error: Permission denied. You don't have access to this resource.";
+          return "错误：权限被拒绝。您没有访问此资源的权限。";
         case 429:
-          return "Error: Rate limit exceeded. Please wait before making more requests.";
+          return "错误：请求频率超过限制。请稍后再试。";
         default:
-          return `Error: API request failed with status ${error.response.status}`;
+          return `错误：API请求失败，状态码 ${error.response.status}`;
       }
     } else if (error.code === "ECONNABORTED") {
-      return "Error: Request timed out. Please try again.";
+      return "错误：请求超时。请重试。";
     }
   }
-  return `Error: Unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`;
+  return `错误：发生意外错误：${error instanceof Error ? error.message : String(error)}`;
 }
 ```
 
-## Shared Utilities
+## 共享工具
 
-Extract common functionality into reusable functions:
+将通用功能提取到可重用的函数中：
 
 ```typescript
-// Shared API request function
+// 共享的API请求函数
 async function makeApiRequest<T>(
   endpoint: string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
@@ -457,36 +470,36 @@ async function makeApiRequest<T>(
 }
 ```
 
-## Async/Await Best Practices
+## Async/Await 最佳实践
 
-Always use async/await for network requests and I/O operations:
+始终对网络请求和I/O操作使用async/await：
 
 ```typescript
-// Good: Async network request
+// 良好：异步网络请求
 async function fetchData(resourceId: string): Promise<ResourceData> {
   const response = await axios.get(`${API_URL}/resource/${resourceId}`);
   return response.data;
 }
 
-// Bad: Promise chains
+// 不佳：Promise链
 function fetchData(resourceId: string): Promise<ResourceData> {
   return axios.get(`${API_URL}/resource/${resourceId}`)
-    .then(response => response.data);  // Harder to read and maintain
+    .then(response => response.data);  // 可读性和可维护性较差
 }
 ```
 
-## TypeScript Best Practices
+## TypeScript 最佳实践
 
-1. **Use Strict TypeScript**: Enable strict mode in tsconfig.json
-2. **Define Interfaces**: Create clear interface definitions for all data structures
-3. **Avoid `any`**: Use proper types or `unknown` instead of `any`
-4. **Zod for Runtime Validation**: Use Zod schemas to validate external data
-5. **Type Guards**: Create type guard functions for complex type checking
-6. **Error Handling**: Always use try-catch with proper error type checking
-7. **Null Safety**: Use optional chaining (`?.`) and nullish coalescing (`??`)
+1. **使用严格的TypeScript**：在tsconfig.json中启用严格模式
+2. **定义接口**：为所有数据结构创建清晰的接口定义
+3. **避免使用`any`**：使用适当的类型或`unknown`代替`any`
+4. **使用Zod进行运行时验证**：使用Zod模式验证外部数据
+5. **类型守卫**：为复杂类型检查创建类型守卫函数
+6. **错误处理**：始终使用try-catch并进行适当的错误类型检查
+7. **空值安全**：使用可选链（`?.`）和空值合并（`??`）
 
 ```typescript
-// Good: Type-safe with Zod and interfaces
+// 良好：使用Zod和接口实现类型安全
 interface UserResponse {
   id: string;
   name: string;
@@ -507,16 +520,16 @@ type User = z.infer<typeof UserSchema>;
 
 async function getUser(id: string): Promise<User> {
   const data = await apiCall(`/users/${id}`);
-  return UserSchema.parse(data);  // Runtime validation
+  return UserSchema.parse(data);  // 运行时验证
 }
 
-// Bad: Using any
+// 不佳：使用any类型
 async function getUser(id: string): Promise<any> {
-  return await apiCall(`/users/${id}`);  // No type safety
+  return await apiCall(`/users/${id}`);  // 没有类型安全
 }
 ```
 
-## Package Configuration
+## 包配置
 
 ### package.json
 
@@ -524,7 +537,7 @@ async function getUser(id: string): Promise<any> {
 {
   "name": "{service}-mcp-server",
   "version": "1.0.0",
-  "description": "MCP server for {Service} API integration",
+  "description": "用于{Service} API集成的MCP服务器",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -574,15 +587,15 @@ async function getUser(id: string): Promise<any> {
 }
 ```
 
-## Complete Example
+## 完整示例
 
 ```typescript
 #!/usr/bin/env node
 /**
- * MCP Server for Example Service.
+ * Example服务的MCP服务器。
  *
- * This server provides tools to interact with Example API, including user search,
- * project management, and data export capabilities.
+ * 该服务器提供与Example API交互的工具，包括用户搜索、
+ * 项目管理和数据导出功能。
  */
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -590,41 +603,41 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import axios, { AxiosError } from "axios";
 
-// Constants
+// 常量
 const API_BASE_URL = "https://api.example.com/v1";
 const CHARACTER_LIMIT = 25000;
 
-// Enums
+// 枚举
 enum ResponseFormat {
   MARKDOWN = "markdown",
   JSON = "json"
 }
 
-// Zod schemas
+// Zod模式
 const UserSearchInputSchema = z.object({
   query: z.string()
-    .min(2, "Query must be at least 2 characters")
-    .max(200, "Query must not exceed 200 characters")
-    .describe("Search string to match against names/emails"),
+    .min(2, "查询字符串至少需要2个字符")
+    .max(200, "查询字符串不能超过200个字符")
+    .describe("用于匹配姓名/邮箱的搜索字符串"),
   limit: z.number()
     .int()
     .min(1)
     .max(100)
     .default(20)
-    .describe("Maximum results to return"),
+    .describe("返回结果的最大数量"),
   offset: z.number()
     .int()
     .min(0)
     .default(0)
-    .describe("Number of results to skip for pagination"),
+    .describe("分页跳过的结果数量"),
   response_format: z.nativeEnum(ResponseFormat)
     .default(ResponseFormat.MARKDOWN)
-    .describe("Output format: 'markdown' for human-readable or 'json' for machine-readable")
+    .describe("输出格式：'markdown' 用于人类可读或 'json' 用于机器可读")
 }).strict();
 
 type UserSearchInput = z.infer<typeof UserSearchInputSchema>;
 
-// Shared utility functions
+// 共享工具函数
 async function makeApiRequest<T>(
   endpoint: string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
@@ -654,33 +667,33 @@ function handleApiError(error: unknown): string {
     if (error.response) {
       switch (error.response.status) {
         case 404:
-          return "Error: Resource not found. Please check the ID is correct.";
+          return "错误：资源未找到。请检查ID是否正确。";
         case 403:
-          return "Error: Permission denied. You don't have access to this resource.";
+          return "错误：权限被拒绝。您没有访问此资源的权限。";
         case 429:
-          return "Error: Rate limit exceeded. Please wait before making more requests.";
+          return "错误：请求频率超过限制。请稍后再试。";
         default:
-          return `Error: API request failed with status ${error.response.status}`;
+          return `错误：API请求失败，状态码 ${error.response.status}`;
       }
     } else if (error.code === "ECONNABORTED") {
-      return "Error: Request timed out. Please try again.";
+      return "错误：请求超时。请重试。";
     }
   }
-  return `Error: Unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`;
+  return `错误：发生意外错误：${error instanceof Error ? error.message : String(error)}`;
 }
 
-// Create MCP server instance
+// 创建MCP服务器实例
 const server = new McpServer({
   name: "example-mcp",
   version: "1.0.0"
 });
 
-// Register tools
+// 注册工具
 server.registerTool(
   "example_search_users",
   {
-    title: "Search Example Users",
-    description: `[Full description as shown above]`,
+    title: "搜索示例用户",
+    description: `[完整描述如上所示]`,
     inputSchema: UserSearchInputSchema,
     annotations: {
       readOnlyHint: true,
@@ -690,58 +703,58 @@ server.registerTool(
     }
   },
   async (params: UserSearchInput) => {
-    // Implementation as shown above
+    // 实现如上所示
   }
 );
 
-// Main function
+// 主函数
 async function main() {
-  // Verify environment variables if needed
+  // 验证所需的环境变量
   if (!process.env.EXAMPLE_API_KEY) {
-    console.error("ERROR: EXAMPLE_API_KEY environment variable is required");
+    console.error("错误：需要EXAMPLE_API_KEY环境变量");
     process.exit(1);
   }
 
-  // Create transport
+  // 创建传输
   const transport = new StdioServerTransport();
 
-  // Connect server to transport
+  // 将服务器连接到传输
   await server.connect(transport);
 
-  console.error("Example MCP server running via stdio");
+  console.error("示例MCP服务器通过stdio运行中");
 }
 
-// Run the server
+// 运行服务器
 main().catch((error) => {
-  console.error("Server error:", error);
+  console.error("服务器错误：", error);
   process.exit(1);
 });
 ```
 
 ---
 
-## Advanced MCP Features
+## 高级MCP特性
 
-### Resource Registration
+### 资源注册
 
-Expose data as resources for efficient, URI-based access:
+将数据作为资源公开，以实现高效的基于URI的访问：
 
 ```typescript
 import { ResourceTemplate } from "@modelcontextprotocol/sdk/types.js";
 
-// Register a resource with URI template
+// 使用URI模板注册资源
 server.registerResource(
   {
     uri: "file://documents/{name}",
-    name: "Document Resource",
-    description: "Access documents by name",
+    name: "文档资源",
+    description: "通过名称访问文档",
     mimeType: "text/plain"
   },
   async (uri: string) => {
-    // Extract parameter from URI
+    // 从URI中提取参数
     const match = uri.match(/^file:\/\/documents\/(.+)$/);
     if (!match) {
-      throw new Error("Invalid URI format");
+      throw new Error("无效的URI格式");
     }
 
     const documentName = match[1];
@@ -757,7 +770,7 @@ server.registerResource(
   }
 );
 
-// List available resources dynamically
+// 动态列出可用资源
 server.registerResourceList(async () => {
   const documents = await getAvailableDocuments();
   return {
@@ -771,146 +784,146 @@ server.registerResourceList(async () => {
 });
 ```
 
-**When to use Resources vs Tools:**
-- **Resources**: For data access with simple URI-based parameters
-- **Tools**: For complex operations requiring validation and business logic
-- **Resources**: When data is relatively static or template-based
-- **Tools**: When operations have side effects or complex workflows
+**何时使用资源vs工具：**
+- **资源**：用于使用简单基于URI的参数进行数据访问
+- **工具**：用于需要验证和业务逻辑的复杂操作
+- **资源**：当数据相对静态或基于模板时
+- **工具**：当操作具有副作用或复杂工作流时
 
-### Multiple Transport Options
+### 多种传输选项
 
-The TypeScript SDK supports different transport mechanisms:
+TypeScript SDK支持不同的传输机制：
 
 ```typescript
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 
-// Stdio transport (default - for CLI tools)
+// Stdio传输（默认 - 用于CLI工具）
 const stdioTransport = new StdioServerTransport();
 await server.connect(stdioTransport);
 
-// SSE transport (for real-time web updates)
+// SSE传输（用于实时Web更新）
 const sseTransport = new SSEServerTransport("/message", response);
 await server.connect(sseTransport);
 
-// HTTP transport (for web services)
-// Configure based on your HTTP framework integration
+// HTTP传输（用于Web服务）
+// 根据你的HTTP框架集成进行配置
 ```
 
-**Transport selection guide:**
-- **Stdio**: Command-line tools, subprocess integration, local development
-- **HTTP**: Web services, remote access, multiple simultaneous clients
-- **SSE**: Real-time updates, server-push notifications, web dashboards
+**传输选择指南：**
+- **Stdio**：命令行工具、子进程集成、本地开发
+- **HTTP**：Web服务、远程访问、多个同时客户端
+- **SSE**：实时更新、服务器推送通知、Web仪表板
 
-### Notification Support
+### 通知支持
 
-Notify clients when server state changes:
+当服务器状态发生变化时通知客户端：
 
 ```typescript
-// Notify when tools list changes
+// 当工具列表变更时通知
 server.notification({
   method: "notifications/tools/list_changed"
 });
 
-// Notify when resources change
+// 当资源变更时通知
 server.notification({
   method: "notifications/resources/list_changed"
 });
 ```
 
-Use notifications sparingly - only when server capabilities genuinely change.
+请谨慎使用通知 - 仅在服务器功能确实发生变化时使用。
 
 ---
 
-## Code Best Practices
+## 代码最佳实践
 
-### Code Composability and Reusability
+### 代码可组合性和可重用性
 
-Your implementation MUST prioritize composability and code reuse:
+你的实现必须优先考虑可组合性和代码重用：
 
-1. **Extract Common Functionality**:
-   - Create reusable helper functions for operations used across multiple tools
-   - Build shared API clients for HTTP requests instead of duplicating code
-   - Centralize error handling logic in utility functions
-   - Extract business logic into dedicated functions that can be composed
-   - Extract shared markdown or JSON field selection & formatting functionality
+1. **提取通用功能**：
+   - 为跨多个工具使用的操作创建可重用的辅助函数
+   - 构建共享的API客户端用于HTTP请求，而不是重复代码
+   - 将错误处理逻辑集中在工具函数中
+   - 将业务逻辑提取到可以组合的专用函数中
+   - 提取共享的markdown或JSON字段选择和格式化功能
 
-2. **Avoid Duplication**:
-   - NEVER copy-paste similar code between tools
-   - If you find yourself writing similar logic twice, extract it into a function
-   - Common operations like pagination, filtering, field selection, and formatting should be shared
-   - Authentication/authorization logic should be centralized
+2. **避免重复**：
+   - 永远不要在工具之间复制粘贴相似的代码
+   - 如果你发现自己在写两次相似的逻辑，将其提取为函数
+   - 分页、过滤、字段选择和格式化等常见操作应该共享
+   - 身份验证/授权逻辑应该集中管理
 
-## Building and Running
+## 构建和运行
 
-Always build your TypeScript code before running:
+在运行之前，请务必先构建你的TypeScript代码：
 
 ```bash
-# Build the project
+# 构建项目
 npm run build
 
-# Run the server
+# 运行服务器
 npm start
 
-# Development with auto-reload
+# 带自动重载的开发模式
 npm run dev
 ```
 
-Always ensure `npm run build` completes successfully before considering the implementation complete.
+在认为实现完成之前，请务必确保 `npm run build` 能够成功完成。
 
-## Quality Checklist
+## 质量检查清单
 
-Before finalizing your Node/TypeScript MCP server implementation, ensure:
+在完成Node/TypeScript MCP服务器实现之前，请确保：
 
-### Strategic Design
-- [ ] Tools enable complete workflows, not just API endpoint wrappers
-- [ ] Tool names reflect natural task subdivisions
-- [ ] Response formats optimize for agent context efficiency
-- [ ] Human-readable identifiers used where appropriate
-- [ ] Error messages guide agents toward correct usage
+### 战略设计
+- [ ] 工具支持完整的工作流程，而不仅仅是API端点包装器
+- [ ] 工具名称反映自然的任务细分
+- [ ] 响应格式针对代理上下文效率进行了优化
+- [ ] 在适当的地方使用人类可读的标识符
+- [ ] 错误消息指导代理正确使用
 
-### Implementation Quality
-- [ ] FOCUSED IMPLEMENTATION: Most important and valuable tools implemented
-- [ ] All tools registered using `registerTool` with complete configuration
-- [ ] All tools include `title`, `description`, `inputSchema`, and `annotations`
-- [ ] Annotations correctly set (readOnlyHint, destructiveHint, idempotentHint, openWorldHint)
-- [ ] All tools use Zod schemas for runtime input validation with `.strict()` enforcement
-- [ ] All Zod schemas have proper constraints and descriptive error messages
-- [ ] All tools have comprehensive descriptions with explicit input/output types
-- [ ] Descriptions include return value examples and complete schema documentation
-- [ ] Error messages are clear, actionable, and educational
+### 实现质量
+- [ ] 聚焦实现：实现了最重要和最有价值的工具
+- [ ] 所有工具都使用 `registerTool` 进行注册，并带有完整配置
+- [ ] 所有工具都包含 `title`、`description`、`inputSchema` 和 `annotations`
+- [ ] 正确设置了注释（readOnlyHint、destructiveHint、idempotentHint、openWorldHint）
+- [ ] 所有工具使用Zod模式进行运行时输入验证，并带有 `.strict()` 强制约束
+- [ ] 所有Zod模式都有适当的约束条件和描述性错误消息
+- [ ] 所有工具都有全面的描述，包含明确的输入/输出类型
+- [ ] 描述中包含返回值示例和完整的模式文档
+- [ ] 错误消息清晰、可操作且具有教育意义
 
-### TypeScript Quality
-- [ ] TypeScript interfaces are defined for all data structures
-- [ ] Strict TypeScript is enabled in tsconfig.json
-- [ ] No use of `any` type - use `unknown` or proper types instead
-- [ ] All async functions have explicit Promise<T> return types
-- [ ] Error handling uses proper type guards (e.g., `axios.isAxiosError`, `z.ZodError`)
+### TypeScript质量
+- [ ] 为所有数据结构定义了TypeScript接口
+- [ ] 在tsconfig.json中启用了严格的TypeScript模式
+- [ ] 不使用 `any` 类型 - 改用 `unknown` 或适当的类型
+- [ ] 所有异步函数都有明确的Promise<T>返回类型
+- [ ] 错误处理使用适当的类型守卫（例如：`axios.isAxiosError`、`z.ZodError`）
 
-### Advanced Features (where applicable)
-- [ ] Resources registered for appropriate data endpoints
-- [ ] Appropriate transport configured (stdio, HTTP, SSE)
-- [ ] Notifications implemented for dynamic server capabilities
-- [ ] Type-safe with SDK interfaces
+### 高级特性（如适用）
+- [ ] 为适当的数据端点注册了资源
+- [ ] 配置了适当的传输方式（stdio、HTTP、SSE）
+- [ ] 为动态服务器功能实现了通知
+- [ ] 使用SDK接口实现类型安全
 
-### Project Configuration
-- [ ] Package.json includes all necessary dependencies
-- [ ] Build script produces working JavaScript in dist/ directory
-- [ ] Main entry point is properly configured as dist/index.js
-- [ ] Server name follows format: `{service}-mcp-server`
-- [ ] tsconfig.json properly configured with strict mode
+### 项目配置
+- [ ] Package.json包含所有必要的依赖
+- [ ] 构建脚本在dist/目录中生成可工作的JavaScript
+- [ ] 主入口点已正确配置为dist/index.js
+- [ ] 服务器名称遵循格式：`{service}-mcp-server`
+- [ ] tsconfig.json已正确配置了严格模式
 
-### Code Quality
-- [ ] Pagination is properly implemented where applicable
-- [ ] Large responses check CHARACTER_LIMIT constant and truncate with clear messages
-- [ ] Filtering options are provided for potentially large result sets
-- [ ] All network operations handle timeouts and connection errors gracefully
-- [ ] Common functionality is extracted into reusable functions
-- [ ] Return types are consistent across similar operations
+### 代码质量
+- [ ] 在适用的地方正确实现了分页
+- [ ] 大型响应会检查CHARACTER_LIMIT常量并使用清晰的消息进行截断
+- [ ] 为潜在的大型结果集提供了过滤选项
+- [ ] 所有网络操作都能优雅地处理超时和连接错误
+- [ ] 通用功能被提取到可重用的函数中
+- [ ] 相似操作的返回类型保持一致
 
-### Testing and Build
-- [ ] `npm run build` completes successfully without errors
-- [ ] dist/index.js created and executable
-- [ ] Server runs: `node dist/index.js --help`
-- [ ] All imports resolve correctly
-- [ ] Sample tool calls work as expected
+### 测试和构建
+- [ ] `npm run build` 能够成功完成且无错误
+- [ ] 创建了可执行的dist/index.js
+- [ ] 服务器可以运行：`node dist/index.js --help`
+- [ ] 所有导入都能正确解析
+- [ ] 示例工具调用能够正常工作

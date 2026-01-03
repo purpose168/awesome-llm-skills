@@ -1,58 +1,57 @@
-# Decision Log Database (ADR - Architecture Decision Records)
+# 决策日志数据库（ADR - 架构决策记录）
 
-**Purpose**: Track important decisions with context and rationale.
+**目的**：使用上下文和理由跟踪重要决策。
 
-## Schema
+## 模式
 
-| Property | Type | Options | Purpose |
+| 属性 | 类型 | 选项 | 目的 |
 |----------|------|---------|---------|
-| **Decision** | title | - | What was decided |
-| **Date** | date | - | When decision was made |
-| **Status** | select | Proposed, Accepted, Superseded, Deprecated | Current decision status |
-| **Domain** | select | Architecture, Product, Business, Design, Operations | Decision category |
-| **Impact** | select | High, Medium, Low | Expected impact level |
-| **Deciders** | people | - | Who made the decision |
-| **Stakeholders** | people | - | Who's affected by decision |
-| **Related Decisions** | relation | Links to other decisions | Context and dependencies |
+| **决策** | 标题 | - | 决定了什么 |
+| **日期** | 日期 | - | 决策何时做出 |
+| **状态** | 选择 | 已提议、已接受、被取代、已弃用 | 当前决策状态 |
+| **领域** | 选择 | 架构、产品、业务、设计、运营 | 决策类别 |
+| **影响** | 选择 | 高、中、低 | 预期影响级别 |
+| **决策者** | 人员 | - | 谁做出的决策 |
+| **利益相关者** | 人员 | - | 谁受决策影响 |
+| **相关决策** | 关系 | 链接到其他决策 | 上下文和依赖关系 |
 
-## Usage
+## 使用
 
 ```
-Create decision records with properties:
+使用属性创建决策记录：
 {
-  "Decision": "Use PostgreSQL for Primary Database",
+  "Decision": "使用 PostgreSQL 作为主数据库",
   "Date": "2025-10-15",
-  "Status": "Accepted",
-  "Domain": "Architecture",
-  "Impact": "High",
+  "Status": "已接受",
+  "Domain": "架构",
+  "Impact": "高",
   "Deciders": [tech_lead, architect],
   "Stakeholders": [eng_team]
 }
 ```
 
-## Content Template
+## 内容模板
 
-Each decision page should include:
-- **Context**: Why this decision was needed
-- **Decision**: What was decided
-- **Rationale**: Why this option was chosen
-- **Options Considered**: Alternatives and trade-offs
-- **Consequences**: Expected outcomes (positive and negative)
-- **Implementation**: How decision will be executed
+每个决策页面应包括：
+- **上下文**：为什么需要这个决策
+- **决策**：决定了什么
+- **理由**：为什么选择这个选项
+- **考虑的选项**：替代方案和权衡
+- **后果**：预期结果（积极和消极）
+- **实施**：如何执行决策
 
-## Views
+## 视图
 
-**Recent Decisions**: Sort by Date descending
-**Active Decisions**: Filter where Status = "Accepted"
-**By Domain**: Group by Domain
-**High Impact**: Filter where Impact = "High"
-**Pending**: Filter where Status = "Proposed"
+**最近决策**：按日期降序排序
+**活跃决策**：筛选状态 = "已接受"
+**按领域**：按领域分组
+**高影响**：筛选影响 = "高"
+**待定**：筛选状态 = "已提议"
 
-## Best Practices
+## 最佳实践
 
-1. **Document immediately**: Record decisions when made, while context is fresh
-2. **Include alternatives**: Show what was considered and why it wasn't chosen
-3. **Track superseded decisions**: Update status when decisions change
-4. **Link related decisions**: Use relations to show dependencies
-5. **Review periodically**: Check if old decisions are still valid
-
+1. **立即记录**：在做出决策时记录，上下文新鲜时
+2. **包括替代方案**：显示考虑了什么以及为什么未选择
+3. **跟踪被取代的决策**：当决策变更时更新状态
+4. **链接相关决策**：使用关系显示依赖关系
+5. **定期审查**：检查旧决策是否仍然有效

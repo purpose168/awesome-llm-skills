@@ -1,58 +1,58 @@
-# 1:1 Meeting Template
+# 1:1 会议模板
 
-Use this template for manager/report one-on-one meetings.
+使用此模板进行经理与下属的一对一会议。
 
 ```markdown
-# 1:1: [Manager] & [Report] - [Date]
+# 1:1：[经理] & [下属] - [日期]
 
-## Meeting Details
-**Date**: [Date]
-**Last meeting**: <mention-page url="...">Previous 1:1</mention-page>
+## 会议详情
+**日期**：[日期]
+**上次会议**：<mention-page url="...">上次 1:1</mention-page>
 
-## Agenda
+## 议程
 
-### [Report]'s Topics
-1. [Topic to discuss]
-2. [Question or concern]
+### [下属] 的主题
+1. [要讨论的主题]
+2. [问题或关注点]
 
-### [Manager]'s Topics
-1. [Topic to cover]
-2. [Feedback or update]
+### [经理] 的主题
+1. [要涵盖的主题]
+2. [反馈或更新]
 
-## Discussion Notes
+## 讨论笔记
 
-### [Topic 1]
-[Discussion points]
+### [主题 1]
+[讨论要点]
 
-**Action items**:
-- [ ] [Action] - @[Owner]
+**行动项**：
+- [ ] [行动] - @[负责人]
 
-### [Topic 2]
-[Discussion points]
+### [主题 2]
+[讨论要点]
 
-## Career Development
+## 职业发展
 
-**Current focus**: [Development goal]
-**Progress**: [Update on progress]
+**当前重点**：[发展目标]
+**进展**：[进展更新]
 
-## Feedback
+## 反馈
 
-**What's going well**:
-- [Positive feedback]
+**进展顺利的方面**：
+- [正面反馈]
 
-**Areas for growth**:
-- [Developmental feedback]
+**成长领域**：
+- [发展反馈]
 
-## Action Items
+## 行动项
 
-- [ ] [Action] - @[Report] - Due: [Date]
-- [ ] [Action] - @[Manager] - Due: [Date]
+- [ ] [行动] - @[下属] - 截止日期：[日期]
+- [ ] [行动] - @[经理] - 截止日期：[日期]
 
-## Next Meeting
+## 下次会议
 
-**Date**: [Date]
-**Topics to cover**:
-- [Carry-over topic]
-- [Upcoming topic]
+**日期**：[日期]
+**要涵盖的主题**：
+- [延续的主题]
+- [即将到来的主题]
 ```
 

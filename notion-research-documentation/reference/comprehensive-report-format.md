@@ -1,41 +1,40 @@
-# Comprehensive Report Format
+# 综合报告格式
 
-**When to use**: 
-- Formal documentation requirements
-- Strategic decision support
-- Complex topics requiring extensive analysis
-- Multiple stakeholders need alignment
+**何时使用**：
+- 正式文档要求
+- 战略决策支持
+- 需要广泛分析的复杂主题
+- 多利益相关者需要达成一致
 
-## Characteristics
+## 特征
 
-**Length**: 1500+ words
+**长度**：1500 字以上
 
-**Structure**:
-- Executive summary
-- Background & context
-- Methodology
-- Detailed findings with subsections
-- Data & evidence section
-- Implications (short and long-term)
-- Prioritized recommendations
-- Appendix
+**结构**：
+- 执行摘要
+- 背景与上下文
+- 方法论
+- 带有子章节的详细发现
+- 数据与证据章节
+- 影响（短期和长期）
+- 优先级建议
+- 附录
 
-## Template
+## 模板
 
-See [comprehensive-report-template.md](comprehensive-report-template.md) for the full template.
+完整模板请参阅 [comprehensive-report-template.md](comprehensive-report-template.md)。
 
-## Best For
+## 最适用于
 
-- Deep analysis and strategic decisions
-- Formal documentation requirements
-- Complex topics with multiple facets
-- When stakeholders need extensive context
-- Board presentations or executive briefings
+- 深度分析和战略决策
+- 正式文档要求
+- 具有多方面的复杂主题
+- 当利益相关者需要广泛的上下文时
+- 董事会演示或执行简报
 
-## Example Use Cases
+## 示例用例
 
-- "Create a comprehensive analysis of our market position"
-- "Document the full technical investigation of the database migration"
-- "Prepare an in-depth report on vendor options for executive review"
-- "Analyze the pros and cons of different architectural approaches"
-
+- "创建关于我们市场地位的综合分析"
+- "记录数据库迁移的完整技术调查"
+- "准备关于供应商选项的深入报告供执行审查"
+- "分析不同架构方法的优缺点"

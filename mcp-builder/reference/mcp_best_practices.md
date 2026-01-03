@@ -1,132 +1,132 @@
-# MCP Server Development Best Practices and Guidelines
+# MCP 服务器开发最佳实践和指南
 
-## Overview
+## 概述
 
-This document compiles essential best practices and guidelines for building Model Context Protocol (MCP) servers. It covers naming conventions, tool design, response formats, pagination, error handling, security, and compliance requirements.
-
----
-
-## Quick Reference
-
-### Server Naming
-- **Python**: `{service}_mcp` (e.g., `slack_mcp`)
-- **Node/TypeScript**: `{service}-mcp-server` (e.g., `slack-mcp-server`)
-
-### Tool Naming
-- Use snake_case with service prefix
-- Format: `{service}_{action}_{resource}`
-- Example: `slack_send_message`, `github_create_issue`
-
-### Response Formats
-- Support both JSON and Markdown formats
-- JSON for programmatic processing
-- Markdown for human readability
-
-### Pagination
-- Always respect `limit` parameter
-- Return `has_more`, `next_offset`, `total_count`
-- Default to 20-50 items
-
-### Character Limits
-- Set CHARACTER_LIMIT constant (typically 25,000)
-- Truncate gracefully with clear messages
-- Provide guidance on filtering
+本文档汇总了构建模型上下文协议（MCP）服务器的关键最佳实践和指南。它涵盖了命名约定、工具设计、响应格式、分页、错误处理、安全性和合规性要求。
 
 ---
 
-## Table of Contents
-1. Server Naming Conventions
-2. Tool Naming and Design
-3. Response Format Guidelines
-4. Pagination Best Practices
-5. Character Limits and Truncation
-6. Tool Development Best Practices
-7. Transport Best Practices
-8. Testing Requirements
-9. OAuth and Security Best Practices
-10. Resource Management Best Practices
-11. Prompt Management Best Practices
-12. Error Handling Standards
-13. Documentation Requirements
-14. Compliance and Monitoring
+## 快速参考
+
+### 服务器命名
+- **Python**: `{service}_mcp`（例如，`slack_mcp`）
+- **Node/TypeScript**: `{service}-mcp-server`（例如，`slack-mcp-server`）
+
+### 工具命名
+- 使用带服务前缀的 snake_case 命名法
+- 格式：`{service}_{action}_{resource}`
+- 示例：`slack_send_message`、`github_create_issue`
+
+### 响应格式
+- 同时支持 JSON 和 Markdown 格式
+- JSON 用于程序化处理
+- Markdown 用于人类可读性
+
+### 分页
+- 始终遵循 `limit` 参数
+- 返回 `has_more`、`next_offset`、`total_count`
+- 默认值为 20-50 项
+
+### 字符限制
+- 设置 CHARACTER_LIMIT 常量（通常为 25,000）
+- 使用清晰的消息进行优雅截断
+- 提供过滤指导
 
 ---
 
-## 1. Server Naming Conventions
-
-Follow these standardized naming patterns for MCP servers:
-
-**Python**: Use format `{service}_mcp` (lowercase with underscores)
-- Examples: `slack_mcp`, `github_mcp`, `jira_mcp`, `stripe_mcp`
-
-**Node/TypeScript**: Use format `{service}-mcp-server` (lowercase with hyphens)
-- Examples: `slack-mcp-server`, `github-mcp-server`, `jira-mcp-server`
-
-The name should be:
-- General (not tied to specific features)
-- Descriptive of the service/API being integrated
-- Easy to infer from the task description
-- Without version numbers or dates
-
----
-
-## 2. Tool Naming and Design
-
-### Tool Naming Best Practices
-
-1. **Use snake_case**: `search_users`, `create_project`, `get_channel_info`
-2. **Include service prefix**: Anticipate that your MCP server may be used alongside other MCP servers
-   - Use `slack_send_message` instead of just `send_message`
-   - Use `github_create_issue` instead of just `create_issue`
-   - Use `asana_list_tasks` instead of just `list_tasks`
-3. **Be action-oriented**: Start with verbs (get, list, search, create, etc.)
-4. **Be specific**: Avoid generic names that could conflict with other servers
-5. **Maintain consistency**: Use consistent naming patterns within your server
-
-### Tool Design Guidelines
-
-- Tool descriptions must narrowly and unambiguously describe functionality
-- Descriptions must precisely match actual functionality
-- Should not create confusion with other MCP servers
-- Should provide tool annotations (readOnlyHint, destructiveHint, idempotentHint, openWorldHint)
-- Keep tool operations focused and atomic
+## 目录
+1. 服务器命名约定
+2. 工具命名与设计
+3. 响应格式指南
+4. 分页最佳实践
+5. 字符限制与截断
+6. 工具开发最佳实践
+7. 传输最佳实践
+8. 测试要求
+9. OAuth 和安全最佳实践
+10. 资源管理最佳实践
+11. 提示管理最佳实践
+12. 错误处理标准
+13. 文档要求
+14. 合规与监控
 
 ---
 
-## 3. Response Format Guidelines
+## 1. 服务器命名约定
 
-All tools that return data should support multiple formats for flexibility:
+为MCP服务器遵循以下标准化命名模式：
 
-### JSON Format (`response_format="json"`)
-- Machine-readable structured data
-- Include all available fields and metadata
-- Consistent field names and types
-- Suitable for programmatic processing
-- Use for when LLMs need to process data further
+**Python**：使用 `{service}_mcp` 格式（小写带下划线）
+- 示例：`slack_mcp`、`github_mcp`、`jira_mcp`、`stripe_mcp`
 
-### Markdown Format (`response_format="markdown"`, typically default)
-- Human-readable formatted text
-- Use headers, lists, and formatting for clarity
-- Convert timestamps to human-readable format (e.g., "2024-01-15 10:30:00 UTC" instead of epoch)
-- Show display names with IDs in parentheses (e.g., "@john.doe (U123456)")
-- Omit verbose metadata (e.g., show only one profile image URL, not all sizes)
-- Group related information logically
-- Use for when presenting information to users
+**Node/TypeScript**：使用 `{service}-mcp-server` 格式（小写带连字符）
+- 示例：`slack-mcp-server`、`github-mcp-server`、`jira-mcp-server`
+
+名称应该：
+- 通用（不与特定功能绑定）
+- 描述正在集成的服务/API
+- 易于从任务描述中推断
+- 不包含版本号或日期
 
 ---
 
-## 4. Pagination Best Practices
+## 2. 工具命名与设计
 
-For tools that list resources:
+### 工具命名最佳实践
 
-- **Always respect the `limit` parameter**: Never load all results when a limit is specified
-- **Implement pagination**: Use `offset` or cursor-based pagination
-- **Return pagination metadata**: Include `has_more`, `next_offset`/`next_cursor`, `total_count`
-- **Never load all results into memory**: Especially important for large datasets
-- **Default to reasonable limits**: 20-50 items is typical
-- **Include clear pagination info in responses**: Make it easy for LLMs to request more data
+1. **使用 snake_case**：`search_users`、`create_project`、`get_channel_info`
+2. **包含服务前缀**：预计您的MCP服务器可能与其他MCP服务器一起使用
+   - 使用 `slack_send_message` 而不是仅 `send_message`
+   - 使用 `github_create_issue` 而不是仅 `create_issue`
+   - 使用 `asana_list_tasks` 而不是仅 `list_tasks`
+3. **以动作为导向**：以动词开头（get、list、search、create等）
+4. **保持具体**：避免可能与其他服务器冲突的通用名称
+5. **保持一致性**：在服务器内部使用一致的命名模式
 
-Example pagination response structure:
+### 工具设计指南
+
+- 工具描述必须狭窄且明确地描述功能
+- 描述必须与实际功能精确匹配
+- 不应与其他MCP服务器产生混淆
+- 应提供工具注释（readOnlyHint、destructiveHint、idempotentHint、openWorldHint）
+- 保持工具操作的专注性和原子性
+
+---
+
+## 3. 响应格式指南
+
+所有返回数据的工具都应支持多种格式以提高灵活性：
+
+### JSON 格式（`response_format="json"`）
+- 机器可读的结构化数据
+- 包含所有可用字段和元数据
+- 一致的字段名称和类型
+- 适合程序化处理
+- 用于LLM需要进一步处理数据的情况
+
+### Markdown 格式（`response_format="markdown"`，通常为默认格式）
+- 人类可读的格式化文本
+- 使用标题、列表和格式以提高清晰度
+- 将时间戳转换为人类可读格式（例如，使用 "2024-01-15 10:30:00 UTC" 而非时间戳）
+- 显示带ID的显示名称（例如，"@john.doe (U123456)"）
+- 省略冗长的元数据（例如，只显示一个头像URL，而非所有尺寸）
+- 逻辑上分组相关信息
+- 用于向用户呈现信息的情况
+
+---
+
+## 4. 分页最佳实践
+
+对于列出资源的工具：
+
+- **始终遵循 `limit` 参数**：指定限制时切勿加载所有结果
+- **实现分页**：使用 `offset` 或基于游标（cursor）的分页
+- **返回分页元数据**：包含 `has_more`、`next_offset`/`next_cursor`、`total_count`
+- **切勿将所有结果加载到内存中**：对于大型数据集尤其重要
+- **使用合理的默认限制**：通常为20-50项
+- **在响应中包含清晰的分页信息**：使LLM能够轻松请求更多数据
+
+分页响应结构示例：
 ```json
 {
   "total": 150,
@@ -140,17 +140,17 @@ Example pagination response structure:
 
 ---
 
-## 5. Character Limits and Truncation
+## 5. 字符限制与截断
 
-To prevent overwhelming responses with too much data:
+为防止响应数据过多导致过载：
 
-- **Define CHARACTER_LIMIT constant**: Typically 25,000 characters at module level
-- **Check response size before returning**: Measure the final response length
-- **Truncate gracefully with clear indicators**: Let the LLM know data was truncated
-- **Provide guidance on filtering**: Suggest how to use parameters to reduce results
-- **Include truncation metadata**: Show what was truncated and how to get more
+- **定义 CHARACTER_LIMIT 常量**：通常在模块级别设置为25,000个字符
+- **在返回前检查响应大小**：测量最终响应长度
+- **使用清晰的指示器优雅截断**：让LLM知道数据已被截断
+- **提供过滤指导**：建议如何使用参数减少结果
+- **包含截断元数据**：显示什么内容被截断以及如何获取更多数据
 
-Example truncation handling:
+截断处理示例：
 ```python
 CHARACTER_LIMIT = 25000
 
@@ -158,316 +158,316 @@ if len(result) > CHARACTER_LIMIT:
     truncated_data = data[:max(1, len(data) // 2)]
     response["truncated"] = True
     response["truncation_message"] = (
-        f"Response truncated from {len(data)} to {len(truncated_data)} items. "
-        f"Use 'offset' parameter or add filters to see more results."
+        f"响应已从 {len(data)} 项截断为 {len(truncated_data)} 项。 "
+        f"使用 'offset' 参数或添加过滤器查看更多结果。"
     )
 ```
 
 ---
 
-## 6. Transport Options
+## 6. 传输选项
 
-MCP servers support multiple transport mechanisms for different deployment scenarios:
+MCP服务器支持多种传输机制，适用于不同的部署场景：
 
-### Stdio Transport
+### Stdio 传输
 
-**Best for**: Command-line tools, local integrations, subprocess execution
+**最适用于**：命令行工具、本地集成、子进程执行
 
-**Characteristics**:
-- Standard input/output stream communication
-- Simple setup, no network configuration needed
-- Runs as a subprocess of the client
-- Ideal for desktop applications and CLI tools
+**特性**：
+- 标准输入/输出流通信
+- 设置简单，无需网络配置
+- 作为客户端的子进程运行
+- 非常适合桌面应用程序和CLI工具
 
-**Use when**:
-- Building tools for local development environments
-- Integrating with desktop applications (e.g., Claude Desktop)
-- Creating command-line utilities
-- Single-user, single-session scenarios
+**使用场景**：
+- 为本地开发环境构建工具
+- 与桌面应用程序集成（例如，Claude Desktop）
+- 创建命令行实用程序
+- 单用户、单会话场景
 
-### HTTP Transport
+### HTTP 传输
 
-**Best for**: Web services, remote access, multi-client scenarios
+**最适用于**：Web服务、远程访问、多客户端场景
 
-**Characteristics**:
-- Request-response pattern over HTTP
-- Supports multiple simultaneous clients
-- Can be deployed as a web service
-- Requires network configuration and security considerations
+**特性**：
+- 基于HTTP的请求-响应模式
+- 支持多个并发客户端
+- 可以部署为Web服务
+- 需要网络配置和安全考虑
 
-**Use when**:
-- Serving multiple clients simultaneously
-- Deploying as a cloud service
-- Integration with web applications
-- Need for load balancing or scaling
+**使用场景**：
+- 同时为多个客户端提供服务
+- 部署为云服务
+- 与Web应用程序集成
+- 需要负载均衡或扩展
 
-### Server-Sent Events (SSE) Transport
+### 服务器发送事件（SSE）传输
 
-**Best for**: Real-time updates, push notifications, streaming data
+**最适用于**：实时更新、推送通知、流数据
 
-**Characteristics**:
-- One-way server-to-client streaming over HTTP
-- Enables real-time updates without polling
-- Long-lived connections for continuous data flow
-- Built on standard HTTP infrastructure
+**特性**：
+- 基于HTTP的单向服务器到客户端流
+- 无需轮询即可实现实时更新
+- 用于持续数据流的长连接
+- 构建在标准HTTP基础设施上
 
-**Use when**:
-- Clients need real-time data updates
-- Implementing push notifications
-- Streaming logs or monitoring data
-- Progressive result delivery for long operations
+**使用场景**：
+- 客户端需要实时数据更新
+- 实现推送通知
+- 流日志或监控数据
+- 长时间操作的渐进式结果交付
 
-### Transport Selection Criteria
+### 传输选择标准
 
-| Criterion | Stdio | HTTP | SSE |
-|-----------|-------|------|-----|
-| **Deployment** | Local | Remote | Remote |
-| **Clients** | Single | Multiple | Multiple |
-| **Communication** | Bidirectional | Request-Response | Server-Push |
-| **Complexity** | Low | Medium | Medium-High |
-| **Real-time** | No | No | Yes |
-
----
-
-## 7. Tool Development Best Practices
-
-### General Guidelines
-1. Tool names should be descriptive and action-oriented
-2. Use parameter validation with detailed JSON schemas
-3. Include examples in tool descriptions
-4. Implement proper error handling and validation
-5. Use progress reporting for long operations
-6. Keep tool operations focused and atomic
-7. Document expected return value structures
-8. Implement proper timeouts
-9. Consider rate limiting for resource-intensive operations
-10. Log tool usage for debugging and monitoring
-
-### Security Considerations for Tools
-
-#### Input Validation
-- Validate all parameters against schema
-- Sanitize file paths and system commands
-- Validate URLs and external identifiers
-- Check parameter sizes and ranges
-- Prevent command injection
-
-#### Access Control
-- Implement authentication where needed
-- Use appropriate authorization checks
-- Audit tool usage
-- Rate limit requests
-- Monitor for abuse
-
-#### Error Handling
-- Don't expose internal errors to clients
-- Log security-relevant errors
-- Handle timeouts appropriately
-- Clean up resources after errors
-- Validate return values
-
-### Tool Annotations
-- Provide readOnlyHint and destructiveHint annotations
-- Remember annotations are hints, not security guarantees
-- Clients should not make security-critical decisions based solely on annotations
+| 标准 | Stdio | HTTP | SSE |
+|------|-------|------|-----|
+| **部署方式** | 本地 | 远程 | 远程 |
+| **客户端** | 单个 | 多个 | 多个 |
+| **通信模式** | 双向 | 请求-响应 | 服务器推送 |
+| **复杂度** | 低 | 中等 | 中等-高 |
+| **实时性** | 否 | 否 | 是 |
 
 ---
 
-## 8. Transport Best Practices
+## 7. 工具开发最佳实践
 
-### General Transport Guidelines
-1. Handle connection lifecycle properly
-2. Implement proper error handling
-3. Use appropriate timeout values
-4. Implement connection state management
-5. Clean up resources on disconnection
+### 通用指南
+1. 工具名称应具有描述性且以动作为导向
+2. 使用带有详细JSON模式的参数验证
+3. 在工具描述中包含示例
+4. 实现适当的错误处理和验证
+5. 对长时间操作使用进度报告
+6. 保持工具操作的专注性和原子性
+7. 记录预期的返回值结构
+8. 实现适当的超时机制
+9. 为资源密集型操作考虑速率限制
+10. 记录工具使用情况以进行调试和监控
 
-### Security Best Practices for Transport
-- Follow security considerations for DNS rebinding attacks
-- Implement proper authentication mechanisms
-- Validate message formats
-- Handle malformed messages gracefully
+### 工具的安全考虑
 
-### Stdio Transport Specific
-- Local MCP servers should NOT log to stdout (interferes with protocol)
-- Use stderr for logging messages
-- Handle standard I/O streams properly
+#### 输入验证
+- 根据模式验证所有参数
+- 清理文件路径和系统命令
+- 验证URL和外部标识符
+- 检查参数大小和范围
+- 防止命令注入
 
----
+#### 访问控制
+- 在需要的地方实现身份验证
+- 使用适当的授权检查
+- 审计工具使用情况
+- 限制请求速率
+- 监控滥用情况
 
-## 9. Testing Requirements
+#### 错误处理
+- 不要向客户端暴露内部错误
+- 记录与安全相关的错误
+- 适当处理超时
+- 错误发生后清理资源
+- 验证返回值
 
-A comprehensive testing strategy should cover:
-
-### Functional Testing
-- Verify correct execution with valid/invalid inputs
-
-### Integration Testing
-- Test interaction with external systems
-
-### Security Testing
-- Validate auth, input sanitization, rate limiting
-
-### Performance Testing
-- Check behavior under load, timeouts
-
-### Error Handling
-- Ensure proper error reporting and cleanup
-
----
-
-## 10. OAuth and Security Best Practices
-
-### Authentication and Authorization
-
-MCP servers that connect to external services should implement proper authentication:
-
-**OAuth 2.1 Implementation:**
-- Use secure OAuth 2.1 with certificates from recognized authorities
-- Validate access tokens before processing requests
-- Only accept tokens specifically intended for your server
-- Reject tokens without proper audience claims
-- Never pass through tokens received from MCP clients
-
-**API Key Management:**
-- Store API keys in environment variables, never in code
-- Validate keys on server startup
-- Provide clear error messages when authentication fails
-- Use secure transmission for sensitive credentials
-
-### Input Validation and Security
-
-**Always validate inputs:**
-- Sanitize file paths to prevent directory traversal
-- Validate URLs and external identifiers
-- Check parameter sizes and ranges
-- Prevent command injection in system calls
-- Use schema validation (Pydantic/Zod) for all inputs
-
-**Error handling security:**
-- Don't expose internal errors to clients
-- Log security-relevant errors server-side
-- Provide helpful but not revealing error messages
-- Clean up resources after errors
-
-### Privacy and Data Protection
-
-**Data collection principles:**
-- Only collect data strictly necessary for functionality
-- Don't collect extraneous conversation data
-- Don't collect PII unless explicitly required for the tool's purpose
-- Provide clear information about what data is accessed
-
-**Data transmission:**
-- Don't send data to servers outside your organization without disclosure
-- Use secure transmission (HTTPS) for all network communication
-- Validate certificates for external services
+### 工具注释
+- 提供readOnlyHint和destructiveHint注释
+- 记住注释只是提示，不是安全保证
+- 客户端不应仅基于注释做出安全关键决策
 
 ---
 
-## 11. Resource Management Best Practices
+## 8. 传输最佳实践
 
-1. Only suggest necessary resources
-2. Use clear, descriptive names for roots
-3. Handle resource boundaries properly
-4. Respect client control over resources
-5. Use model-controlled primitives (tools) for automatic data exposure
+### 通用传输指南
+1. 正确处理连接生命周期
+2. 实现适当的错误处理
+3. 使用适当的超时值
+4. 实现连接状态管理
+5. 断开连接时清理资源
 
----
+### 传输的安全最佳实践
+- 遵循针对DNS重新绑定攻击的安全考虑
+- 实现适当的身份验证机制
+- 验证消息格式
+- 优雅处理格式错误的消息
 
-## 12. Prompt Management Best Practices
-
-- Clients should show users proposed prompts
-- Users should be able to modify or reject prompts
-- Clients should show users completions
-- Users should be able to modify or reject completions
-- Consider costs when using sampling
-
----
-
-## 13. Error Handling Standards
-
-- Use standard JSON-RPC error codes
-- Report tool errors within result objects (not protocol-level)
-- Provide helpful, specific error messages
-- Don't expose internal implementation details
-- Clean up resources properly on errors
+### Stdio传输特定指南
+- 本地MCP服务器不应记录到stdout（会干扰协议）
+- 使用stderr进行日志记录
+- 正确处理标准I/O流
 
 ---
 
-## 14. Documentation Requirements
+## 9. 测试要求
 
-- Provide clear documentation of all tools and capabilities
-- Include working examples (at least 3 per major feature)
-- Document security considerations
-- Specify required permissions and access levels
-- Document rate limits and performance characteristics
+全面的测试策略应涵盖以下方面：
+
+### 功能测试
+- 验证使用有效/无效输入时的正确执行
+
+### 集成测试
+- 测试与外部系统的交互
+
+### 安全测试
+- 验证身份验证、输入清理、速率限制
+
+### 性能测试
+- 检查负载下的行为、超时情况
+
+### 错误处理
+- 确保适当的错误报告和清理
 
 ---
 
-## 15. Compliance and Monitoring
+## 10. OAuth 和安全最佳实践
 
-- Implement logging for debugging and monitoring
-- Track tool usage patterns
-- Monitor for potential abuse
-- Maintain audit trails for security-relevant operations
-- Be prepared for ongoing compliance reviews
+### 身份验证和授权
+
+连接到外部服务的MCP服务器应实现适当的身份验证：
+
+**OAuth 2.1 实现：**
+- 使用来自认可机构的证书的安全OAuth 2.1
+- 处理请求前验证访问令牌
+- 仅接受专门为您的服务器设计的令牌
+- 拒绝没有适当受众声明的令牌
+- 绝不要传递从MCP客户端接收的令牌
+
+**API密钥管理：**
+- 将API密钥存储在环境变量中，切勿存储在代码中
+- 服务器启动时验证密钥
+- 身份验证失败时提供清晰的错误消息
+- 对敏感凭据使用安全传输
+
+### 输入验证和安全
+
+**始终验证输入：**
+- 清理文件路径以防止目录遍历
+- 验证URL和外部标识符
+- 检查参数大小和范围
+- 防止系统调用中的命令注入
+- 对所有输入使用模式验证（Pydantic/Zod）
+
+**错误处理安全：**
+- 不要向客户端暴露内部错误
+- 在服务器端记录与安全相关的错误
+- 提供有帮助但不暴露内部信息的错误消息
+- 错误发生后清理资源
+
+### 隐私和数据保护
+
+**数据收集原则：**
+- 仅收集功能所需的严格必要数据
+- 不收集无关的对话数据
+- 除非工具目的明确需要，否则不收集PII（个人身份信息）
+- 提供有关访问哪些数据的清晰信息
+
+**数据传输：**
+- 未经披露，不要将数据发送到组织外部的服务器
+- 对所有网络通信使用安全传输（HTTPS）
+- 验证外部服务的证书
 
 ---
 
-## Summary
+## 11. 资源管理最佳实践
 
-These best practices represent the comprehensive guidelines for building secure, efficient, and compliant MCP servers that work well within the ecosystem. Developers should follow these guidelines to ensure their MCP servers meet the standards for inclusion in the MCP directory and provide a safe, reliable experience for users.
+1. 仅建议必要的资源
+2. 为根资源使用清晰、描述性的名称
+3. 正确处理资源边界
+4. 尊重客户端对资源的控制
+5. 使用模型控制的原语（工具）进行自动数据暴露
+
+---
+
+## 12. 提示管理最佳实践
+
+- 客户端应向用户显示建议的提示
+- 用户应能够修改或拒绝提示
+- 客户端应向用户显示完成结果
+- 用户应能够修改或拒绝完成结果
+- 使用采样时考虑成本
+
+---
+
+## 13. 错误处理标准
+
+- 使用标准JSON-RPC错误代码
+- 在结果对象内报告工具错误（而非协议级别）
+- 提供有帮助的、具体的错误消息
+- 不暴露内部实现细节
+- 错误发生时正确清理资源
+
+---
+
+## 14. 文档要求
+
+- 提供所有工具和功能的清晰文档
+- 包含工作示例（每个主要功能至少3个）
+- 记录安全考虑因素
+- 指定所需的权限和访问级别
+- 记录速率限制和性能特征
+
+---
+
+## 15. 合规与监控
+
+- 实现日志记录以进行调试和监控
+- 跟踪工具使用模式
+- 监控潜在的滥用情况
+- 为与安全相关的操作维护审计跟踪
+- 准备好进行持续的合规审查
+
+---
+
+## 总结
+
+这些最佳实践代表了构建安全、高效且合规的MCP服务器的全面指南，这些服务器能在生态系统中良好运行。开发人员应遵循这些指南，以确保他们的MCP服务器符合纳入MCP目录的标准，并为用户提供安全、可靠的体验。
 
 
 ----------
 
 
-# Tools
+# 工具
 
-> Enable LLMs to perform actions through your server
+> 使LLM能够通过您的服务器执行操作
 
-Tools are a powerful primitive in the Model Context Protocol (MCP) that enable servers to expose executable functionality to clients. Through tools, LLMs can interact with external systems, perform computations, and take actions in the real world.
+工具是模型上下文协议（MCP）中的强大原语，使服务器能够向客户端公开可执行功能。通过工具，LLM可以与外部系统交互、执行计算并在现实世界中采取行动。
 
 <Note>
-  Tools are designed to be **model-controlled**, meaning that tools are exposed from servers to clients with the intention of the AI model being able to automatically invoke them (with a human in the loop to grant approval).
+  工具被设计为**模型控制**的，这意味着工具从服务器向客户端公开，目的是让AI模型能够自动调用它们（有人类在回路中批准）。
 </Note>
 
-## Overview
+## 概述
 
-Tools in MCP allow servers to expose executable functions that can be invoked by clients and used by LLMs to perform actions. Key aspects of tools include:
+MCP中的工具允许服务器公开可执行函数，这些函数可以被客户端调用，并被LLM用于执行操作。工具的关键方面包括：
 
-* **Discovery**: Clients can obtain a list of available tools by sending a `tools/list` request
-* **Invocation**: Tools are called using the `tools/call` request, where servers perform the requested operation and return results
-* **Flexibility**: Tools can range from simple calculations to complex API interactions
+* **发现**：客户端可以通过发送`tools/list`请求获取可用工具列表
+* **调用**：工具使用`tools/call`请求调用，服务器执行请求的操作并返回结果
+* **灵活性**：工具可以从简单计算到复杂API交互不等
 
-Like [resources](/docs/concepts/resources), tools are identified by unique names and can include descriptions to guide their usage. However, unlike resources, tools represent dynamic operations that can modify state or interact with external systems.
+与[资源](/docs/concepts/resources)类似，工具通过唯一名称标识，并可以包含描述来指导其使用。然而，与资源不同的是，工具代表可以修改状态或与外部系统交互的动态操作。
 
-## Tool definition structure
+## 工具定义结构
 
-Each tool is defined with the following structure:
+每个工具使用以下结构定义：
 
 ```typescript
 {
-  name: string;          // Unique identifier for the tool
-  description?: string;  // Human-readable description
-  inputSchema: {         // JSON Schema for the tool's parameters
+  name: string;          // 工具的唯一标识符
+  description?: string;  // 人类可读的描述
+  inputSchema: {         // 工具参数的JSON Schema
     type: "object",
-    properties: { ... }  // Tool-specific parameters
+    properties: { ... }  // 工具特定的参数
   },
-  annotations?: {        // Optional hints about tool behavior
-    title?: string;      // Human-readable title for the tool
-    readOnlyHint?: boolean;    // If true, the tool does not modify its environment
-    destructiveHint?: boolean; // If true, the tool may perform destructive updates
-    idempotentHint?: boolean;  // If true, repeated calls with same args have no additional effect
-    openWorldHint?: boolean;   // If true, tool interacts with external entities
+  annotations?: {        // 关于工具行为的可选提示
+    title?: string;      // 工具的人类可读标题
+    readOnlyHint?: boolean;    // 如果为true，工具不修改其环境
+    destructiveHint?: boolean; // 如果为true，工具可能执行破坏性更新
+    idempotentHint?: boolean;  // 如果为true，使用相同参数重复调用没有额外效果
+    openWorldHint?: boolean;   // 如果为true，工具与外部实体交互
   }
 }
 ```
 
-## Implementing tools
+## 实现工具
 
-Here's an example of implementing a basic tool in an MCP server:
+以下是在MCP服务器中实现基本工具的示例：
 
 <Tabs>
   <Tab title="TypeScript">
@@ -481,12 +481,12 @@ Here's an example of implementing a basic tool in an MCP server:
       }
     });
 
-    // Define available tools
+    // 定义可用工具
     server.setRequestHandler(ListToolsRequestSchema, async () => {
       return {
         tools: [{
           name: "calculate_sum",
-          description: "Add two numbers together",
+          description: "将两个数字相加",
           inputSchema: {
             type: "object",
             properties: {
@@ -499,7 +499,7 @@ Here's an example of implementing a basic tool in an MCP server:
       };
     });
 
-    // Handle tool execution
+    // 处理工具执行
     server.setRequestHandler(CallToolRequestSchema, async (request) => {
       if (request.params.name === "calculate_sum") {
         const { a, b } = request.params.arguments;
@@ -512,7 +512,7 @@ Here's an example of implementing a basic tool in an MCP server:
           ]
         };
       }
-      throw new Error("Tool not found");
+      throw new Error("未找到工具");
     });
     ```
   </Tab>
@@ -526,7 +526,7 @@ Here's an example of implementing a basic tool in an MCP server:
         return [
             types.Tool(
                 name="calculate_sum",
-                description="Add two numbers together",
+                description="将两个数字相加",
                 inputSchema={
                     "type": "object",
                     "properties": {
@@ -548,23 +548,23 @@ Here's an example of implementing a basic tool in an MCP server:
             b = arguments["b"]
             result = a + b
             return [types.TextContent(type="text", text=str(result))]
-        raise ValueError(f"Tool not found: {name}")
+        raise ValueError(f"未找到工具: {name}")
     ```
   </Tab>
 </Tabs>
 
-## Example tool patterns
+## 工具模式示例
 
-Here are some examples of types of tools that a server could provide:
+以下是服务器可以提供的工具类型示例：
 
-### System operations
+### 系统操作
 
-Tools that interact with the local system:
+与本地系统交互的工具：
 
 ```typescript
 {
   name: "execute_command",
-  description: "Run a shell command",
+  description: "运行shell命令",
   inputSchema: {
     type: "object",
     properties: {
@@ -575,14 +575,14 @@ Tools that interact with the local system:
 }
 ```
 
-### API integrations
+### API集成
 
-Tools that wrap external APIs:
+包装外部API的工具：
 
 ```typescript
 {
   name: "github_create_issue",
-  description: "Create a GitHub issue",
+  description: "创建GitHub问题",
   inputSchema: {
     type: "object",
     properties: {
@@ -594,14 +594,14 @@ Tools that wrap external APIs:
 }
 ```
 
-### Data processing
+### 数据处理
 
-Tools that transform or analyze data:
+转换或分析数据的工具：
 
 ```typescript
 {
   name: "analyze_csv",
-  description: "Analyze a CSV file",
+  description: "分析CSV文件",
   inputSchema: {
     type: "object",
     properties: {
@@ -617,76 +617,76 @@ Tools that transform or analyze data:
 }
 ```
 
-## Best practices
+## 最佳实践
 
-When implementing tools:
+实现工具时：
 
-1. Provide clear, descriptive names and descriptions
-2. Use detailed JSON Schema definitions for parameters
-3. Include examples in tool descriptions to demonstrate how the model should use them
-4. Implement proper error handling and validation
-5. Use progress reporting for long operations
-6. Keep tool operations focused and atomic
-7. Document expected return value structures
-8. Implement proper timeouts
-9. Consider rate limiting for resource-intensive operations
-10. Log tool usage for debugging and monitoring
+1. 提供清晰、描述性的名称和描述
+2. 对参数使用详细的JSON Schema定义
+3. 在工具描述中包含示例，以演示模型应如何使用它们
+4. 实现适当的错误处理和验证
+5. 对长时间操作使用进度报告
+6. 保持工具操作的专注性和原子性
+7. 记录预期的返回值结构
+8. 实现适当的超时机制
+9. 为资源密集型操作考虑速率限制
+10. 记录工具使用情况以进行调试和监控
 
-### Tool name conflicts
+### 工具名称冲突
 
-MCP client applications and MCP server proxies may encounter tool name conflicts when building their own tool lists. For example, two connected MCP servers `web1` and `web2` may both expose a tool named `search_web`.
+MCP客户端应用程序和MCP服务器代理在构建自己的工具列表时可能会遇到工具名称冲突。例如，两个连接的MCP服务器`web1`和`web2`可能都公开一个名为`search_web`的工具。
 
-Applications may disambiguiate tools with one of the following strategies (among others; not an exhaustive list):
+应用程序可以使用以下策略之一来消除工具歧义（以下只是部分策略，并非详尽列表）：
 
-* Concatenating a unique, user-defined server name with the tool name, e.g. `web1___search_web` and `web2___search_web`. This strategy may be preferable when unique server names are already provided by the user in a configuration file.
-* Generating a random prefix for the tool name, e.g. `jrwxs___search_web` and `6cq52___search_web`. This strategy may be preferable in server proxies where user-defined unique names are not available.
-* Using the server URI as a prefix for the tool name, e.g. `web1.example.com:search_web` and `web2.example.com:search_web`. This strategy may be suitable when working with remote MCP servers.
+* 将用户定义的唯一服务器名称与工具名称连接起来，例如`web1___search_web`和`web2___search_web`。当配置文件中已经提供了用户定义的唯一服务器名称时，此策略可能更可取。
+* 为工具名称生成随机前缀，例如`jrwxs___search_web`和`6cq52___search_web`。在服务器代理中，当用户定义的唯一名称不可用时，此策略可能更可取。
+* 使用服务器URI作为工具名称的前缀，例如`web1.example.com:search_web`和`web2.example.com:search_web`。在使用远程MCP服务器时，此策略可能适合。
 
-Note that the server-provided name from the initialization flow is not guaranteed to be unique and is not generally suitable for disambiguation purposes.
+请注意，初始化流程中服务器提供的名称不保证是唯一的，通常不适合用于消歧目的。
 
-## Security considerations
+## 安全考虑
 
-When exposing tools:
+公开工具时：
 
-### Input validation
+### 输入验证
 
-* Validate all parameters against the schema
-* Sanitize file paths and system commands
-* Validate URLs and external identifiers
-* Check parameter sizes and ranges
-* Prevent command injection
+* 根据模式验证所有参数
+* 清理文件路径和系统命令
+* 验证URL和外部标识符
+* 检查参数大小和范围
+* 防止命令注入
 
-### Access control
+### 访问控制
 
-* Implement authentication where needed
-* Use appropriate authorization checks
-* Audit tool usage
-* Rate limit requests
-* Monitor for abuse
+* 在需要的地方实现身份验证
+* 使用适当的授权检查
+* 审计工具使用情况
+* 限制请求速率
+* 监控滥用情况
 
-### Error handling
+### 错误处理
 
-* Don't expose internal errors to clients
-* Log security-relevant errors
-* Handle timeouts appropriately
-* Clean up resources after errors
-* Validate return values
+* 不要向客户端暴露内部错误
+* 记录与安全相关的错误
+* 适当处理超时
+* 错误发生后清理资源
+* 验证返回值
 
-## Tool discovery and updates
+## 工具发现和更新
 
-MCP supports dynamic tool discovery:
+MCP支持动态工具发现：
 
-1. Clients can list available tools at any time
-2. Servers can notify clients when tools change using `notifications/tools/list_changed`
-3. Tools can be added or removed during runtime
-4. Tool definitions can be updated (though this should be done carefully)
+1. 客户端可以随时列出可用工具
+2. 服务器可以使用`notifications/tools/list_changed`通知客户端工具发生变化
+3. 可以在运行时添加或删除工具
+4. 可以更新工具定义（尽管应谨慎操作）
 
-## Error handling
+## 错误处理
 
-Tool errors should be reported within the result object, not as MCP protocol-level errors. This allows the LLM to see and potentially handle the error. When a tool encounters an error:
+工具错误应在结果对象内报告，而不是作为MCP协议级错误。这允许LLM看到错误并可能处理它。当工具遇到错误时：
 
-1. Set `isError` to `true` in the result
-2. Include error details in the `content` array
+1. 在结果中将`isError`设置为`true`
+2. 在`content`数组中包含错误详情
 
 Here's an example of proper error handling for tools:
 
@@ -745,39 +745,39 @@ Here's an example of proper error handling for tools:
   </Tab>
 </Tabs>
 
-This approach allows the LLM to see that an error occurred and potentially take corrective action or request human intervention.
+这个方法允许LLM看到发生了错误，并可能采取纠正措施或请求人工干预。
 
-## Tool annotations
+## 工具注释
 
-Tool annotations provide additional metadata about a tool's behavior, helping clients understand how to present and manage tools. These annotations are hints that describe the nature and impact of a tool, but should not be relied upon for security decisions.
+工具注释提供有关工具行为的额外元数据，帮助客户端了解如何呈现和管理工具。这些注释是描述工具性质和影响的提示，但不应依赖它们做出安全决策。
 
-### Purpose of tool annotations
+### 工具注释的目的
 
-Tool annotations serve several key purposes:
+工具注释有几个关键目的：
 
-1. Provide UX-specific information without affecting model context
-2. Help clients categorize and present tools appropriately
-3. Convey information about a tool's potential side effects
-4. Assist in developing intuitive interfaces for tool approval
+1. 提供特定于UX的信息，不影响模型上下文
+2. 帮助客户端适当地分类和呈现工具
+3. 传达有关工具潜在副作用的信息
+4. 协助开发直观的工具批准界面
 
-### Available tool annotations
+### 可用的工具注释
 
-The MCP specification defines the following annotations for tools:
+MCP规范为工具定义了以下注释：
 
-| Annotation        | Type    | Default | Description                                                                                                                          |
+| 注释              | 类型    | 默认值 | 描述                                                                                                                          |
 | ----------------- | ------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `title`           | string  | -       | A human-readable title for the tool, useful for UI display                                                                           |
-| `readOnlyHint`    | boolean | false   | If true, indicates the tool does not modify its environment                                                                          |
-| `destructiveHint` | boolean | true    | If true, the tool may perform destructive updates (only meaningful when `readOnlyHint` is false)                                     |
-| `idempotentHint`  | boolean | false   | If true, calling the tool repeatedly with the same arguments has no additional effect (only meaningful when `readOnlyHint` is false) |
-| `openWorldHint`   | boolean | true    | If true, the tool may interact with an "open world" of external entities                                                             |
+| `title`           | string  | -       | 工具的人类可读标题，对UI显示很有用                                                                           |
+| `readOnlyHint`    | boolean | false   | 如果为true，表示工具不修改其环境                                                                          |
+| `destructiveHint` | boolean | true    | 如果为true，工具可能执行破坏性更新（仅当`readOnlyHint`为false时有意义）                                     |
+| `idempotentHint`  | boolean | false   | 如果为true，使用相同参数重复调用工具没有额外效果（仅当`readOnlyHint`为false时有意义） |
+| `openWorldHint`   | boolean | true    | 如果为true，工具可能与外部实体的"开放世界"交互                                                             |
 
-### Example usage
+### 示例用法
 
-Here's how to define tools with annotations for different scenarios:
+以下是如何为不同场景定义带有注释的工具：
 
 ```typescript
-// A read-only search tool
+// 一个只读搜索工具
 {
   name: "web_search",
   description: "Search the web for information",
@@ -795,7 +795,7 @@ Here's how to define tools with annotations for different scenarios:
   }
 }
 
-// A destructive file deletion tool
+// 一个破坏性文件删除工具
 {
   name: "delete_file",
   description: "Delete a file from the filesystem",
@@ -815,7 +815,7 @@ Here's how to define tools with annotations for different scenarios:
   }
 }
 
-// A non-destructive database record creation tool
+// 一个非破坏性数据库记录创建工具
 {
   name: "create_record",
   description: "Create a new record in the database",
@@ -837,7 +837,7 @@ Here's how to define tools with annotations for different scenarios:
 }
 ```
 
-### Integrating annotations in server implementation
+### 在服务器实现中集成注释
 
 <Tabs>
   <Tab title="TypeScript">
@@ -846,7 +846,7 @@ Here's how to define tools with annotations for different scenarios:
       return {
         tools: [{
           name: "calculate_sum",
-          description: "Add two numbers together",
+          description: "将两个数字相加",
           inputSchema: {
             type: "object",
             properties: {
@@ -856,7 +856,7 @@ Here's how to define tools with annotations for different scenarios:
             required: ["a", "b"]
           },
           annotations: {
-            title: "Calculate Sum",
+            title: "计算求和",
             readOnlyHint: true,
             openWorldHint: false
           }
@@ -874,17 +874,17 @@ Here's how to define tools with annotations for different scenarios:
 
     @mcp.tool(
         annotations={
-            "title": "Calculate Sum",
+            "title": "计算求和",
             "readOnlyHint": True,
             "openWorldHint": False
         }
     )
     async def calculate_sum(a: float, b: float) -> str:
-        """Add two numbers together.
+        """将两个数字相加。
 
-        Args:
-            a: First number to add
-            b: Second number to add
+        参数：
+            a: 要相加的第一个数字
+            b: 要相加的第二个数字
         """
         result = a + b
         return str(result)
@@ -892,24 +892,24 @@ Here's how to define tools with annotations for different scenarios:
   </Tab>
 </Tabs>
 
-### Best practices for tool annotations
+### 工具注释的最佳实践
 
-1. **Be accurate about side effects**: Clearly indicate whether a tool modifies its environment and whether those modifications are destructive.
+1. **准确说明副作用**：清楚地表明工具是否修改其环境以及这些修改是否具有破坏性。
 
-2. **Use descriptive titles**: Provide human-friendly titles that clearly describe the tool's purpose.
+2. **使用描述性标题**：提供清晰描述工具用途的人性化标题。
 
-3. **Indicate idempotency properly**: Mark tools as idempotent only if repeated calls with the same arguments truly have no additional effect.
+3. **正确指示幂等性**：只有当使用相同参数重复调用确实没有额外效果时，才将工具标记为幂等。
 
-4. **Set appropriate open/closed world hints**: Indicate whether a tool interacts with a closed system (like a database) or an open system (like the web).
+4. **设置适当的开放/封闭世界提示**：指示工具是与封闭系统（如数据库）还是开放系统（如Web）交互。
 
-5. **Remember annotations are hints**: All properties in ToolAnnotations are hints and not guaranteed to provide a faithful description of tool behavior. Clients should never make security-critical decisions based solely on annotations.
+5. **记住注释只是提示**：ToolAnnotations中的所有属性都是提示，不保证提供工具行为的真实描述。客户端永远不应仅基于注释做出安全关键决策。
 
-## Testing tools
+## 测试工具
 
-A comprehensive testing strategy for MCP tools should cover:
+MCP工具的全面测试策略应涵盖：
 
-* **Functional testing**: Verify tools execute correctly with valid inputs and handle invalid inputs appropriately
-* **Integration testing**: Test tool interaction with external systems using both real and mocked dependencies
-* **Security testing**: Validate authentication, authorization, input sanitization, and rate limiting
-* **Performance testing**: Check behavior under load, timeout handling, and resource cleanup
-* **Error handling**: Ensure tools properly report errors through the MCP protocol and clean up resources
+* **功能测试**：验证工具使用有效输入时能正确执行，并适当处理无效输入
+* **集成测试**：测试工具与外部系统的交互，使用真实和模拟的依赖项
+* **安全测试**：验证身份验证、授权、输入清理和速率限制
+* **性能测试**：检查负载下的行为、超时处理和资源清理
+* **错误处理**：确保工具通过MCP协议正确报告错误并清理资源

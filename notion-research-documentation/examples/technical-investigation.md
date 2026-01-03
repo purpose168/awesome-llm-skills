@@ -222,12 +222,12 @@ cache.delete_pattern("api:v1:users:*")
 5. **Future-looking**: Noted areas for improvement
 6. **Well-cited**: Every major point links back to source material
 
-## Workflow Pattern Demonstrated
+## 演示的工作流程模式
 
-This example shows the complete research workflow:
-- **Scoped search** (teamspace filter for engineering)
-- **Multi-page synthesis** (4 different sources)
-- **Technical template** (architecture-focused format)
-- **Proper placement** (under engineering docs)
-- **Comprehensive citations** (links to all sources)
+此示例展示了完整的研究工作流程：
+- **范围搜索**（工程团队的团队空间过滤器）
+- **多页面综合**（4 个不同来源）
+- **技术模板**（以架构为中心的格式）
+- **适当放置**（在工程文档下）
+- **全面引用**（链接到所有源）
 

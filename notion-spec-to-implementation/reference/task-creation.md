@@ -1,28 +1,28 @@
-# Task Creation from Specs
+# 从规范创建任务
 
-## Finding the Task Database
+## 查找任务数据库
 
-Before creating tasks, locate the task database:
+在创建任务之前，定位任务数据库：
 
 ```
-1. Search for task database:
+1. 搜索任务数据库：
    Notion:notion-search
-   query: "Tasks" or "Task Management" or "[Project] Tasks"
+   query: "Tasks" 或 "Task Management" 或 "[Project] Tasks"
    
-2. Fetch database schema:
+2. 获取数据库模式：
    Notion:notion-fetch
    id: "database-id-from-search"
    
-3. Identify data source:
-   - Look for <data-source url="collection://..."> tags
-   - Extract collection ID for parent parameter
+3. 识别数据源：
+   - 查找 <data-source url="collection://..."> 标签
+   - 提取集合 ID 用于 parent 参数
    
-4. Note schema:
-   - Required properties
-   - Property types and options
-   - Relation properties for linking
+4. 记录模式：
+   - 必需属性
+   - 属性类型和选项
+   - 用于链接的关系属性
 
-Example:
+示例：
 Notion:notion-search
 query: "Engineering Tasks"
 query_type: "internal"
@@ -31,60 +31,60 @@ Notion:notion-fetch
 id: "tasks-database-id"
 ```
 
-Result: `collection://abc-123-def` for use as parent
+结果：`collection://abc-123-def` 用作 parent
 
-## Task Breakdown Strategy
+## 任务分解策略
 
-### Size Guidelines
+### 规模指导原则
 
-**Good task size**:
-- Completable in 1-2 days
-- Single clear deliverable
-- Independently testable
-- Minimal dependencies
+**良好的任务规模**：
+- 1-2 天内可完成
+- 单个明确的可交付成果
+- 可独立测试
+- 最小依赖关系
 
-**Too large**:
-- Takes > 3 days
-- Multiple deliverables
-- Many dependencies
-- Break down further
+**过大**：
+- 超过 3 天
+- 多个可交付成果
+- 许多依赖
+- 需要进一步分解
 
-**Too small**:
-- Takes < 2 hours
-- Too granular
-- Group with related work
+**过小**：
+- 少于 2 小时
+- 过于细化
+- 与相关工作分组
 
-### Granularity by Phase
+### 按阶段细化
 
-**Early phases**: Larger tasks acceptable
-- "Design database schema"
-- "Set up API structure"
+**早期阶段**：较大的任务可接受
+- "设计数据库模式"
+- "设置 API 结构"
 
-**Middle phases**: Medium-sized tasks
-- "Implement user authentication"
-- "Build dashboard UI"
+**中期阶段**：中等规模的任务
+- "实现用户身份验证"
+- "构建仪表板 UI"
 
-**Late phases**: Smaller, precise tasks
-- "Fix validation bug in form"
-- "Add loading state to button"
+**后期阶段**：较小、精确的任务
+- "修复表单中的验证错误"
+- "为按钮添加加载状态"
 
-## Task Creation Pattern
+## 任务创建模式
 
-For each requirement or work item:
-
-```
-1. Identify the work
-2. Determine task size
-3. Create task in database
-4. Set properties
-5. Write task description
-6. Link to spec/plan
-```
-
-### Creating Task
+对于每个需求或工作项：
 
 ```
-Use Notion:notion-create-pages:
+1. 识别工作
+2. 确定任务规模
+3. 在数据库中创建任务
+4. 设置属性
+5. 编写任务描述
+6. 链接到规范/计划
+```
+
+### 创建任务
+
+```
+使用 Notion:notion-create-pages：
 
 parent: {
   type: "data_source_id",
@@ -92,350 +92,349 @@ parent: {
 }
 
 properties: {
-  "[Title Property]": "Task: [Clear task name]",
+  "[Title Property]": "Task: [清晰的任务名称]",
   "Status": "To Do",
   "Priority": "[High/Medium/Low]",
   "[Project/Related]": ["spec-page-id", "plan-page-id"],
-  "Assignee": "[Person]" (if known),
-  "date:Due Date:start": "[Date]" (if applicable),
+  "Assignee": "[人员]" (如果已知),
+  "date:Due Date:start": "[日期]" (如果适用),
   "date:Due Date:is_datetime": 0
 }
 
-content: "[Task description using template]"
+content: "[使用模板的任务描述]"
 ```
 
-## Task Description Template
+## 任务描述模板
 
 ```markdown
-# [Task Name]
+# [任务名称]
 
-## Context
-Implementation task for <mention-page url="...">Feature Spec</mention-page>
+## 上下文
+<mention-page url="...">功能规范</mention-page> 的实施任务
 
-Part of <mention-page url="...">Implementation Plan</mention-page> - Phase [N]
+属于 <mention-page url="...">实施计划</mention-page> - 阶段 [N]
 
-## Objective
-[What this task accomplishes]
+## 目标
+[此任务完成的内容]
 
-## Requirements
-Based on spec requirements:
-- [Relevant requirement 1]
-- [Relevant requirement 2]
+## 需求
+基于规范需求：
+- [相关需求 1]
+- [相关需求 2]
 
-## Acceptance Criteria
-- [ ] [Specific, testable criterion]
-- [ ] [Specific, testable criterion]
-- [ ] [Specific, testable criterion]
+## 验收标准
+- [ ] [具体、可测试的标准]
+- [ ] [具体、可测试的标准]
+- [ ] [具体、可测试的标准]
 
-## Technical Approach
-[Suggested implementation approach]
+## 技术方法
+[建议的实施方法]
 
-### Components Affected
-- [Component 1]
-- [Component 2]
+### 受影响的组件
+- [组件 1]
+- [组件 2]
 
-### Key Decisions
-- [Decision point 1]
-- [Decision point 2]
+### 关键决策
+- [决策点 1]
+- [决策点 2]
 
-## Dependencies
+## 依赖关系
 
-### Blocked By
-- <mention-page url="...">Prerequisite Task</mention-page> or None
+### 被阻塞于
+- <mention-page url="...">前置任务</mention-page> 或 无
 
-### Blocks
-- <mention-page url="...">Dependent Task</mention-page> or None
+### 阻塞
+- <mention-page url="...">依赖任务</mention-page> 或 无
 
-## Resources
-- [Link to design mockup]
-- [Link to API spec]
-- [Link to relevant code]
+## 资源
+- [设计模型链接]
+- [API 规范链接]
+- [相关代码链接]
 
-## Estimated Effort
-[Time estimate]
+## 预计工作量
+[时间估算]
 
-## Progress
-[To be updated during implementation]
+## 进度
+[实施过程中更新]
 ```
 
-## Task Types
+## 任务类型
 
-### Infrastructure/Setup Tasks
-
-```
-Title: "Setup: [What's being set up]"
-Examples:
-- "Setup: Configure database connection pool"
-- "Setup: Initialize authentication middleware"
-- "Setup: Create CI/CD pipeline"
-
-Focus: Getting environment/tooling ready
-```
-
-### Feature Implementation Tasks
+### 基础设施/设置任务
 
 ```
-Title: "Implement: [Feature name]"
-Examples:
-- "Implement: User login flow"
-- "Implement: File upload functionality"
-- "Implement: Dashboard widget"
+标题: "Setup: [正在设置的内容]"
+示例：
+- "Setup: 配置数据库连接池"
+- "Setup: 初始化身份验证中间件"
+- "Setup: 创建 CI/CD 流水线"
 
-Focus: Building specific functionality
+重点: 准备环境/工具
 ```
 
-### Integration Tasks
+### 功能实施任务
 
 ```
-Title: "Integrate: [What's being integrated]"
-Examples:
-- "Integrate: Connect frontend to API"
-- "Integrate: Add payment provider"
-- "Integrate: Link user profile to dashboard"
+标题: "Implement: [功能名称]"
+示例：
+- "Implement: 用户登录流程"
+- "Implement: 文件上传功能"
+- "Implement: 仪表板小部件"
 
-Focus: Connecting components
+重点: 构建特定功能
 ```
 
-### Testing Tasks
+### 集成任务
 
 ```
-Title: "Test: [What's being tested]"
-Examples:
-- "Test: Write unit tests for auth service"
-- "Test: E2E testing for checkout flow"
-- "Test: Performance testing for API"
+标题: "Integrate: [正在集成的内容]"
+示例：
+- "Integrate: 连接前端到 API"
+- "Integrate: 添加支付提供商"
+- "Integrate: 将用户资料链接到仪表板"
 
-Focus: Validation and quality assurance
+重点: 连接组件
 ```
 
-### Documentation Tasks
+### 测试任务
 
 ```
-Title: "Document: [What's being documented]"
-Examples:
-- "Document: API endpoints"
-- "Document: Setup instructions"
-- "Document: Architecture decisions"
+标题: "Test: [正在测试的内容]"
+示例：
+- "Test: 编写身份验证服务的单元测试"
+- "Test: 结账流程的端到端测试"
+- "Test: API 性能测试"
 
-Focus: Creating documentation
+重点: 验证和质量保证
 ```
 
-### Bug Fix Tasks
+### 文档任务
 
 ```
-Title: "Fix: [Bug description]"
-Examples:
-- "Fix: Login error on Safari"
-- "Fix: Memory leak in image processing"
-- "Fix: Race condition in payment flow"
+标题: "Document: [正在记录的内容]"
+示例：
+- "Document: API 端点"
+- "Document: 设置说明"
+- "Document: 架构决策"
 
-Focus: Resolving issues
+重点: 创建文档
 ```
 
-### Refactoring Tasks
+### 错误修复任务
 
 ```
-Title: "Refactor: [What's being refactored]"
-Examples:
-- "Refactor: Extract auth logic to service"
-- "Refactor: Optimize database queries"
-- "Refactor: Simplify component hierarchy"
+标题: "Fix: [错误描述]"
+示例：
+- "Fix: Safari 上的登录错误"
+- "Fix: 图像处理中的内存泄漏"
+- "Fix: 支付流程中的竞态条件"
 
-Focus: Code quality improvement
+重点: 解决问题
 ```
 
-## Sequencing Tasks
-
-### Critical Path
-
-Identify must-happen-first tasks:
+### 重构任务
 
 ```
-1. Database schema
-2. API foundation
-3. Core business logic
-4. Frontend integration
-5. Testing
-6. Deployment
+标题: "Refactor: [正在重构的内容]"
+示例：
+- "Refactor: 将身份验证逻辑提取到服务"
+- "Refactor: 优化数据库查询"
+- "Refactor: 简化组件层次结构"
+
+重点: 代码质量改进
 ```
 
-### Parallel Tracks
+## 任务排序
 
-Tasks that can happen simultaneously:
+### 关键路径
 
-```
-Track A: Backend development
-- API endpoints
-- Business logic
-- Database operations
-
-Track B: Frontend development
-- UI components
-- State management
-- Routing
-
-Track C: Infrastructure
-- CI/CD setup
-- Monitoring
-- Documentation
-```
-
-### Phase-Based Sequencing
-
-Group by implementation phase:
+识别必须首先发生的任务：
 
 ```
-Phase 1 (Foundation):
-- Setup tasks
-- Infrastructure tasks
-
-Phase 2 (Core):
-- Feature implementation tasks
-- Integration tasks
-
-Phase 3 (Polish):
-- Testing tasks
-- Documentation tasks
-- Optimization tasks
+1. 数据库模式
+2. API 基础
+3. 核心业务逻辑
+4. 前端集成
+5. 测试
+6. 部署
 ```
 
-## Priority Assignment
+### 并行轨道
 
-### P0/Critical
-- Blocks everything else
-- Core functionality
-- Security requirements
-- Data integrity
-
-### P1/High
-- Important features
-- User-facing functionality
-- Performance requirements
-
-### P2/Medium
-- Nice-to-have features
-- Optimizations
-- Minor improvements
-
-### P3/Low
-- Future enhancements
-- Edge case handling
-- Cosmetic improvements
-
-## Estimation
-
-### Story Points
-
-If using story points:
-- 1 point: Few hours
-- 2 points: Half day
-- 3 points: Full day
-- 5 points: 2 days
-- 8 points: 3-4 days (consider breaking down)
-
-### Time Estimates
-
-Direct time estimates:
-- 2-4 hours: Small task
-- 1 day: Medium task
-- 2 days: Large task
-- 3+ days: Break down further
-
-### Estimation Factors
-
-Consider:
-- Complexity
-- Unknowns
-- Dependencies
-- Testing requirements
-- Documentation needs
-
-## Task Relationships
-
-### Parent Task Pattern
-
-For large features:
+可以同时进行的任务：
 
 ```
-Parent: "Feature: User Authentication"
-Children:
-- "Setup: Configure auth library"
-- "Implement: Login flow"
-- "Implement: Password reset"
-- "Test: Auth functionality"
+轨道 A: 后端开发
+- API 端点
+- 业务逻辑
+- 数据库操作
+
+轨道 B: 前端开发
+- UI 组件
+- 状态管理
+- 路由
+
+轨道 C: 基础设施
+- CI/CD 设置
+- 监控
+- 文档
 ```
 
-### Dependency Chain Pattern
+### 基于阶段的排序
 
-For sequential work:
-
-```
-Task A: "Design database schema"
-↓ (blocks)
-Task B: "Implement data models"
-↓ (blocks)
-Task C: "Create API endpoints"
-↓ (blocks)
-Task D: "Integrate with frontend"
-```
-
-### Related Tasks Pattern
-
-For parallel work:
+按实施阶段分组：
 
 ```
-Central: "Feature: Dashboard"
-Related:
-- "Backend API for dashboard data"
-- "Frontend dashboard component"
-- "Dashboard data caching"
+阶段 1（基础）：
+- 设置任务
+- 基础设施任务
+
+阶段 2（核心）：
+- 功能实施任务
+- 集成任务
+
+阶段 3（完善）：
+- 测试任务
+- 文档任务
+- 优化任务
 ```
 
-## Bulk Task Creation
+## 优先级分配
 
-When creating many tasks:
+### P0/关键
+- 阻塞其他所有内容
+- 核心功能
+- 安全要求
+- 数据完整性
+
+### P1/高
+- 重要功能
+- 面向用户的功能
+- 性能要求
+
+### P2/中
+- 最好有的功能
+- 优化
+- 小改进
+
+### P3/低
+- 未来增强
+- 边缘情况处理
+- 外观改进
+
+## 估算
+
+### 故事点
+
+如果使用故事点：
+- 1 点：几小时
+- 2 点：半天
+- 3 点：一天
+- 5 点：2 天
+- 8 点：3-4 天（考虑分解）
+
+### 时间估算
+
+直接时间估算：
+- 2-4 小时：小任务
+- 1 天：中等任务
+- 2 天：大任务
+- 3+ 天：进一步分解
+
+### 估算因素
+
+考虑：
+- 复杂性
+- 未知因素
+- 依赖关系
+- 测试要求
+- 文档需求
+
+## 任务关系
+
+### 父任务模式
+
+对于大型功能：
 
 ```
-For each work item in breakdown:
-  1. Determine task properties
-  2. Create task page
-  3. Link to spec/plan
-  4. Set relationships
-
-Then:
-  1. Update plan with task links
-  2. Review sequencing
-  3. Assign tasks (if known)
+父任务: "Feature: 用户身份验证"
+子任务：
+- "Setup: 配置身份验证库"
+- "Implement: 登录流程"
+- "Implement: 密码重置"
+- "Test: 身份验证功能"
 ```
 
-## Task Naming Conventions
+### 依赖链模式
 
-**Be specific**:
-✓ "Implement user login with email/password"
-✗ "Add login"
+对于顺序工作：
 
-**Include context**:
-✓ "Dashboard: Add revenue chart widget"
-✗ "Add chart"
+```
+任务 A: "设计数据库模式"
+↓ (阻塞)
+任务 B: "实现数据模型"
+↓ (阻塞)
+任务 C: "创建 API 端点"
+↓ (阻塞)
+任务 D: "与前端集成"
+```
 
-**Use action verbs**:
-- Implement, Build, Create
-- Integrate, Connect, Link
-- Fix, Resolve, Debug
-- Test, Validate, Verify
-- Document, Write, Update
-- Refactor, Optimize, Improve
+### 相关任务模式
 
-## Validation Checklist
+对于并行工作：
 
-Before finalizing tasks:
+```
+中心: "Feature: 仪表板"
+相关：
+- "仪表板数据的后端 API"
+- "前端仪表板组件"
+- "仪表板数据缓存"
+```
 
-☐ Each task has clear objective
-☐ Acceptance criteria are testable
-☐ Dependencies identified
-☐ Appropriate size (1-2 days)
-☐ Priority assigned
-☐ Linked to spec/plan
-☐ Proper sequencing
-☐ Resources noted
+## 批量任务创建
 
+创建多个任务时：
+
+```
+对于分解中的每个工作项：
+  1. 确定任务属性
+  2. 创建任务页面
+  3. 链接到规范/计划
+  4. 设置关系
+
+然后：
+  1. 用任务链接更新计划
+  2. 审查排序
+  3. 分配任务（如果已知）
+```
+
+## 任务命名约定
+
+**具体明确**：
+✓ "使用电子邮件/密码实现用户登录"
+✗ "添加登录"
+
+**包含上下文**：
+✓ "Dashboard: 添加收入图表小部件"
+✗ "添加图表"
+
+**使用动作动词**：
+- Implement, Build, Create（实施、构建、创建）
+- Integrate, Connect, Link（集成、连接、链接）
+- Fix, Resolve, Debug（修复、解决、调试）
+- Test, Validate, Verify（测试、验证、核实）
+- Document, Write, Update（记录、编写、更新）
+- Refactor, Optimize, Improve（重构、优化、改进）
+
+## 验证清单
+
+在确定任务之前：
+
+☐ 每个任务都有明确的目标
+☐ 验收标准可测试
+☐ 已识别依赖关系
+☐ 规模适当（1-2 天）
+☐ 已分配优先级
+☐ 已链接到规范/计划
+☐ 排序正确
+☐ 已注明资源

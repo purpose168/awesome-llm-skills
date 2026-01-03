@@ -1,57 +1,56 @@
-# FAQ Database
+# 常见问题数据库
 
-**Purpose**: Organize frequently asked questions with answers.
+**目的**：用答案组织常见问题。
 
-## Schema
+## 模式
 
-| Property | Type | Options | Purpose |
+| 属性 | 类型 | 选项 | 目的 |
 |----------|------|---------|---------|
-| **Question** | title | - | The question being asked |
-| **Category** | select | Product, Engineering, Support, HR, General | Question topic |
-| **Tags** | multi_select | - | Specific topics (auth, billing, onboarding, etc.) |
-| **Answer Type** | select | Quick Answer, Detailed Guide, Link to Docs | Response format |
-| **Last Reviewed** | date | - | When answer was verified |
-| **Helpful Count** | number | - | Track usefulness (optional) |
-| **Audience** | select | Internal, External, All | Who should see this |
-| **Related Questions** | relation | Links to related FAQs | Connect similar topics |
+| **问题** | 标题 | - | 被问的问题 |
+| **类别** | 选择 | 产品、工程、支持、人力资源、通用 | 问题主题 |
+| **标签** | 多选 | - | 特定主题（认证、计费、入职等） |
+| **答案类型** | 选择 | 快速回答、详细指南、链接到文档 | 响应格式 |
+| **最后审查** | 日期 | - | 答案何时验证 |
+| **有用计数** | 数字 | - | 跟踪有用性（可选） |
+| **受众** | 选择 | 内部、外部、所有 | 谁应该看到这个 |
+| **相关问题** | 关系 | 链接到相关常见问题 | 连接相似主题 |
 
-## Usage
+## 使用
 
 ```
-Create FAQ entries with properties:
+使用属性创建常见问题条目：
 {
-  "Question": "How do I reset my password?",
-  "Category": "Support",
-  "Tags": "authentication, password, login",
-  "Answer Type": "Quick Answer",
+  "Question": "如何重置我的密码？",
+  "Category": "支持",
+  "Tags": "认证, 密码, 登录",
+  "Answer Type": "快速回答",
   "Last Reviewed": "2025-10-01",
-  "Audience": "External"
+  "Audience": "外部"
 }
 ```
 
-## Content Template
+## 内容模板
 
-Each FAQ page should include:
-- **Short Answer**: 1-2 sentence quick response
-- **Detailed Explanation**: Full answer with context
-- **Steps** (if applicable): Numbered procedure
-- **Screenshots** (if helpful): Visual guidance
-- **Related Questions**: Links to similar FAQs
-- **Additional Resources**: External docs or videos
+每个常见问题页面应包括：
+- **简短回答**：1-2 句话快速响应
+- **详细解释**：带上下文的完整答案
+- **步骤**（如适用）：编号程序
+- **截图**（如有帮助）：视觉指导
+- **相关问题**：链接到相似的常见问题
+- **额外资源**：外部文档或视频
 
-## Views
+## 视图
 
-**By Category**: Group by Category
-**Recently Updated**: Sort by Last Reviewed descending
-**Needs Review**: Filter where Last Reviewed > 180 days ago
-**External FAQs**: Filter where Audience contains "External"
-**Popular**: Sort by Helpful Count descending (if tracking)
+**按类别**：按类别分组
+**最近更新**：按最后审查降序排序
+**需要审查**：筛选最后审查 > 180 天前
+**外部常见问题**：筛选受众包含"外部"
+**热门**：按有用计数降序排序（如果跟踪）
 
-## Best Practices
+## 最佳实践
 
-1. **Use clear questions**: Write questions as users would ask them
-2. **Provide quick answers**: Lead with the direct answer, then elaborate
-3. **Link related FAQs**: Help users discover related information
-4. **Review regularly**: Keep answers current and accurate
-5. **Track what's helpful**: Use feedback to improve frequently accessed FAQs
-
+1. **使用清晰的问题**：以用户会问的方式编写问题
+2. **提供快速答案**：以直接答案开头，然后详细说明
+3. **链接相关常见问题**：帮助用户发现相关信息
+4. **定期审查**：保持答案当前和准确
+5. **跟踪什么有用**：使用反馈改进频繁访问的常见问题

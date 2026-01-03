@@ -1,128 +1,128 @@
-# Example: Group Trip Research & Planning
+# 示例：团体旅行研究和规划
 
-**User Request**: "Research and plan our friends' trip to Japan in March - we're 6 people looking for 10 days"
+**用户请求**："研究和规划我们朋友们的 3 月日本之旅 - 我们是 6 个人，计划 10 天"
 
-## Workflow
+## 工作流程
 
-### 1. Search Existing Notes
+### 1. 搜索现有笔记
 ```
 Notion:notion-search
 query: "Japan travel"
 ```
-Found: Japan Travel Guide (from friend), Tokyo Restaurants, Kyoto Temple Guide
+找到：日本旅行指南（来自朋友）、东京餐厅、京都寺庙指南
 
-### 2. Fetch & Extract Tips
+### 2. 获取和提取提示
 ```
 Notion:notion-fetch (3x)
 ```
-**Key info from previous travelers:**
-- Best time: March-April (cherry blossoms)
-- Must-see: Tokyo, Kyoto, Osaka
-- Budget: $200-300/day (mid-range)
-- Book accommodations 3 months ahead
-- Get JR Pass before arrival
-- Top restaurants: Sushi Dai, Ichiran Ramen, Tsunahachi Tempura
+**来自先前旅行者的关键信息：**
+- 最佳时间：3-4 月（樱花季）
+- 必看：东京、京都、大阪
+- 预算：$200-300/天（中等范围）
+- 提前 3 个月预订住宿
+- 到达前获取 JR Pass
+- 顶级餐厅：Sushi Dai、Ichiran Ramen、筑地场寿司
 
-### 3. Research & Synthesize
-Combined previous traveler insights with:
-- Flight options and prices
-- Accommodation types (hotels/ryokans/Airbnb)
-- Transportation (JR Pass essential)
-- 10-day itinerary structure
-- Budget breakdown
+### 3. 研究和综合
+结合先前旅行者的见解与：
+- 航班选项和价格
+- 住宿类型（酒店/日式旅馆/Airbnb）
+- 交通（JR Pass 必需）
+- 10 天行程结构
+- 预算分解
 
-### 4. Create Comprehensive Plan
+### 4. 创建综合计划
 ```
 Notion:notion-create-pages
 parent: { page_id: "travel-plans-parent-id" }
 pages: [{
   properties: {
-    title: "Japan Trip 2026 - March 15-25 (10 Days)"
+    title: "日本之旅 2026 - 3月15-25日（10 天）"
   },
-  content: "[Full trip plan with itinerary, budget, tips...]"
+  content: "[完整旅行计划，包含行程、预算、提示...]"
 }]
 ```
 
-## Output Sample
+## 输出示例
 
 ```markdown
-# Japan Trip 2026 - March 15-25 (10 Days)
+# 日本之旅 2026 - 3月15-25日（10 天）
 
-## Trip Overview
-**Dates**: March 15-25, 2026 (Cherry Blossom Season 🌸)
-**Group**: 6 people | **Budget**: $3,000-4,000/person
+## 旅行概述
+**日期**：2026年3月15-25日（樱花季 🌸）
+**团体**：6 人 | **预算**：$3,000-4,000/人
 
-## Itinerary Summary
+## 行程摘要
 
-**Days 1-3: Tokyo**
-- Arrive, explore Shibuya, Harajuku, Shinjuku
-- Visit Tsukiji Market, Imperial Palace, Sensoji Temple
-- Experience Tokyo nightlife, teamLab Borderless
+**第 1-3 天：东京**
+- 到达，探索涩谷、原宿、新宿
+- 参观筑地市场、皇居、浅草寺
+- 体验东京夜生活、teamLab Borderless
 
-**Days 4-5: Hakone**  
-- Day trip from Tokyo
-- Hot springs, Mt. Fuji views, Lake Ashi cruise
+**第 4-5 天：箱根**
+- 从东京一日游
+- 温泉、富士山景观、芦之湖游船
 
-**Days 6-8: Kyoto**
-- Bullet train from Tokyo
-- Fushimi Inari, Kinkaku-ji, Arashiyama Bamboo Grove
-- Geisha district (Gion), traditional tea ceremony
+**第 6-8 天：京都**
+- 从东京乘子弹头列车
+- 伏见稻荷、金阁寺、嵯山竹林
+- 艺伎区（祇园）、传统茶道
 
-**Days 9-10: Osaka + Depart**
-- Osaka Castle, Dotonbori food district
-- Nara day trip (deer park, Todai-ji Temple)
-- Return flight from Osaka (KIX)
+**第 9-10 天：大阪 + 离开**
+- 大阪城、道顿堀美食区
+- 奈良一日游（鹿公园、东大寺）
+- 从大阪离境航班（KIX）
 
-## Budget Breakdown (per person)
-- **Flights**: $900-1,200 (round-trip)
-- **Accommodations**: $700-1,000 (9 nights)
-- **JR Pass**: $280 (7-day pass)
-- **Food**: $500-700 ($50-70/day)
-- **Activities**: $300-400
-- **Local transport**: $100
-**Total**: $2,780-3,680
+## 预算分解（每人）
+- **航班**：$900-1,200（往返）
+- **住宿**：$700-1,000（9 晚）
+- **JR Pass**：$280（7 日通票）
+- **餐饮**：$500-700（$50-70/天）
+- **活动**：$300-400
+- **当地交通**：$100
+**总计**：$2,780-3,680
 
-## Key Bookings
-- **Flights**: Book 3-4 months ahead
-- **Hotels**: Book now (cherry blossom season)
-  - Tokyo: Shinjuku area (2 nights) + Asakusa (1 night)
-  - Kyoto: Gion area (3 nights)
-  - Osaka: Namba area (2 nights)
-- **JR Pass**: Order 2-3 weeks before travel
-- **Restaurants**: Reserve 1 week ahead (Sushi Dai, high-end spots)
+## 关键预订
+- **航班**：提前 3-4 个月预订
+- **酒店**：现在预订（樱花季）
+  - 东京：新宿区（2 晚）+ 浅草（1 晚）
+  - 京都：祇园区（3 晚）
+  - 大阪：难波区（2 晚）
+- **JR Pass**：旅行前 2-3 周订购
+- **餐厅**：提前 1 周预订（Sushi Dai、高端场所）
 
-## Essential Tips
-Source: <mention-page url="...">Japan Travel Guide</mention-page>
-- Get pocket WiFi or eSIM on arrival
-- Download: Google Translate, Hyperdia (train routes), Tabelog (restaurants)
-- Cash-heavy country - withdraw at 7-Eleven ATMs
-- Shoes off in temples, ryokans, some restaurants
-- Trains extremely punctual - don't be late
-- Learn basic phrases: arigatou, sumimasen, itadakimasu
+## 基本提示
+来源：<mention-page url="...">日本旅行指南</mention-page>
+- 到达时获取口袋 WiFi 或 eSIM
+- 下载：Google Translate、Hyperdia（火车路线）、Tabelog（餐厅）
+- 现金为主国家 - 在 7-Eleven ATM 取款
+- 在寺庙、日式旅馆、一些餐厅脱鞋
+- 火车极其准时 - 不要迟到
+- 学习基本短语：arigatou、sumimasen、itadakimasu
 
-## Packing List
-- Comfortable walking shoes (10k+ steps/day)
-- Light jacket (March 55-65°F)
-- Backpack for day trips
-- Cash pouch
-- Portable charger
+## 打包清单
+- 舒适的步行鞋（10k+ 步/天）
+- 轻薄夹克（3 月 55-65°F）
+- 一日游背包
+- 现金袋
+- 便携充电器
 
-## Next Steps
-- [ ] Book flights (target: <$1,100/person)
-- [ ] Order JR Passes
-- [ ] Book hotels (Tokyo → Kyoto → Osaka)
-- [ ] Create shared expense tracker
-- [ ] Schedule group planning call
+## 后续步骤
+- [ ] 预订航班（目标：<$1,100/人）
+- [ ] 订购 JR Pass
+- [ ] 预订酒店（东京 → 京都 → 大阪）
+- [ ] 创建共享费用跟踪器
+- [ ] 安排团体规划通话
 
-## Sources
-- <mention-page url="...">Japan Travel Guide</mention-page> (Sarah's 2024 trip)
-- <mention-page url="...">Tokyo Restaurant Recommendations</mention-page>
-- <mention-page url="...">Kyoto Temple Guide</mention-page>
+## 来源
+- <mention-page url="...">日本旅行指南</mention-page>（Sarah 的 2024 年旅行）
+- <mention-page url="...">东京餐厅推荐</mention-page>
+- <mention-page url="...">京都寺庙指南</mention-page>
 ```
 
-## Key Takeaways
-- Leveraged previous traveler notes from Notion
-- Combined personal insights with research
-- Created actionable itinerary with budget breakdown
-- Included practical tips from experienced travelers
-- Set clear next steps for group coordination
+## 关键要点
+- 利用了 Notion 中先前旅行者的笔记
+- 结合了个人见解与研究
+- 创建了包含预算分解的可操作行程
+- 包含了有经验旅行者的实用提示
+- 为团体协调设定了明确的后续步骤

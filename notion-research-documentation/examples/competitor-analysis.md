@@ -1,12 +1,12 @@
-# Example: Competitor Analysis
+# 示例：竞争对手分析
 
-## User Request
+## 用户请求
 
-> "Research competitor pricing models and create a comparison document"
+> "研究竞争对手定价模型并创建比较文档"
 
-## Workflow Execution
+## 工作流程执行
 
-### Step 1: Search for Competitor Information
+### 步骤 1：搜索竞争对手信息
 
 ```
 Notion:notion-search
@@ -19,265 +19,266 @@ filters: {
 }
 ```
 
-**Results Found:**
-- "Competitor Analysis - Stripe" (Product)
-- "Market Research Q3 2024" (Strategy)
-- "Pricing Strategy Discussion" (Product)
-- "Competitor Feature Matrix" (Product)
+**找到的结果：**
+- "竞争对手分析 - Stripe" (Product)
+- "市场研究 Q3 2024" (Strategy)
+- "定价策略讨论" (Product)
+- "竞争对手功能矩阵" (Product)
 
-### Step 2: Fetch and Analyze
+### 步骤 2：获取和分析
 
 ```
 Notion:notion-fetch for each page
 ```
 
-**Extracted Information:**
+**提取的信息：**
 
-**Stripe**:
-- Pay-as-you-go: 2.9% + $0.30 per transaction
-- No monthly fees
-- Volume discounts available
+**Stripe**：
+- 按需付费：2.9% + 每笔交易 $0.30
+- 无月费
+- 可享受批量折扣
 
-**Square**:
-- Pay-as-you-go: 2.6% + $0.10 per transaction
-- Monthly plan: $29/month with lower rates
-- Hardware costs separate
+**Square**：
+- 按需付费：2.6% + 每笔交易 $0.10
+- 月计划：$29/月，费率更低
+- 硬件成本单独计算
 
-**PayPal**:
-- Standard: 3.49% + $0.49 per transaction
-- Advanced: $30/month + 2.59% + $0.49
-- Multi-currency fees
+**PayPal**：
+- 标准：3.49% + 每笔交易 $0.49
+- 高级：$30/月 + 2.59% + $0.49
+- 多币种费用
 
-**Adyen**:
-- Interchange++ pricing model
-- Custom enterprise pricing
-- Setup and monthly fees apply
+**Adyen**：
+- Interchange++ 定价模型
+- 定制企业定价
+- 适用设置费和月费
 
-### Step 3: Create Comparison Document
+### 步骤 3：创建比较文档
 
 ```
 Notion:notion-create-pages
 
 pages: [{
   properties: {
-    "title": "Competitor Pricing Analysis - Payment Processors"
+    "title": "竞争对手定价分析 - 支付处理器"
   },
-  content: "[Comparison document using template]"
+  content: "[使用模板的比较文档]"
 }]
 ```
 
-## Output Document
+## 输出文档
 
 ```markdown
-# Competitor Pricing Analysis - Payment Processors
+# 竞争对手定价分析 - 支付处理器
 
-**Date**: October 14, 2025  
-**Research Team**: Product Strategy
+**日期**：2025年10月14日
+**研究团队**：产品策略
 
-## Executive Summary
+## 执行摘要
 
-We analyzed four major payment processor competitors: Stripe, Square, PayPal, and Adyen. Pricing models vary from simple pay-as-you-go (Stripe) to complex interchange-plus (Adyen). Key insight: All competitors offer volume discounts for high-transaction merchants, with breakpoints typically at $100K/month processing volume.
+我们分析了四个主要支付处理器竞争对手：Stripe、Square、PayPal 和 Adyen。定价模型从简单的按需付费（Stripe）到复杂的 interchange-plus（Adyen）不等。关键见解：所有竞争对手都为高交易量的商家提供批量折扣，分界点通常为每月 $10 万处理量。
 
-## Comparison Matrix
+## 比较矩阵
 
-| Feature | Stripe | Square | PayPal | Adyen |
+| 功能 | Stripe | Square | PayPal | Adyen |
 |---------|--------|--------|--------|-------|
-| **Base Rate** | 2.9% + $0.30 | 2.6% + $0.10 | 3.49% + $0.49 | Interchange++ |
-| **Monthly Fee** | $0 | $0-29 | $0-30 | Custom |
-| **Volume Discounts** | Yes, >$80K | Yes, >$250K | Yes, >$100K | Yes, custom |
-| **Setup Fee** | $0 | $0 | $0 | $1,000-5,000 |
-| **Multi-currency** | 1% extra | 3% extra | 3-4% extra | Included |
-| **Chargeback Fee** | $15 | $15-25 | $20 | Custom |
-| **Target Market** | Startups-Enterprise | Small-Medium | Small-Medium | Enterprise |
+| **基础费率** | 2.9% + $0.30 | 2.6% + $0.10 | 3.49% + $0.49 | Interchange++ |
+| **月费** | $0 | $0-29 | $0-30 | 定制 |
+| **批量折扣** | 是，>$80K | 是，>$250K | 是，>$100K | 是，定制 |
+| **设置费** | $0 | $0 | $0 | $1,000-5,000 |
+| **多币种** | 额外 1% | 额外 3% | 额外 3-4% | 包含 |
+| **退款费用** | $15 | $15-25 | $20 | 定制 |
+| **目标市场** | 初创企业-企业 | 小型-中型 | 小型-中型 | 企业 |
 
-## Detailed Analysis
+## 详细分析
 
 ### Stripe
 
-**Pricing Structure**:
-- **Standard**: 2.9% + $0.30 per successful card charge
-- **Volume discounts**: Available for businesses processing >$80,000/month
-- **International cards**: +1% fee
-- **Currency conversion**: 1% above market rate
+**定价结构**：
+- **标准**：2.9% + 每次成功卡支付 $0.30
+- **批量折扣**：适用于处理量 >$80,000/月的企业
+- **国际卡**：+1% 费用
+- **货币转换**：高于市场汇率 1%
 
-**Strengths**:
-- Simple, transparent pricing
-- No setup fees or monthly minimums
-- Excellent developer experience
-- Quick onboarding
+**优势**：
+- 简单、透明的定价
+- 无设置费或月最低消费
+- 优秀的开发者体验
+- 快速入驻
 
-**Weaknesses**:
-- Higher per-transaction fee for high volume
-- Volume discounts less aggressive than Adyen
+**劣势**：
+- 高交易量的每笔交易费用较高
+- 批量折扣不如 Adyen 激进
 
-**Best for**: Startups and growth-stage companies needing quick integration
+**最适合**：需要快速集成的初创企业和成长阶段公司
 
-**Source**: <mention-page url="...">Competitor Analysis - Stripe</mention-page>
+**来源**：<mention-page url="...">竞争对手分析 - Stripe</mention-page>
 
 ### Square
 
-**Pricing Structure**:
-- **Pay-as-you-go**: 2.6% + $0.10 per tap, dip, or swipe
-- **Keyed-in**: 3.5% + $0.15
-- **Plus plan**: $29/month for lower rates (2.5% + $0.10)
-- **Premium plan**: Custom pricing
+**定价结构**：
+- **按需付费**：每次点击、插入或刷卡 2.6% + $0.10
+- **手动输入**：3.5% + $0.15
+- **Plus 计划**：$29/月，费率更低（2.5% + $0.10）
+- **Premium 计划**：定制定价
 
-**Strengths**:
-- Lowest per-transaction fee for in-person
-- All-in-one hardware + software
-- No long-term contracts
+**优势**：
+- 面对面交易的每笔交易费用最低
+- 一体化硬件 + 软件
+- 无长期合同
 
-**Weaknesses**:
-- Higher rates for online/keyed transactions
-- Hardware costs ($49-$299)
-- Less suitable for online-only businesses
+**劣势**：
+- 在线/手动交易费率较高
+- 硬件成本（$49-$299）
+- 不太适合仅在线业务
 
-**Best for**: Brick-and-mortar retail and restaurants
+**最适合**：实体零售和餐厅
 
-**Source**: <mention-page url="...">Market Research Q3 2024</mention-page>
+**来源**：<mention-page url="...">市场研究 Q3 2024</mention-page>
 
 ### PayPal
 
-**Pricing Structure**:
-- **Standard**: 3.49% + $0.49 per transaction
-- **Advanced**: $30/month + 2.59% + $0.49
-- **Payments Pro**: Additional $30/month for direct credit card processing
+**定价结构**：
+- **标准**：每笔交易 3.49% + $0.49
+- **高级**：$30/月 + 2.59% + $0.49
+- **Payments Pro**：直接信用卡处理额外 $30/月
 
-**Strengths**:
-- Huge customer base (PayPal checkout)
-- Buyer protection increases trust
-- International reach (200+ countries)
+**优势**：
+- 庞大的客户群（PayPal 结账）
+- 买家保护增加信任
+- 国际覆盖（200+ 国家）
 
-**Weaknesses**:
-- Highest per-transaction fees
-- Complex fee structure
-- Account holds and reserves common
+**劣势**：
+- 每笔交易费用最高
+- 复杂的费用结构
+- 账户冻结和储备金常见
 
-**Best for**: Businesses where PayPal brand trust matters (e-commerce, marketplaces)
+**最适合**：PayPal 品牌信任度重要的业务（电子商务、市场）
 
-**Source**: <mention-page url="...">Pricing Strategy Discussion</mention-page>
+**来源**：<mention-page url="...">定价策略讨论</mention-page>
 
 ### Adyen
 
-**Pricing Structure**:
-- **Interchange++**: Actual interchange + scheme fees + fixed markup
-- **Setup fee**: $1,000-5,000 (negotiable)
-- **Monthly minimum**: Typically $10,000+ processing volume
-- **Per-transaction**: Interchange + 0.6% + $0.12 (example)
+**定价结构**：
+- **Interchange++**：实际 interchange + 计划费用 + 固定加价
+- **设置费**：$1,000-5,000（可协商）
+- **月最低消费**：通常 $10,000+ 处理量
+- **每笔交易**：Interchange + 0.6% + $0.12（示例）
 
-**Strengths**:
-- Most transparent cost structure at scale
-- Lowest effective rate for high volume
-- True multi-currency (100+ currencies)
-- Direct connections to schemes
+**优势**：
+- 规模下最透明的成本结构
+- 高交易量的实际费率最低
+- 真正的多币种（100+ 货币）
+- 直接连接到计划
 
-**Weaknesses**:
-- Complex pricing requires analysis
-- High minimums ($10K+/month)
-- Longer integration time
-- Not suitable for small businesses
+**劣势**：
+- 定价复杂需要分析
+- 高最低消费（$10K+/月）
+- 集成时间较长
+- 不适合小企业
 
-**Best for**: Enterprise with $1M+/month processing volume
+**最适合**：月处理量 $1M+/月的企业
 
-**Source**: <mention-page url="...">Competitor Feature Matrix</mention-page>
+**来源**：<mention-page url="...">竞争对手功能矩阵</mention-page>
 
-## Pricing Trends & Insights
+## 定价趋势和见解
 
-### Volume-Based Discounting
-All competitors offer discounts at scale:
-- **Entry point**: $80K-$250K/month processing
-- **Typical discount**: 10-30 basis points reduction
-- **Negotiation leverage**: Begins at $500K/month+
+### 基于批量的折扣
 
-### Hidden Costs to Consider
+所有竞争对手都提供规模折扣：
+- **入门点**：$80K-$250K/月处理量
+- **典型折扣**：10-30 个基点减少
+- **谈判杠杆**：$500K/月开始
 
-| Cost Type | Stripe | Square | PayPal | Adyen |
+### 需要考虑的隐藏成本
+
+| 成本类型 | Stripe | Square | PayPal | Adyen |
 |-----------|--------|--------|--------|-------|
-| Chargeback | $15 | $15-25 | $20 | $15-25 |
-| Account verification | $0 | $0 | $0 | Varies |
-| PCI compliance | $0 | $0 | $0 | $0 |
-| Currency conversion | 1% | 3% | 3-4% | 0% |
-| Refund fees | Returned | Returned | Not returned | Varies |
+| 退款 | $15 | $15-25 | $20 | $15-25 |
+| 账户验证 | $0 | $0 | $0 | 不同 |
+| PCI 合规 | $0 | $0 | $0 | $0 |
+| 货币转换 | 1% | 3% | 3-4% | 0% |
+| 退款费用 | 返还 | 返还 | 不退还 | 不同 |
 
-### Market Positioning
+### 市场定位
 
 ```
-High Volume / Enterprise
+高交易量 / 企业
     ↑
     |                    Adyen
-    |                      
-    |         Stripe             
-    |    
+    |
+    |         Stripe
+    |
     |  Square    PayPal
     |
     └──────────────────→
-      Small / Simple        Complex / International
+      小型 / 简单        复杂 / 国际
 ```
 
-## Strategic Implications
+## 战略影响
 
-### For Startups (<$100K/month)
-**Recommended**: Stripe
-- Lowest friction to start
-- No upfront costs
-- Great documentation
-- Acceptable rates at this scale
+### 对于初创企业（<$100K/月）
+**推荐**：Stripe
+- 启动阻力最低
+- 无前期成本
+- 优秀的文档
+- 此规模下可接受的费率
 
-### For Growing Companies ($100K-$1M/month)
-**Recommended**: Stripe or Square
-- Negotiate volume discounts
-- Evaluate interchange++ if international
-- Consider Square if in-person dominant
+### 对于成长中公司（$100K-$1M/月）
+**推荐**：Stripe 或 Square
+- 谈判批量折扣
+- 如果涉及国际，评估 interchange++
+- 如果面对面交易占主导，考虑 Square
 
-### For Enterprises (>$1M/month)
-**Recommended**: Adyen or Negotiated Stripe
-- Interchange++ models save significantly
-- Direct scheme connections
-- Multi-region capabilities matter
-- ROI on integration complexity
+### 对于企业（>$1M/月）
+**推荐**：Adyen 或协商的 Stripe
+- Interchange++ 模型节省显著
+- 直接计划连接
+- 多区域能力重要
+- 集成复杂性的投资回报
 
-## Recommendations
+## 建议
 
-1. **Immediate**: Benchmark our current 2.8% + $0.25 against Stripe's standard
-2. **Short-term**: Request volume discount quote from Stripe at our current $150K/month
-3. **Long-term**: Evaluate Adyen when we cross $1M/month threshold
+1. **立即**：将我们当前的 2.8% + $0.25 与 Stripe 标准进行基准比较
+2. **短期**：在我们当前 $150K/月处理量下向 Stripe 请求批量折扣报价
+3. **长期**：当我们跨过 $1M/月门槛时评估 Adyen
 
-## Next Steps
+## 后续步骤
 
-- [ ] Request detailed pricing proposal from Stripe for volume discounts
-- [ ] Create pricing calculator comparing all 4 at different volume levels
-- [ ] Interview customers about payment method preferences
-- [ ] Analyze our transaction mix (domestic vs international, card types)
+- [ ] 向 Stripe 请求批量折扣的详细定价提案
+- [ ] 创建定价计算器，在不同交易量下比较所有 4 家
+- [ ] 采访客户关于支付方式偏好
+- [ ] 分析我们的交易组合（国内 vs 国际、卡类型）
 
-## Sources
+## 来源
 
-### Primary Research
-- <mention-page url="...">Competitor Analysis - Stripe</mention-page>
-- <mention-page url="...">Market Research Q3 2024</mention-page>
-- <mention-page url="...">Pricing Strategy Discussion</mention-page>
-- <mention-page url="...">Competitor Feature Matrix</mention-page>
+### 主要研究
+- <mention-page url="...">竞争对手分析 - Stripe</mention-page>
+- <mention-page url="...">市场研究 Q3 2024</mention-page>
+- <mention-page url="...">定价策略讨论</mention-page>
+- <mention-page url="...">竞争对手功能矩阵</mention-page>
 
-### External References
-- Stripe.com pricing page (Oct 2025)
-- Square pricing documentation
-- PayPal merchant fees
-- Adyen pricing transparency report
+### 外部参考
+- Stripe.com 定价页面（2025年10月）
+- Square 定价文档
+- PayPal 商家费用
+- Adyen 定价透明度报告
 ```
 
-## Key Success Factors
+## 关键成功因素
 
-1. **Structured comparison**: Matrix format for quick scanning
-2. **Multiple dimensions**: Price, features, target market
-3. **Strategic recommendations**: Not just data, but implications
-4. **Visual elements**: Table and positioning diagram
-5. **Actionable next steps**: Clear recommendations
-6. **Comprehensive sources**: Internal research + external validation
+1. **结构化比较**：矩阵格式便于快速浏览
+2. **多个维度**：价格、功能、目标市场
+3. **战略建议**：不仅是数据，还有影响
+4. **视觉元素**：表格和定位图
+5. **可操作的后续步骤**：明确的建议
+6. **全面的来源**：内部研究 + 外部验证
 
-## Workflow Pattern Demonstrated
+## 演示的工作流程模式
 
-- **Date-filtered search** (recent information only)
-- **Multiple competitor synthesis** (4 different companies)
-- **Comparison template** (matrix + detailed analysis)
-- **Strategic layer** (implications and recommendations)
-- **Action-oriented** (next steps included)
+- **日期过滤搜索**（仅限近期信息）
+- **多个竞争对手综合**（4 家不同公司）
+- **比较模板**（矩阵 + 详细分析）
+- **战略层**（影响和建议）
+- **行动导向**（包含后续步骤）
 

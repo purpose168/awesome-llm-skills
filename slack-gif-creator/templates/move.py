@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Move Animation - Move objects along paths with various motion types.
+移动动画 - 沿各种运动类型路径移动对象。
 
-Provides flexible movement primitives for objects along linear, arc, or custom paths.
+为对象沿线性、弧形或自定义路径提供灵活的运动原语。
 """
 
 import sys
@@ -22,7 +22,7 @@ def create_move_animation(
     start_pos: tuple[int, int] = (50, 240),
     end_pos: tuple[int, int] = (430, 240),
     num_frames: int = 30,
-    motion_type: str = 'linear',  # 'linear', 'arc', 'bezier', 'circle', 'wave'
+    motion_type: str = 'linear',  # 'linear'（线性）、'arc'（弧形）、'bezier'（贝塞尔）、'circle'（圆形）、'wave'（波浪）
     easing: str = 'ease_out',
     motion_params: dict | None = None,
     frame_width: int = 480,
@@ -30,34 +30,34 @@ def create_move_animation(
     bg_color: tuple[int, int, int] = (255, 255, 255)
 ) -> list:
     """
-    Create frames showing object moving along a path.
+    创建显示对象沿路径移动的帧。
 
-    Args:
-        object_type: 'circle', 'emoji', or 'custom'
-        object_data: Data for the object
-        start_pos: Starting (x, y) position
-        end_pos: Ending (x, y) position
-        num_frames: Number of frames
-        motion_type: Type of motion path
-        easing: Easing function name
-        motion_params: Additional parameters for motion (e.g., {'arc_height': 100})
-        frame_width: Frame width
-        frame_height: Frame height
-        bg_color: Background color
+    参数：
+        object_type: 'circle'（圆形）、'emoji'（表情符号）或'custom'（自定义）
+        object_data: 对象的数据
+        start_pos: 起始(x, y)位置
+        end_pos: 结束(x, y)位置
+        num_frames: 帧数
+        motion_type: 运动路径类型
+        easing: 缓动函数名称
+        motion_params: 运动的额外参数（例如，{'arc_height': 100}）
+        frame_width: 帧宽度
+        frame_height: 帧高度
+        bg_color: 背景颜色
 
-    Returns:
-        List of frames
+    返回：
+        帧列表
     """
     frames = []
 
-    # Default object data
+    # 默认对象数据
     if object_data is None:
         if object_type == 'circle':
             object_data = {'radius': 30, 'color': (100, 150, 255)}
         elif object_type == 'emoji':
             object_data = {'emoji': '🚀', 'size': 60}
 
-    # Default motion params
+    # 默认运动参数
     if motion_params is None:
         motion_params = {}
 
@@ -66,23 +66,23 @@ def create_move_animation(
 
         t = i / (num_frames - 1) if num_frames > 1 else 0
 
-        # Calculate position based on motion type
+        # 根据运动类型计算位置
         if motion_type == 'linear':
-            # Straight line with easing
+            # 带缓动的直线运动
             x = interpolate(start_pos[0], end_pos[0], t, easing)
             y = interpolate(start_pos[1], end_pos[1], t, easing)
 
         elif motion_type == 'arc':
-            # Parabolic arc
+            # 抛物线弧形
             arc_height = motion_params.get('arc_height', 100)
             x, y = calculate_arc_motion(start_pos, end_pos, arc_height, t)
 
         elif motion_type == 'circle':
-            # Circular motion around a center
+            # 围绕中心的圆形运动
             center = motion_params.get('center', (frame_width // 2, frame_height // 2))
             radius = motion_params.get('radius', 150)
             start_angle = motion_params.get('start_angle', 0)
-            angle_range = motion_params.get('angle_range', 360)  # Full circle
+            angle_range = motion_params.get('angle_range', 360)  # 完整圆周
 
             angle = start_angle + (angle_range * t)
             angle_rad = math.radians(angle)
@@ -91,25 +91,25 @@ def create_move_animation(
             y = center[1] + radius * math.sin(angle_rad)
 
         elif motion_type == 'wave':
-            # Move in straight line but add wave motion
+            # 沿直线移动但添加波浪运动
             wave_amplitude = motion_params.get('wave_amplitude', 50)
             wave_frequency = motion_params.get('wave_frequency', 2)
 
-            # Base linear motion
+            # 基础线性运动
             base_x = interpolate(start_pos[0], end_pos[0], t, easing)
             base_y = interpolate(start_pos[1], end_pos[1], t, easing)
 
-            # Add wave offset perpendicular to motion direction
+            # 添加垂直于运动方向的波浪偏移
             dx = end_pos[0] - start_pos[0]
             dy = end_pos[1] - start_pos[1]
             length = math.sqrt(dx * dx + dy * dy)
 
             if length > 0:
-                # Perpendicular direction
+                # 垂直方向
                 perp_x = -dy / length
                 perp_y = dx / length
 
-                # Wave offset
+                # 波浪偏移
                 wave_offset = math.sin(t * wave_frequency * 2 * math.pi) * wave_amplitude
 
                 x = base_x + perp_x * wave_offset
@@ -118,22 +118,22 @@ def create_move_animation(
                 x, y = base_x, base_y
 
         elif motion_type == 'bezier':
-            # Quadratic bezier curve
+            # 二次贝塞尔曲线
             control_point = motion_params.get('control_point', (
                 (start_pos[0] + end_pos[0]) // 2,
                 (start_pos[1] + end_pos[1]) // 2 - 100
             ))
 
-            # Quadratic Bezier formula: B(t) = (1-t)²P0 + 2(1-t)tP1 + t²P2
+            # 二次贝塞尔公式：B(t) = (1-t)²P0 + 2(1-t)tP1 + t²P2
             x = (1 - t) ** 2 * start_pos[0] + 2 * (1 - t) * t * control_point[0] + t ** 2 * end_pos[0]
             y = (1 - t) ** 2 * start_pos[1] + 2 * (1 - t) * t * control_point[1] + t ** 2 * end_pos[1]
 
         else:
-            # Default to linear
+            # 默认为线性运动
             x = interpolate(start_pos[0], end_pos[0], t, easing)
             y = interpolate(start_pos[1], end_pos[1], t, easing)
 
-        # Draw object at calculated position
+        # 在计算的位置绘制对象
         x, y = int(x), int(y)
 
         if object_type == 'circle':
@@ -161,15 +161,15 @@ def create_path_from_points(points: list[tuple[int, int]],
                             num_frames: int = 60,
                             easing: str = 'ease_in_out') -> list[tuple[int, int]]:
     """
-    Create a smooth path through multiple points.
+    创建穿过多个点的平滑路径。
 
-    Args:
-        points: List of (x, y) waypoints
-        num_frames: Total number of frames
-        easing: Easing between points
+    参数：
+        points: (x, y)航点列表
+        num_frames: 总帧数
+        easing: 点之间的缓动
 
-    Returns:
-        List of (x, y) positions for each frame
+    返回：
+        每帧的(x, y)位置列表
     """
     if len(points) < 2:
         return points * num_frames
@@ -181,7 +181,7 @@ def create_path_from_points(points: list[tuple[int, int]],
         start = points[i]
         end = points[i + 1]
 
-        # Last segment gets remaining frames
+        # 最后一段获取剩余帧
         if i == len(points) - 2:
             segment_frames = num_frames - len(path)
         else:
@@ -199,15 +199,15 @@ def create_path_from_points(points: list[tuple[int, int]],
 def apply_trail_effect(frames: list, trail_length: int = 5,
                       fade_alpha: float = 0.3) -> list:
     """
-    Add motion trail effect to moving object.
+    为移动对象添加运动轨迹效果。
 
-    Args:
-        frames: List of frames with moving object
-        trail_length: Number of previous frames to blend
-        fade_alpha: Opacity of trail frames
+    参数：
+        frames: 带有移动对象的帧列表
+        trail_length: 要混合的前几帧数
+        fade_alpha: 轨迹帧的不透明度
 
-    Returns:
-        List of frames with trail effect
+    返回：
+        带有轨迹效果的帧列表
     """
     from PIL import Image, ImageChops
     import numpy as np
@@ -215,17 +215,17 @@ def apply_trail_effect(frames: list, trail_length: int = 5,
     trailed_frames = []
 
     for i, frame in enumerate(frames):
-        # Start with current frame
+        # 从当前帧开始
         result = frame.copy()
 
-        # Blend previous frames
+        # 混合前几帧
         for j in range(1, min(trail_length + 1, i + 1)):
             prev_frame = frames[i - j]
 
-            # Calculate fade
+            # 计算淡出
             alpha = fade_alpha ** j
 
-            # Blend
+            # 混合
             result_array = np.array(result, dtype=np.float32)
             prev_array = np.array(prev_frame, dtype=np.float32)
 
@@ -237,11 +237,11 @@ def apply_trail_effect(frames: list, trail_length: int = 5,
     return trailed_frames
 
 
-# Example usage
+# 示例用法
 if __name__ == '__main__':
-    print("Creating movement examples...")
+    print("创建移动示例...")
 
-    # Example 1: Linear movement
+    # 示例1：线性移动
     builder = GIFBuilder(width=480, height=480, fps=20)
     frames = create_move_animation(
         object_type='emoji',
@@ -255,7 +255,7 @@ if __name__ == '__main__':
     builder.add_frames(frames)
     builder.save('move_linear.gif', num_colors=128)
 
-    # Example 2: Arc movement
+    # 示例2：弧形移动
     builder.clear()
     frames = create_move_animation(
         object_type='emoji',
@@ -270,13 +270,13 @@ if __name__ == '__main__':
     builder.add_frames(frames)
     builder.save('move_arc.gif', num_colors=128)
 
-    # Example 3: Circular movement
+    # 示例3：圆形移动
     builder.clear()
     frames = create_move_animation(
         object_type='emoji',
         object_data={'emoji': '🌍', 'size': 50},
-        start_pos=(0, 0),  # Ignored for circle
-        end_pos=(0, 0),    # Ignored for circle
+        start_pos=(0, 0),  # 圆形运动忽略
+        end_pos=(0, 0),    # 圆形运动忽略
         num_frames=40,
         motion_type='circle',
         motion_params={
@@ -290,4 +290,4 @@ if __name__ == '__main__':
     builder.add_frames(frames)
     builder.save('move_circle.gif', num_colors=128)
 
-    print("Created movement examples!")
+    print("已创建移动示例！")

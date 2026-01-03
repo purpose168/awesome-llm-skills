@@ -1,25 +1,24 @@
-# Progress Update Template
+# 进度更新模板
 
-Use this to update progress on implementation plans and tasks.
+使用此模板更新实施计划和任务的进度。
 
 ```markdown
-## Progress: [Date]
+## 进度：[日期]
 
-### Completed Today
-- [Specific item completed]
-- [Specific item completed]
+### 今日完成
+- [已完成的具体项目]
+- [已完成的具体项目]
 
-### In Progress
-- [Current work item and status]
+### 进行中
+- [当前工作项和状态]
 
-### Next Steps
-1. [Next action]
-2. [Next action]
+### 后续步骤
+1. [下一个行动]
+2. [下一个行动]
 
-### Blockers
-- [Blocker description] or None
+### 阻碍因素
+- [阻碍因素描述] 或 无
 
-### Notes
-[Additional context, decisions made, issues encountered]
+### 说明
+[其他上下文、做出的决策、遇到的问题]
 ```
-

@@ -1,64 +1,63 @@
-# Comprehensive Report Template
+# 综合报告模板
 
-Use for in-depth research requiring extensive analysis. See [comprehensive-report-format.md](comprehensive-report-format.md) for when to use this format.
+用于需要广泛分析的深入研究。有关何时使用此格式的信息，请参阅 [comprehensive-report-format.md](comprehensive-report-format.md)。
 
 ```markdown
-# [Report Title]
+# [报告标题]
 
-## Executive Summary
-[One paragraph summarizing the entire report]
+## 执行摘要
+[一段总结整个报告的文字]
 
-## Background & Context
-[Why this research was conducted, what questions it addresses]
+## 背景与上下文
+[为什么进行这项研究，它解决了哪些问题]
 
-## Methodology
-- Sources consulted: [number] Notion pages across [teamspaces]
-- Time period: [if relevant]
-- Scope: [what was included/excluded]
+## 方法论
+- 参考来源：[团队空间] 中的 [数量] 个 Notion 页面
+- 时间范围：[如适用]
+- 范围：[包含/排除的内容]
 
-## Key Findings
+## 主要发现
 
-### [Major Theme 1]
-**Summary**: [One sentence]
+### [主要主题 1]
+**摘要**：[一句话]
 
-**Details**:
-- [Supporting point with evidence]
-- [Supporting point with evidence]
-- [Supporting point with evidence]
+**详细信息**：
+- [带有证据的支持点]
+- [带有证据的支持点]
+- [带有证据的支持点]
 
-**Sources**: [Page mentions]
+**来源**：[页面提及]
 
-### [Major Theme 2]
-[Repeat structure]
+### [主要主题 2]
+[重复结构]
 
-## Data & Evidence
+## 数据与证据
 
-[Tables, quotes, specific data points]
+[表格、引用、具体数据点]
 
-## Implications
+## 影响
 
-### Short-term
-[Immediate implications]
+### 短期
+[直接影响]
 
-### Long-term
-[Strategic implications]
+### 长期
+[战略影响]
 
-## Recommendations
+## 建议
 
-### Priority 1: [High priority action]
-- **What**: [Specific action]
-- **Why**: [Rationale]
-- **How**: [Implementation approach]
+### 优先级 1：[高优先级行动]
+- **内容**：[具体行动]
+- **原因**：[理由]
+- **方式**：[实施方法]
 
-### Priority 2: [Medium priority action]
-[Repeat structure]
+### 优先级 2：[中优先级行动]
+[重复结构]
 
-## Appendix
+## 附录
 
-### Additional Resources
-- [Related pages]
+### 附加资源
+- [相关页面]
 
-### Open Questions
-- [Unanswered questions for future research]
+### 未解决的问题
+- [供未来研究未回答的问题]
 ```
-

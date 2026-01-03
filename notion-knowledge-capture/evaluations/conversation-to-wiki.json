@@ -1,31 +1,30 @@
 {
-  "name": "Save Conversation to Wiki",
+  "name": "将对话保存到 Wiki",
   "skills": ["knowledge-capture"],
-  "query": "Save this conversation about deploying our application to production to the team wiki",
-  "context": "Preceding conversation contains discussion about deployment process, including steps, gotchas, and best practices",
+  "query": "将这次关于将应用程序部署到生产环境的对话保存到团队 wiki",
+  "context": "前面的对话包含关于部署流程的讨论，包括步骤、注意事项和最佳实践",
   "expected_behavior": [
-    "Extracts key information from conversation context (deployment steps, gotchas, best practices)",
-    "Identifies content type as How-To Guide based on procedural nature",
-    "Structures content using How-To structure: Overview → Prerequisites → Steps (numbered) → Verification → Troubleshooting → Related",
-    "Organizes information into clear sections with proper headings",
-    "Includes specific commands, configurations, or examples from conversation",
-    "Adds context about why/when to use this process in Overview section",
-    "Notes common issues and solutions mentioned in discussion in Troubleshooting section",
-    "Uses Notion:notion-search to find team wiki location or asks user",
-    "Creates page using Notion:notion-create-pages with structured content and appropriate parent",
-    "Uses clear, descriptive title like 'How to Deploy to Production'",
-    "Applies Notion markdown formatting (headings, code blocks, bullets)",
-    "Suggests tags/categories for discoverability if wiki database"
+    "从对话上下文中提取关键信息（部署步骤、注意事项、最佳实践）",
+    "基于程序性质将内容类型识别为操作指南",
+    "使用操作指南结构结构化内容：概述 → 先决条件 → 步骤（编号）→ 验证 → 故障排除 → 相关内容",
+    "将信息组织成带有适当标题的清晰章节",
+    "包括对话中的具体命令、配置或示例",
+    "在概述部分添加关于为什么/何时使用此流程的上下文",
+    "在故障排除部分记录讨论中提到的常见问题和解决方案",
+    "使用 Notion:notion-search 查找团队 wiki 位置或询问用户",
+    "使用 Notion:notion-create-pages 创建页面，包含结构化内容和适当的父级",
+    "使用清晰、描述性的标题，如'如何部署到生产环境'",
+    "应用 Notion markdown 格式化（标题、代码块、项目符号）",
+    "如果是 wiki 数据库，建议标签/类别以提高可发现性"
   ],
   "success_criteria": [
-    "Content is structured using How-To format from SKILL.md content types",
-    "Key points from conversation are captured accurately (not generic)",
-    "Information is organized with proper Notion markdown (##, ###, bullets, code blocks)",
-    "Specific technical details (commands, configs) are preserved from conversation",
-    "Document is written for future reference with clear step-by-step instructions",
-    "Title is searchable and descriptive (e.g., 'How to Deploy to Production')",
-    "Page is placed in appropriate wiki location (general wiki or specific section)",
-    "Uses correct tool name (Notion:notion-create-pages)"
+    "内容使用 SKILL.md 内容类型中的操作指南格式进行结构化",
+    "准确捕获对话中的关键点（不是通用的）",
+    "信息使用适当的 Notion markdown（##, ###, 项目符号, 代码块）进行组织",
+    "保留对话中的具体技术细节（命令、配置）",
+    "文档编写用于将来参考，包含清晰的分步说明",
+    "标题可搜索且具有描述性（例如，'如何部署到生产环境'）",
+    "页面放置在适当的 wiki 位置（通用 wiki 或特定部分）",
+    "使用正确的工具名称（Notion:notion-create-pages）"
   ]
 }
-

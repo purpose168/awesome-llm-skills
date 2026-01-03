@@ -1,34 +1,33 @@
-# Task Creation Template
+# 任务创建模板
 
-When creating tasks from spec.
+从规范创建任务时使用。
 
 ```markdown
-# [Task Name]
+# [任务名称]
 
-## Context
-Part of implementation for <mention-page url="...">Feature Spec</mention-page>
+## 上下文
+作为 <mention-page url="...">功能规范</mention-page> 实施的一部分
 
-Implementation plan: <mention-page url="...">Implementation Plan</mention-page>
+实施计划: <mention-page url="...">实施计划</mention-page>
 
-## Description
-[What needs to be done]
+## 描述
+[需要完成的内容]
 
-## Acceptance Criteria
-- [ ] [Criterion 1]
-- [ ] [Criterion 2]
+## 验收标准
+- [ ] [标准 1]
+- [ ] [标准 2]
 
-## Technical Details
-[Technical approach or notes]
+## 技术细节
+[技术方法或说明]
 
-## Dependencies
-- Blocked by: [Task] or None
-- Blocks: [Task] or None
+## 依赖关系
+- 被阻塞于: [任务] 或 无
+- 阻塞: [任务] 或 无
 
-## Resources
-- [Link to design]
-- [Link to related code]
+## 资源
+- [设计链接]
+- [相关代码链接]
 
-## Progress
-[To be updated during implementation]
+## 进度
+[实施过程中更新]
 ```
-

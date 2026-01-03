@@ -1,146 +1,145 @@
-# Standard Implementation Plan Template
+# 标准实施计划模板
 
-Use this template for most feature implementations.
+将此模板用于大多数功能实施。
 
 ```markdown
-# Implementation Plan: [Feature Name]
+# 实施计划：[功能名称]
 
-## Overview
-[1-2 sentence feature description and business value]
+## 概述
+[1-2 句功能描述和业务价值]
 
-## Linked Specification
-<mention-page url="...">Original Specification</mention-page>
+## 关联规范
+<mention-page url="...">原始规范</mention-page>
 
-## Requirements Summary
+## 需求摘要
 
-### Functional Requirements
-- [Requirement 1]
-- [Requirement 2]
-- [Requirement 3]
+### 功能需求
+- [需求 1]
+- [需求 2]
+- [需求 3]
 
-### Non-Functional Requirements
-- **Performance**: [Targets]
-- **Security**: [Requirements]
-- **Scalability**: [Needs]
+### 非功能需求
+- **性能**: [目标]
+- **安全性**: [要求]
+- **可扩展性**: [需求]
 
-### Acceptance Criteria
-- [ ] [Criterion 1]
-- [ ] [Criterion 2]
-- [ ] [Criterion 3]
+### 验收标准
+- [ ] [标准 1]
+- [ ] [标准 2]
+- [ ] [标准 3]
 
-## Technical Approach
+## 技术方法
 
-### Architecture
-[High-level architectural decisions]
+### 架构
+[高层架构决策]
 
-### Technology Stack
-- Backend: [Technologies]
-- Frontend: [Technologies]
-- Infrastructure: [Technologies]
+### 技术栈
+- 后端: [技术]
+- 前端: [技术]
+- 基础设施: [技术]
 
-### Key Design Decisions
-1. **[Decision]**: [Rationale]
-2. **[Decision]**: [Rationale]
+### 关键设计决策
+1. **[决策]**: [理由]
+2. **[决策]**: [理由]
 
-## Implementation Phases
+## 实施阶段
 
-### Phase 1: Foundation (Week 1)
-**Goal**: Set up core infrastructure
+### 阶段 1: 基础（第 1 周）
+**目标**: 设置核心基础设施
 
-**Tasks**:
-- [ ] <mention-page url="...">Database schema design</mention-page>
-- [ ] <mention-page url="...">API scaffolding</mention-page>
-- [ ] <mention-page url="...">Authentication setup</mention-page>
+**任务**:
+- [ ] <mention-page url="...">数据库模式设计</mention-page>
+- [ ] <mention-page url="...">API 脚手架</mention-page>
+- [ ] <mention-page url="...">身份验证设置</mention-page>
 
-**Deliverables**: Working API skeleton
-**Estimated effort**: 3 days
+**可交付成果**: 可工作的 API 框架
+**预计工作量**: 3 天
 
-### Phase 2: Core Features (Week 2-3)
-**Goal**: Implement main functionality
+### 阶段 2: 核心功能（第 2-3 周）
+**目标**: 实现主要功能
 
-**Tasks**:
-- [ ] <mention-page url="...">Feature A implementation</mention-page>
-- [ ] <mention-page url="...">Feature B implementation</mention-page>
+**任务**:
+- [ ] <mention-page url="...">功能 A 实施</mention-page>
+- [ ] <mention-page url="...">功能 B 实施</mention-page>
 
-**Deliverables**: Core features working
-**Estimated effort**: 1 week
+**可交付成果**: 核心功能正常工作
+**预计工作量**: 1 周
 
-### Phase 3: Integration & Polish (Week 4)
-**Goal**: Complete integration and refinement
+### 阶段 3: 集成与完善（第 4 周）
+**目标**: 完成集成和优化
 
-**Tasks**:
-- [ ] <mention-page url="...">Frontend integration</mention-page>
-- [ ] <mention-page url="...">Testing & QA</mention-page>
+**任务**:
+- [ ] <mention-page url="...">前端集成</mention-page>
+- [ ] <mention-page url="...">测试与质量保证</mention-page>
 
-**Deliverables**: Production-ready feature
-**Estimated effort**: 1 week
+**可交付成果**: 生产就绪的功能
+**预计工作量**: 1 周
 
-## Dependencies
+## 依赖关系
 
-### External Dependencies
-- [Dependency 1]: [Status]
-- [Dependency 2]: [Status]
+### 外部依赖
+- [依赖项 1]: [状态]
+- [依赖项 2]: [状态]
 
-### Internal Dependencies
-- [Team/component dependency]
+### 内部依赖
+- [团队/组件依赖]
 
-### Blockers
-- [Known blocker] or None currently
+### 阻碍因素
+- [已知阻碍因素] 或 当前无阻碍
 
-## Risks & Mitigation
+## 风险与缓解
 
-### Risk 1: [Description]
-- **Probability**: High/Medium/Low
-- **Impact**: High/Medium/Low
-- **Mitigation**: [Strategy]
+### 风险 1: [描述]
+- **可能性**: 高/中/低
+- **影响**: 高/中/低
+- **缓解策略**: [策略]
 
-### Risk 2: [Description]
-- **Probability**: High/Medium/Low
-- **Impact**: High/Medium/Low
-- **Mitigation**: [Strategy]
+### 风险 2: [描述]
+- **可能性**: 高/中/低
+- **影响**: 高/中/低
+- **缓解策略**: [策略]
 
-## Timeline
+## 时间线
 
-| Milestone | Target Date | Status |
+| 里程碑 | 目标日期 | 状态 |
 |-----------|-------------|--------|
-| Phase 1 Complete | [Date] | ⏳ Planned |
-| Phase 2 Complete | [Date] | ⏳ Planned |
-| Phase 3 Complete | [Date] | ⏳ Planned |
-| Launch | [Date] | ⏳ Planned |
+| 阶段 1 完成 | [日期] | ⏳ 计划中 |
+| 阶段 2 完成 | [日期] | ⏳ 计划中 |
+| 阶段 3 完成 | [日期] | ⏳ 计划中 |
+| 发布 | [日期] | ⏳ 计划中 |
 
-## Success Criteria
+## 成功标准
 
-### Technical Success
-- [ ] All acceptance criteria met
-- [ ] Performance targets achieved
-- [ ] Security requirements satisfied
-- [ ] Test coverage > 80%
+### 技术成功
+- [ ] 所有验收标准已满足
+- [ ] 性能目标已达成
+- [ ] 安全性要求已满足
+- [ ] 测试覆盖率 > 80%
 
-### Business Success
-- [ ] [Business metric 1]
-- [ ] [Business metric 2]
+### 业务成功
+- [ ] [业务指标 1]
+- [ ] [业务指标 2]
 
-## Resources
+## 资源
 
-### Documentation
-- <mention-page url="...">Design Doc</mention-page>
-- <mention-page url="...">API Spec</mention-page>
+### 文档
+- <mention-page url="...">设计文档</mention-page>
+- <mention-page url="...">API 规范</mention-page>
 
-### Related Work
-- <mention-page url="...">Related Feature</mention-page>
+### 相关工作
+- <mention-page url="...">相关功能</mention-page>
 
-## Progress Tracking
+## 进度跟踪
 
-[This section updated regularly]
+[此部分定期更新]
 
-### Phase Status
-- Phase 1: ⏳ Not Started
-- Phase 2: ⏳ Not Started
-- Phase 3: ⏳ Not Started
+### 阶段状态
+- 阶段 1: ⏳ 未开始
+- 阶段 2: ⏳ 未开始
+- 阶段 3: ⏳ 未开始
 
-**Overall Progress**: 0% complete
+**总体进度**: 0% 完成
 
-### Latest Update: [Date]
-[Brief status update]
+### 最新更新: [日期]
+[简要状态更新]
 ```
-

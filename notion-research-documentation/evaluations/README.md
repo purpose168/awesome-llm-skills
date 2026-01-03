@@ -1,109 +1,109 @@
-# Research & Documentation Skill Evaluations
+# 研究和文档技能评估
 
-Evaluation scenarios for testing the Research & Documentation skill across different Claude models.
+用于在不同 Claude 模型上测试研究和文档技能的评估场景。
 
-## Purpose
+## 目的
 
-These evaluations ensure the Research & Documentation skill:
-- Searches across Notion workspace effectively
-- Synthesizes information from multiple sources
-- Selects appropriate research report format
-- Creates comprehensive documentation with proper citations
-- Works consistently across Haiku, Sonnet, and Opus
+这些评估确保研究和文档技能：
+- 有效地搜索 Notion 工作区
+- 综合来自多个来源的信息
+- 选择合适的研究报告格式
+- 创建包含适当引用的综合文档
+- 在 Haiku、Sonnet 和 Opus 之间保持一致的工作
 
-## Evaluation Files
+## 评估文件
 
 ### basic-research.json
-Tests basic research workflow with synthesis across multiple Notion pages.
+测试跨多个 Notion 页面综合的基本研究工作流程。
 
-**Scenario**: Research Q4 product roadmap and create summary  
-**Key Behaviors**:
-- Searches Notion for roadmap-related pages
-- Fetches multiple relevant pages (roadmap, product docs, meeting notes)
-- Synthesizes information from different sources
-- Selects appropriate format (Research Summary)
-- Includes citations linking back to source pages
-- Creates structured document with clear sections
+**场景**：研究 Q4 产品路线图并创建摘要
+**关键行为**：
+- 在 Notion 中搜索与路线图相关的页面
+- 获取多个相关页面（路线图、产品文档、会议记录）
+- 综合来自不同来源的信息
+- 选择合适的格式（研究摘要）
+- 包含链接回源页面的引用
+- 创建具有清晰部分的结构化文档
 
 ### research-to-database.json
-Tests creating research documentation in a Notion database with properties.
+测试在具有属性的 Notion 数据库中创建研究文档。
 
-**Scenario**: Research competitor landscape and save to Research database  
-**Key Behaviors**:
-- Searches for existing competitive intelligence in Notion
-- Identifies Research database as target
-- Fetches database schema to understand properties
-- Creates page with correct property values (Research Type, Status, Date, etc.)
-- Structures content with comparison format
-- Includes source citations for both Notion pages and external research
+**场景**：研究竞争格局并保存到研究数据库
+**关键行为**：
+- 在 Notion 中搜索现有的竞争情报
+- 识别研究数据库为目标
+- 获取数据库模式以了解属性
+- 创建具有正确属性值的页面（研究类型、状态、日期等）
+- 使用比较格式构建内容
+- 包含 Notion 页面和外部研究的源引用
 
-## Running Evaluations
+## 运行评估
 
-1. Enable the `research-documentation` skill
-2. Submit the query from the evaluation file
-3. Verify the skill searches Notion workspace comprehensively
-4. Check that multiple source pages are fetched and synthesized
-5. Verify appropriate format is selected (Research Summary, Comprehensive Report, Quick Brief, Comparison)
-6. Confirm citations link back to sources
-7. Test with Haiku, Sonnet, and Opus
+1. 启用 `research-documentation` 技能
+2. 提交评估文件中的查询
+3. 验证技能全面搜索 Notion 工作区
+4. 检查是否获取并综合了多个源页面
+5. 验证选择了合适的格式（研究摘要、综合报告、快速简报、比较）
+6. 确认引用链接回源
+7. 使用 Haiku、Sonnet 和 Opus 进行测试
 
-## Expected Skill Behaviors
+## 预期技能行为
 
-Research & Documentation evaluations should verify:
+研究和文档评估应验证：
 
-### Notion Search & Synthesis
-- Searches workspace with relevant queries
-- Fetches multiple source pages (3-5+)
-- Synthesizes information across sources
-- Identifies patterns and insights
-- Handles conflicting information appropriately
+### Notion 搜索和综合
+- 使用相关查询搜索工作区
+- 获取多个源页面（3-5+）
+- 综合跨来源的信息
+- 识别模式和见解
+- 适当地处理冲突信息
 
-### Format Selection
-- Chooses correct format based on scope and depth:
-  - **Research Summary**: Quick overview with key findings
-  - **Comprehensive Report**: Deep analysis with multiple sections
-  - **Quick Brief**: Fast facts and takeaways
-  - **Comparison**: Side-by-side analysis
-- Applies format structure consistently
-- Uses appropriate sections and headings
+### 格式选择
+- 根据范围和深度选择正确的格式：
+  - **研究摘要**：包含关键发现的快速概述
+  - **综合报告**：具有多个部分的深入分析
+  - **快速简报**：快速事实和要点
+  - **比较**：并排分析
+- 一致地应用格式结构
+- 使用适当的部分和标题
 
-### Citation & Attribution
-- Includes citations for all Notion sources
-- Uses mention-page tags: `<mention-page url="...">`
-- Attributes findings to specific sources
-- Distinguishes between Notion content and Claude research
-- Links related documents
+### 引用和归属
+- 包含所有 Notion 源的引用
+- 使用 mention-page 标签：`<mention-page url="...">`
+- 将发现归因于特定来源
+- 区分 Notion 内容和 Claude 研究
+- 链接相关文档
 
-### Document Quality
-- Title clearly indicates research topic and date
-- Executive summary or key findings upfront
-- Organized with clear hierarchy
-- Actionable insights and recommendations
-- Appropriate depth for the query
+### 文档质量
+- 标题清楚地表明研究主题和日期
+- 前置执行摘要或关键发现
+- 使用清晰的层次结构组织
+- 可操作的见解和建议
+- 适合查询的适当深度
 
-## Creating New Evaluations
+## 创建新评估
 
-When adding Research & Documentation evaluations:
+添加研究和文档评估时：
 
-1. **Test different research types** - Product research, competitive analysis, technical investigation, market research
-2. **Vary source count** - Synthesis of 2-3 pages vs. 10+ pages
-3. **Test format selection** - Does it choose the right format for the scope?
-4. **Include database targets** - Not just standalone pages
-5. **Test citation accuracy** - Are all sources properly attributed?
-6. **Cross-workspace search** - Testing search across teamspaces if applicable
+1. **测试不同的研究类型** - 产品研究、竞争分析、技术调查、市场研究
+2. **变化源数量** - 2-3 页面的综合 vs. 10+ 页面
+3. **测试格式选择** - 它是否为范围选择正确的格式？
+4. **包含数据库目标** - 不仅仅是独立页面
+5. **测试引用准确性** - 所有源是否都正确归属？
+6. **跨工作区搜索** - 如果适用，测试跨团队空间的搜索
 
-## Example Success Criteria
+## 示例成功标准
 
-**Good** (specific, testable):
-- "Searches Notion for 'roadmap' and 'Q4' and 'product'"
-- "Fetches at least 3 different source pages"
-- "Includes citation for each key finding using mention-page tags"
-- "Creates page with title format 'Research: [Topic] - [Date]'"
-- "Uses Research Summary format with sections: Executive Summary → Key Findings → Details → Recommendations → Sources"
+**好**（具体、可测试）：
+- "在 Notion 中搜索 'roadmap'、'Q4' 和 'product'"
+- "获取至少 3 个不同的源页面"
+- "使用 mention-page 标签为每个关键发现包含引用"
+- "创建标题格式为 'Research: [主题] - [日期]' 的页面"
+- "使用研究摘要格式，包含部分：执行摘要 → 关键发现 → 详细信息 → 建议 → 源"
 
-**Bad** (vague, untestable):
-- "Searches Notion effectively"
-- "Creates comprehensive research"
-- "Uses sources appropriately"
-- "Good documentation"
+**坏**（模糊、不可测试）：
+- "有效地搜索 Notion"
+- "创建综合研究"
+- "适当地使用源"
+- "良好的文档"
 

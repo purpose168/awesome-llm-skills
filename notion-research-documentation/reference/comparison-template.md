@@ -1,44 +1,43 @@
-# Comparison Template
+# 比较模板
 
-Use when researching multiple options or alternatives. See [comparison-format.md](comparison-format.md) for when to use this format.
+在研究多个选项或替代方案时使用。有关何时使用此格式的信息，请参阅 [comparison-format.md](comparison-format.md)。
 
 ```markdown
-# [Topic] Comparison
+# [主题] 比较
 
-## Overview
-[Brief introduction to what's being compared and why]
+## 概述
+[简要介绍比较的内容和原因]
 
-## Comparison Matrix
+## 比较矩阵
 
-| Criteria | Option A | Option B | Option C |
+| 标准 | 选项 A | 选项 B | 选项 C |
 |----------|----------|----------|----------|
-| [Criterion 1] | [Rating/Details] | [Rating/Details] | [Rating/Details] |
-| [Criterion 2] | [Rating/Details] | [Rating/Details] | [Rating/Details] |
+| [标准 1] | [评分/详细信息] | [评分/详细信息] | [评分/详细信息] |
+| [标准 2] | [评分/详细信息] | [评分/详细信息] | [评分/详细信息] |
 
-## Detailed Analysis
+## 详细分析
 
-### Option A
-**Pros**:
-- [Advantage]
-- [Advantage]
+### 选项 A
+**优点**：
+- [优势]
+- [优势]
 
-**Cons**:
-- [Disadvantage]
-- [Disadvantage]
+**缺点**：
+- [劣势]
+- [劣势]
 
-**Best for**: [Use case]
+**最适用于**：[用例]
 
-**Source**: <mention-page url="...">Source Page</mention-page>
+**来源**：<mention-page url="...">来源页面</mention-page>
 
-[Repeat for each option]
+[对每个选项重复]
 
-## Recommendation
+## 建议
 
-**Selected option**: [Choice]
+**选定选项**：[选择]
 
-**Rationale**: [Why this option is best given the context]
+**理由**：[在给定上下文中此选项最佳的原因]
 
-## Sources
-[List all consulted pages]
+## 来源
+[列出所有参考的页面]
 ```
-

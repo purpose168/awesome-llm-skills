@@ -1,35 +1,34 @@
-# Learning/Post-Mortem Database
+# 学习/事后分析数据库
 
-**Purpose**: Capture learnings from incidents, projects, or experiences.
+**目的**：从事故、项目或经验中捕获学习成果。
 
-## Schema
+## 模式
 
-| Property | Type | Options | Purpose |
+| 属性 | 类型 | 选项 | 目的 |
 |----------|------|---------|---------|
-| **Title** | title | - | Event or project name |
-| **Date** | date | - | When it happened |
-| **Type** | select | Incident, Project, Experiment, Retrospective | Learning type |
-| **Severity** | select | Critical, Major, Minor | Impact level (for incidents) |
-| **Team** | people | - | Who was involved |
-| **Key Learnings** | number | - | Count of learnings |
-| **Action Items** | relation | Links to tasks | Follow-up actions |
+| **标题** | 标题 | - | 事件或项目名称 |
+| **日期** | 日期 | - | 何时发生 |
+| **类型** | 选择 | 事故、项目、实验、回顾 | 学习类型 |
+| **严重性** | 选择 | 严重、重大、次要 | 影响级别（用于事故） |
+| **团队** | 人员 | - | 谁参与其中 |
+| **关键学习** | 数字 | - | 学习计数 |
+| **行动项** | 关系 | 链接到任务 | 后续行动 |
 
-## Content Template
+## 内容模板
 
-Each learning page should include:
-- **What Happened**: Situation description
-- **What Went Well**: Success factors
-- **What Didn't Go Well**: Problems encountered
-- **Root Causes**: Why things happened
-- **Learnings**: Key takeaways
-- **Action Items**: Improvements to implement
+每个学习页面应包括：
+- **发生了什么**：情况描述
+- **做得好的地方**：成功因素
+- **做得不好的地方**：遇到的问题
+- **根本原因**：为什么发生这些事情
+- **学习成果**：关键要点
+- **行动项**：要实施的改进
 
-## Best Practices
+## 最佳实践
 
-1. **Blameless approach**: Focus on systems and processes, not individuals
-2. **Document quickly**: Capture while memory is fresh
-3. **Identify root causes**: Go beyond surface-level problems
-4. **Create action items**: Turn learnings into improvements
-5. **Follow up**: Track that action items are completed
-6. **Share widely**: Make learnings accessible to entire team
-
+1. **无责备方法**：关注系统和流程，而不是个人
+2. **快速记录**：在记忆新鲜时捕获
+3. **识别根本原因**：超越表面问题
+4. **创建行动项**：将学习成果转化为改进
+5. **跟进**：跟踪行动项已完成
+6. **广泛分享**：使整个团队都能访问学习成果

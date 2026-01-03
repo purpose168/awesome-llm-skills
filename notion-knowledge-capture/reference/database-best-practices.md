@@ -1,65 +1,65 @@
-# Database Best Practices
+# 数据库最佳实践
 
-General guidance for creating and maintaining knowledge capture databases.
+创建和维护知识捕获数据库的一般指导。
 
-## Core Principles
+## 核心原则
 
-### 1. Keep It Simple
-- Start with core properties
-- Add more only when needed
-- Don't over-engineer
+### 1. 保持简单
+- 从核心属性开始
+- 仅在需要时添加更多
+- 不要过度设计
 
-### 2. Use Consistent Naming
-- Title property for main identifier
-- Status for lifecycle tracking
-- Tags for flexible categorization
-- Owner for accountability
+### 2. 使用一致的命名
+- 标题属性作为主要标识符
+- 状态用于生命周期跟踪
+- 标签用于灵活分类
+- 所有者用于问责
 
-### 3. Include Metadata
-- Created/Updated timestamps
-- Owner or maintainer
-- Last reviewed dates
-- Status indicators
+### 3. 包含元数据
+- 创建/更新时间戳
+- 所有者或维护者
+- 最后审查日期
+- 状态指示器
 
-### 4. Enable Discovery
-- Use tags liberally
-- Create helpful views
-- Link related content
-- Use clear titles
+### 4. 启用发现
+- 自由使用标签
+- 创建有用的视图
+- 链接相关内容
+- 使用清晰的标题
 
-### 5. Plan for Scale
-- Consider filters early
-- Use relations for connections
-- Think about search
-- Organize with categories
+### 5. 为扩展做规划
+- 尽早考虑过滤器
+- 使用关系进行连接
+- 考虑搜索
+- 用类别组织
 
-## Creating a Database
+## 创建数据库
 
-### Using `Notion:notion-create-database`
+### 使用 `Notion:notion-create-database`
 
-Example for documentation database:
+文档数据库示例：
 
 ```javascript
 {
   "parent": {"page_id": "wiki-page-id"},
-  "title": [{"text": {"content": "Team Documentation"}}],
+  "title": [{"text": {"content": "团队文档"}}],
   "properties": {
     "Type": {
       "select": {
         "options": [
-          {"name": "How-To", "color": "blue"},
-          {"name": "Concept", "color": "green"},
-          {"name": "Reference", "color": "gray"},
-          {"name": "FAQ", "color": "yellow"}
+          {"name": "操作指南", "color": "blue"},
+          {"name": "概念", "color": "green"},
+          {"name": "参考", "color": "gray"},
+          {"name": "常见问题", "color": "yellow"}
         ]
       }
     },
     "Category": {
       "select": {
         "options": [
-          {"name": "Engineering", "color": "red"},
-          {"name": "Product", "color": "purple"},
-          {"name": "Design", "color": "pink"}
+          {"name": "工程", "color": "red"},
+          {"name": "产品", "color": "purple"},
+          {"name": "设计", "color": "pink"}
         ]
       }
     },
@@ -68,9 +68,9 @@ Example for documentation database:
     "Status": {
       "select": {
         "options": [
-          {"name": "Draft", "color": "gray"},
-          {"name": "Final", "color": "green"},
-          {"name": "Deprecated", "color": "red"}
+          {"name": "草稿", "color": "gray"},
+          {"name": "最终", "color": "green"},
+          {"name": "已弃用", "color": "red"}
         ]
       }
     }
@@ -78,35 +78,34 @@ Example for documentation database:
 }
 ```
 
-### Fetching Database Schema
+### 获取数据库模式
 
-Before creating pages, always fetch database to get schema:
+在创建页面之前，始终获取数据库以获取模式：
 
 ```
 Notion:notion-fetch
 id: "database-url-or-id"
 ```
 
-This returns the exact property names and types to use.
+这将返回要使用的确切属性名称和类型。
 
-## Database Selection Guide
+## 数据库选择指南
 
-| Need | Use This Database |
+| 需求 | 使用此数据库 |
 |------|-------------------|
-| General documentation | [Documentation Database](documentation-database.md) |
-| Track decisions | [Decision Log](decision-log-database.md) |
-| Q&A knowledge base | [FAQ Database](faq-database.md) |
-| Team-specific content | [Team Wiki](team-wiki-database.md) |
-| Step-by-step guides | [How-To Guide Database](how-to-guide-database.md) |
-| Incident/project learnings | [Learning Database](learning-database.md) |
+| 通用文档 | [文档数据库](documentation-database.md) |
+| 跟踪决策 | [决策日志](decision-log-database.md) |
+| 问答知识库 | [常见问题数据库](faq-database.md) |
+| 团队特定内容 | [团队 Wiki](team-wiki-database.md) |
+| 分步指南 | [操作指南数据库](how-to-guide-database.md) |
+| 事故/项目学习 | [学习数据库](learning-database.md) |
 
-## Tips
+## 提示
 
-1. **Start with general documentation database** - most flexible
-2. **Add specialized databases** as needs emerge (FAQ, Decisions)
-3. **Use relations** to connect related docs
-4. **Create views** for common use cases
-5. **Review properties** quarterly - remove unused ones
-6. **Document the schema** in database description
-7. **Train team** on property usage and conventions
-
+1. **从通用文档数据库开始** - 最灵活
+2. **添加专用数据库**，随着需求出现（常见问题、决策）
+3. **使用关系**连接相关文档
+4. **创建视图**用于常见用例
+5. **每季度审查属性** - 删除未使用的属性
+6. **在数据库描述中记录模式**
+7. **培训团队**关于属性使用和约定

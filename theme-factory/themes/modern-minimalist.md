@@ -1,19 +1,19 @@
-# Modern Minimalist
+# 现代极简主义
 
-A clean and contemporary theme with a sophisticated grayscale palette for maximum versatility.
+一个干净现代的主题，采用精致的灰度调色板，具有最大的通用性。
 
-## Color Palette
+## 色彩调色板
 
-- **Charcoal**: `#36454f` - Primary dark color
-- **Slate Gray**: `#708090` - Medium gray for accents
-- **Light Gray**: `#d3d3d3` - Backgrounds and dividers
-- **White**: `#ffffff` - Text and clean backgrounds
+- **炭灰色**: `#36454f` - 主要深色
+- **板岩灰**: `#708090` - 中灰色用于强调
+- **浅灰色**: `#d3d3d3` - 背景和分隔符
+- **白色**: `#ffffff` - 文本和干净背景
 
-## Typography
+## 字体排版
 
-- **Headers**: DejaVu Sans Bold
-- **Body Text**: DejaVu Sans
+- **标题**: DejaVu Sans Bold（粗体）
+- **正文**: DejaVu Sans
 
-## Best Used For
+## 适用场景
 
-Tech presentations, architecture portfolios, design showcases, modern business proposals, data visualization.
+科技演示、建筑作品集、设计展示、现代商业提案、数据可视化。

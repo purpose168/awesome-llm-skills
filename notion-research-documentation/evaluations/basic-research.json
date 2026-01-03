@@ -1,28 +1,28 @@
 {
-  "name": "Basic Research and Documentation",
+  "name": "基本研究和文档",
   "skills": ["research-documentation"],
-  "query": "Research our API authentication approach and create a summary document in Notion",
+  "query": "研究我们的 API 身份验证方法并在 Notion 中创建摘要文档",
   "expected_behavior": [
-    "Searches Notion workspace for authentication-related pages using Notion:notion-search",
-    "Uses appropriate search terms like 'API authentication', 'auth', 'API security'",
-    "Applies filters if relevant (e.g., created_date_range, creator filters)",
-    "Fetches at least 2-3 relevant pages using Notion:notion-fetch to get detailed content",
-    "Analyzes the fetched content to extract key information about authentication approach",
-    "Creates a structured research summary document using Research Summary format (see reference/formats.md)",
-    "Includes sections: Executive Summary, Key Findings, Detailed Analysis, Recommendations, Sources",
-    "Cites source pages using <mention-page> tags for proper linking",
-    "Uses Notion:notion-create-pages to save the document to Notion",
-    "Applies Notion-flavored markdown with headings, bullets, and clear structure",
-    "Places document appropriately (asks user or uses project/research area)"
+    "使用 Notion:notion-search 在 Notion 工作区中搜索与身份验证相关的页面",
+    "使用适当的搜索术语，如 'API authentication'、'auth'、'API security'",
+    "如果相关，应用过滤器（例如，created_date_range、创建者过滤器）",
+    "使用 Notion:notion-fetch 获取至少 2-3 个相关页面以获取详细内容",
+    "分析获取的内容以提取有关身份验证方法的关键信息",
+    "使用研究摘要格式创建结构化的研究摘要文档（参见 reference/formats.md）",
+    "包含部分：执行摘要、关键发现、详细分析、建议、源",
+    "使用 <mention-page> 标签引用源页面以进行适当链接",
+    "使用 Notion:notion-create-pages 将文档保存到 Notion",
+    "应用 Notion 风格的 markdown，包含标题、项目符号和清晰的结构",
+    "将文档放置在适当位置（询问用户或使用项目/研究区域）"
   ],
   "success_criteria": [
-    "Document contains synthesized information from multiple searched pages",
-    "At least 2-3 source pages are cited with mention-page tags",
-    "Document follows Research Summary format structure from reference/formats.md",
-    "Title is descriptive with topic and date (e.g., 'API Authentication Research - Oct 2025')",
-    "Content is concise but comprehensive with clear findings",
-    "Uses Notion markdown correctly (headings, lists, mentions)",
-    "Document is placed in appropriate location or user is consulted"
+    "文档包含来自多个搜索页面的综合信息",
+    "至少 2-3 个源页面使用 mention-page 标签引用",
+    "文档遵循 reference/formats.md 中的研究摘要格式结构",
+    "标题具有描述性，包含主题和日期（例如，'API Authentication Research - Oct 2025'）",
+    "内容简洁但全面，具有清晰的发现",
+    "正确使用 Notion markdown（标题、列表、提及）",
+    "文档放置在适当位置或咨询用户"
   ]
 }
 

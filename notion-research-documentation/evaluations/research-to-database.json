@@ -1,29 +1,29 @@
 {
-  "name": "Research with Database Integration",
+  "name": "数据库集成研究",
   "skills": ["research-documentation"],
-  "query": "Research competitor pricing strategies and add to our Research database",
+  "query": "研究竞争对手定价策略并添加到我们的研究数据库",
   "expected_behavior": [
-    "Searches for competitor and pricing information using Notion:notion-search",
-    "Applies appropriate search strategy (see reference/advanced-search.md patterns)",
-    "Fetches relevant pages using Notion:notion-fetch and synthesizes findings",
-    "Recognizes need to add to database (mentioned in query)",
-    "Searches for or asks about the Research database location",
-    "Fetches database using Notion:notion-fetch to get schema, data sources, and properties",
-    "Identifies correct data source from <data-source> tags if multiple exist",
-    "Creates page with appropriate database properties (Type: Competitor Analysis, Category, Tags, Date, Status, etc.)",
-    "Uses parent: { data_source_id: 'collection://...' } for correct database placement",
-    "Includes research content using Competitor Analysis format (see reference/formats.md)",
-    "Sets all required properties from schema with correct values",
-    "Cites sources using mention-page tags per reference/citations.md"
+    "使用 Notion:notion-search 搜索竞争对手和定价信息",
+    "应用适当的搜索策略（参见 reference/advanced-search.md 模式）",
+    "使用 Notion:notion-fetch 获取相关页面并综合发现",
+    "识别需要添加到数据库（在查询中提及）",
+    "搜索或询问研究数据库位置",
+    "使用 Notion:notion-fetch 获取数据库以获取模式、数据源和属性",
+    "如果存在多个数据源，从 <data-source> 标签中识别正确的数据源",
+    "创建具有适当数据库属性的页面（类型：竞争对手分析、类别、标签、日期、状态等）",
+    "使用 parent: { data_source_id: 'collection://...' } 进行正确的数据库放置",
+    "使用竞争对手分析格式包含研究内容（参见 reference/formats.md）",
+    "使用正确的值设置模式中的所有必需属性",
+    "根据 reference/citations.md 使用 mention-page 标签引用源"
   ],
   "success_criteria": [
-    "Page is created in correct database using data_source_id as parent",
-    "All required database properties are set correctly",
-    "Property values match available options from fetched schema",
-    "Content follows Competitor Analysis format structure",
-    "Sources are cited with proper mention-page tags",
-    "Title is descriptive (e.g., 'Competitor Pricing Analysis')",
-    "Research synthesizes findings rather than just listing sources"
+    "使用 data_source_id 作为父级在正确的数据库中创建页面",
+    "所有必需的数据库属性都正确设置",
+    "属性值与获取的模式中的可用选项匹配",
+    "内容遵循竞争对手分析格式结构",
+    "源使用适当的 mention-page 标签引用",
+    "标题具有描述性（例如，'Competitor Pricing Analysis'）",
+    "研究综合发现而不仅仅是列出源"
   ]
 }
 

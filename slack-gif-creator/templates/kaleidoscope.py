@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Kaleidoscope Effect - Create mirror/rotation effects.
+万花筒效果 - 创建镜像/旋转效果。
 
-Apply kaleidoscope effects to frames or objects for psychedelic visuals.
+对帧或对象应用万花筒效果以产生迷幻视觉效果。
 """
 
 import sys
@@ -18,63 +18,63 @@ import numpy as np
 def apply_kaleidoscope(frame: Image.Image, segments: int = 8,
                        center: tuple[int, int] | None = None) -> Image.Image:
     """
-    Apply kaleidoscope effect by mirroring/rotating frame sections.
+    通过镜像/旋转帧部分来应用万花筒效果。
 
-    Args:
-        frame: Input frame
-        segments: Number of mirror segments (4, 6, 8, 12 work well)
-        center: Center point for effect (None = frame center)
+    参数：
+        frame: 输入帧
+        segments: 镜像段数（4、6、8、12效果很好）
+        center: 效果的中心点（None = 帧中心）
 
-    Returns:
-        Frame with kaleidoscope effect
+    返回：
+        带有万花筒效果的帧
     """
     width, height = frame.size
 
     if center is None:
         center = (width // 2, height // 2)
 
-    # Create output frame
+    # 创建输出帧
     output = Image.new('RGB', (width, height))
 
-    # Calculate angle per segment
+    # 计算每段的角度
     angle_per_segment = 360 / segments
 
-    # For simplicity, we'll create a radial mirror effect
-    # A full implementation would rotate and mirror properly
-    # This is a simplified version that creates interesting patterns
+    # 为简单起见，我们将创建径向镜像效果
+    # 完整的实现会正确旋转和镜像
+    # 这是一个创建有趣图案的简化版本
 
-    # Convert to numpy for easier manipulation
+    # 转换为numpy以便更容易操作
     frame_array = np.array(frame)
     output_array = np.zeros_like(frame_array)
 
     center_x, center_y = center
 
-    # Create wedge mask and mirror it
+    # 创建楔形蒙版并镜像它
     for y in range(height):
         for x in range(width):
-            # Calculate angle from center
+            # 计算从中心的角度
             dx = x - center_x
             dy = y - center_y
 
             angle = (math.degrees(math.atan2(dy, dx)) + 180) % 360
             distance = math.sqrt(dx * dx + dy * dy)
 
-            # Which segment does this pixel belong to?
+            # 这个像素属于哪个段？
             segment = int(angle / angle_per_segment)
 
-            # Mirror angle within segment
+            # 段内的镜像角度
             segment_angle = angle % angle_per_segment
-            if segment % 2 == 1:  # Mirror every other segment
+            if segment % 2 == 1:  # 每隔一段镜像
                 segment_angle = angle_per_segment - segment_angle
 
-            # Calculate source position
+            # 计算源位置
             source_angle = segment_angle + (segment // 2) * angle_per_segment * 2
             source_angle_rad = math.radians(source_angle - 180)
 
             source_x = int(center_x + distance * math.cos(source_angle_rad))
             source_y = int(center_y + distance * math.sin(source_angle_rad))
 
-            # Bounds check
+            # 边界检查
             if 0 <= source_x < width and 0 <= source_y < height:
                 output_array[y, x] = frame_array[source_y, source_x]
             else:
@@ -85,20 +85,20 @@ def apply_kaleidoscope(frame: Image.Image, segments: int = 8,
 
 def apply_simple_mirror(frame: Image.Image, mode: str = 'quad') -> Image.Image:
     """
-    Apply simple mirror effect (faster than full kaleidoscope).
+    应用简单的镜像效果（比完整万花筒更快）。
 
-    Args:
-        frame: Input frame
-        mode: 'horizontal', 'vertical', 'quad' (4-way), 'radial'
+    参数：
+        frame: 输入帧
+        mode: 'horizontal'（水平）、'vertical'（垂直）、'quad'（4路）、'radial'（径向）
 
-    Returns:
-        Mirrored frame
+    返回：
+        镜像后的帧
     """
     width, height = frame.size
     center_x, center_y = width // 2, height // 2
 
     if mode == 'horizontal':
-        # Mirror left half to right
+        # 将左半部分镜像到右半部分
         left_half = frame.crop((0, 0, center_x, height))
         left_flipped = ImageOps.mirror(left_half)
         result = frame.copy()
@@ -106,7 +106,7 @@ def apply_simple_mirror(frame: Image.Image, mode: str = 'quad') -> Image.Image:
         return result
 
     elif mode == 'vertical':
-        # Mirror top half to bottom
+        # 将上半部分镜像到下半部分
         top_half = frame.crop((0, 0, width, center_y))
         top_flipped = ImageOps.flip(top_half)
         result = frame.copy()
@@ -114,21 +114,21 @@ def apply_simple_mirror(frame: Image.Image, mode: str = 'quad') -> Image.Image:
         return result
 
     elif mode == 'quad':
-        # 4-way mirror (top-left quadrant mirrored to all)
+        # 4路镜像（左上象限镜像到所有象限）
         quad = frame.crop((0, 0, center_x, center_y))
 
         result = Image.new('RGB', (width, height))
 
-        # Top-left (original)
+        # 左上（原始）
         result.paste(quad, (0, 0))
 
-        # Top-right (horizontal mirror)
+        # 右上（水平镜像）
         result.paste(ImageOps.mirror(quad), (center_x, 0))
 
-        # Bottom-left (vertical mirror)
+        # 左下（垂直镜像）
         result.paste(ImageOps.flip(quad), (0, center_y))
 
-        # Bottom-right (both mirrors)
+        # 右下（两个镜像）
         result.paste(ImageOps.flip(ImageOps.mirror(quad)), (center_x, center_y))
 
         return result
@@ -146,27 +146,27 @@ def create_kaleidoscope_animation(
     height: int = 480
 ) -> list[Image.Image]:
     """
-    Create animated kaleidoscope effect.
+    创建万花筒动画。
 
-    Args:
-        base_frame: Frame to apply effect to (or None for demo pattern)
-        num_frames: Number of frames
-        segments: Kaleidoscope segments
-        rotation_speed: How fast pattern rotates (0.5-2.0)
-        width: Frame width if generating demo
-        height: Frame height if generating demo
+    参数：
+        base_frame: 要应用效果的帧（或None用于演示图案）
+        num_frames: 帧数
+        segments: 万花筒段数
+        rotation_speed: 图案旋转速度（0.5-2.0）
+        width: 如果生成演示则为帧宽度
+        height: 如果生成演示则为帧高度
 
-    Returns:
-        List of frames with kaleidoscope effect
+    返回：
+        带有万花筒效果的帧列表
     """
     frames = []
 
-    # Create demo pattern if no base frame
+    # 如果没有基础帧则创建演示图案
     if base_frame is None:
         base_frame = Image.new('RGB', (width, height), (255, 255, 255))
         draw = ImageDraw.Draw(base_frame)
 
-        # Draw some colored shapes
+        # 绘制一些彩色形状
         from core.color_palettes import get_palette
         palette = get_palette('vibrant')
 
@@ -177,14 +177,14 @@ def create_kaleidoscope_animation(
             y = height // 2 + int(100 * math.sin(i * 2 * math.pi / 3))
             draw.ellipse([x - 40, y - 40, x + 40, y + 40], fill=color)
 
-    # Rotate base frame and apply kaleidoscope
+    # 旋转基础帧并应用万花筒
     for i in range(num_frames):
         angle = (i / num_frames) * 360 * rotation_speed
 
-        # Rotate base frame
+        # 旋转基础帧
         rotated = base_frame.rotate(angle, resample=Image.BICUBIC)
 
-        # Apply kaleidoscope
+        # 应用万花筒
         kaleido_frame = apply_kaleidoscope(rotated, segments=segments)
 
         frames.append(kaleido_frame)
@@ -192,15 +192,15 @@ def create_kaleidoscope_animation(
     return frames
 
 
-# Example usage
+# 示例用法
 if __name__ == '__main__':
     from core.gif_builder import GIFBuilder
 
-    print("Creating kaleidoscope GIF...")
+    print("创建万花筒GIF...")
 
     builder = GIFBuilder(width=480, height=480, fps=20)
 
-    # Create kaleidoscope animation
+    # 创建万花筒动画
     frames = create_kaleidoscope_animation(
         num_frames=40,
         segments=8,

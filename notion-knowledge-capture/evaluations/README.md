@@ -1,95 +1,95 @@
-# Knowledge Capture Skill Evaluations
+# 知识捕获技能评估
 
-Evaluation scenarios for testing the Knowledge Capture skill across different Claude models.
+用于测试不同 Claude 模型的知识捕获技能的评估场景。
 
-## Purpose
+## 目的
 
-These evaluations ensure the Knowledge Capture skill:
-- Correctly identifies content types (how-to guides, FAQs, decision records, wikis)
-- Extracts relevant information from conversations
-- Structures content appropriately for each type
-- Searches and places content in the right Notion location
-- Works consistently across Haiku, Sonnet, and Opus
+这些评估确保知识捕获技能：
+- 正确识别内容类型（操作指南、常见问题、决策记录、wiki）
+- 从对话中提取相关信息
+- 为每种类型适当地结构化内容
+- 搜索并将内容放置在正确的 Notion 位置
+- 在 Haiku、Sonnet 和 Opus 之间一致地工作
 
-## Evaluation Files
+## 评估文件
 
 ### conversation-to-wiki.json
-Tests capturing conversation content as a how-to guide for the team wiki.
+测试将对话内容作为团队 wiki 的操作指南进行捕获。
 
-**Scenario**: Save deployment discussion to wiki  
-**Key Behaviors**:
-- Extracts steps, gotchas, and best practices from conversation
-- Identifies content as How-To Guide
-- Structures with proper sections (Overview, Prerequisites, Steps, Troubleshooting)
-- Searches for team wiki location
-- Preserves technical details (commands, configs)
+**场景**：将部署讨论保存到 wiki  
+**关键行为**：
+- 从对话中提取步骤、注意事项和最佳实践
+- 将内容识别为操作指南
+- 使用适当的章节结构化（概述、先决条件、步骤、故障排除）
+- 搜索团队 wiki 位置
+- 保留技术细节（命令、配置）
 
 ### decision-record.json
-Tests capturing architectural or technical decisions with full context.
+测试使用完整上下文捕获架构或技术决策。
 
-**Scenario**: Document database migration decision  
-**Key Behaviors**:
-- Extracts decision context, alternatives, and rationale
-- Follows decision record structure (Context, Decision, Alternatives, Consequences)
-- Captures both selected and rejected options with reasoning
-- Places in decision log or ADR database
-- Links to related technical documentation
+**场景**：记录数据库迁移决策  
+**关键行为**：
+- 提取决策上下文、替代方案和理由
+- 遵循决策记录结构（上下文、决策、替代方案、后果）
+- 捕获已选择和已拒绝的选项及其推理
+- 放置在决策日志或 ADR（架构决策记录）数据库中
+- 链接到相关技术文档
 
-## Running Evaluations
+## 运行评估
 
-1. Enable the `knowledge-capture` skill
-2. Submit the query from the evaluation file
-3. Provide conversation context as specified
-4. Verify all expected behaviors are met
-5. Check success criteria for quality
-6. Test with Haiku, Sonnet, and Opus
+1. 启用 `knowledge-capture` 技能
+2. 提交评估文件中的查询
+3. 按照指定提供对话上下文
+4. 验证所有预期行为是否满足
+5. 检查质量的成功标准
+6. 使用 Haiku、Sonnet 和 Opus 进行测试
 
-## Expected Skill Behaviors
+## 预期技能行为
 
-Knowledge Capture evaluations should verify:
+知识捕获评估应验证：
 
-### Content Extraction
-- Accurately captures key points from conversation context
-- Preserves specific technical details, not generic placeholders
-- Maintains context and nuance from discussion
+### 内容提取
+- 准确捕获对话上下文中的关键点
+- 保留特定技术细节，而不是通用占位符
+- 保持讨论中的上下文和细微差别
 
-### Content Type Selection
-- Correctly identifies appropriate content type (how-to, FAQ, decision record, wiki page)
-- Uses matching structure from reference documentation
-- Applies proper Notion markdown formatting
+### 内容类型选择
+- 正确识别适当的内容类型（操作指南、常见问题、决策记录、wiki 页面）
+- 使用参考文档中的匹配结构
+- 应用适当的 Notion markdown 格式化
 
-### Notion Integration
-- Searches for appropriate target location (wiki, decision log, etc.)
-- Creates well-structured pages with clear titles
-- Uses proper parent placement
-- Includes discoverable titles and metadata
+### Notion 集成
+- 搜索适当的目标位置（wiki、决策日志等）
+- 创建具有清晰标题的结构良好的页面
+- 使用适当的父级放置
+- 包括可发现的标题和元数据
 
-### Quality Standards
-- Content is actionable and future-reference ready
-- Technical accuracy is preserved
-- Organization aids discoverability
-- Formatting enhances readability
+### 质量标准
+- 内容可操作且可未来参考
+- 保留技术准确性
+- 组织有助于可发现性
+- 格式化增强可读性
 
-## Creating New Evaluations
+## 创建新评估
 
-When adding Knowledge Capture evaluations:
+添加知识捕获评估时：
 
-1. **Use realistic conversation content** - Include actual technical details, decisions, or processes
-2. **Test different content types** - How-to guides, FAQs, decision records, meeting notes, learnings
-3. **Vary complexity** - Simple captures vs. complex technical discussions
-4. **Test discovery** - Finding the right wiki section or database
-5. **Include edge cases** - Unclear content types, minimal context, overlapping categories
+1. **使用真实的对话内容** - 包括实际的技术细节、决策或流程
+2. **测试不同的内容类型** - 操作指南、常见问题、决策记录、会议记录、学习成果
+3. **变化复杂度** - 简单捕获 vs. 复杂技术讨论
+4. **测试发现** - 找到正确的 wiki 部分或数据库
+5. **包括边缘情况** - 不清楚的内容类型、最小上下文、重叠类别
 
-## Example Success Criteria
+## 示例成功标准
 
-**Good** (specific, testable):
-- "Structures content using How-To format with numbered steps"
-- "Preserves exact bash commands from conversation"
-- "Creates page with title format 'How to [Action]'"
-- "Places in Engineering Wiki → Deployment section"
+**好**（具体、可测试）：
+- "使用操作指南格式结构化内容，包含编号步骤"
+- "保留对话中的确切 bash 命令"
+- "创建标题格式为'如何 [操作]'的页面"
+- "放置在工程 Wiki → 部署部分"
 
-**Bad** (vague, untestable):
-- "Creates good documentation"
-- "Uses appropriate structure"
-- "Saves to the right place"
+**差**（模糊、不可测试）：
+- "创建好的文档"
+- "使用适当的结构"
+- "保存到正确的位置"
 

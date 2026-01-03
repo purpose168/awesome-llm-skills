@@ -1,125 +1,124 @@
-# Example: Customer Meeting Prep
+# 示例：客户会议准备
 
-**User Request**: "Prep for sales meeting with Acme Corp on Thursday"
+**用户请求**："为周四与 Acme Corp 的销售会议做准备"
 
-## Workflow
+## 工作流程
 
-### 1. Search Customer Info
+### 1. 搜索客户信息
 ```
 Notion:notion-search
 query: "Acme Corp"
 ```
 
-Found:
-- CRM notes from initial call
-- Product demo feedback
-- Pricing proposal
-- Competitor analysis
+找到：
+- 初次通话的 CRM 记录
+- 产品演示反馈
+- 定价提案
+- 竞争对手分析
 
-### 2. Fetch Details
+### 2. 获取详细信息
 ```
-Notion:notion-fetch (4 pages)
+Notion:notion-fetch (4 个页面)
 ```
 
-**Key context**:
-- **Company**: 500-person fintech startup, Series B
-- **Pain Points**: Manual workflows, data silos, scaling issues
-- **Decision Makers**: CTO (technical), VP Product (user needs), CFO (budget)
-- **Timeline**: Need solution by Q1
-- **Budget**: $50-75K/year range
-- **Competition**: Evaluating us vs. Competitor A and Competitor B
+**关键上下文**：
+- **公司**：500 人的金融科技初创公司，B 轮
+- **痛点**：手动工作流程、数据孤岛、扩展问题
+- **决策者**：CTO（技术）、产品副总裁（用户需求）、CFO（预算）
+- **时间线**：第一季度需要解决方案
+- **预算**：每年 5-7.5 万美元范围
+- **竞争**：正在评估我们 vs. 竞争对手 A 和竞争对手 B
 
-### 3. Add Research Context
-Claude research added:
-- Fintech industry compliance requirements
-- Common integration needs for financial products
-- Typical procurement processes for Series B companies
+### 3. 添加研究上下文
+Claude 研究添加：
+- 金融科技行业合规要求
+- 金融产品的常见集成需求
+- B 轮公司的典型采购流程
 
-### 4. Create Internal Pre-Read
+### 4. 创建内部预读
 ```
 Notion:notion-create-pages
 pages: [{
   properties: {
-    title: "Acme Corp Meeting - Pre-Read (Internal)"
+    title: "Acme Corp 会议 - 预读（内部）"
   },
-  content: "# Acme Corp Meeting - Pre-Read (Internal)
+  content: "# Acme Corp 会议 - 预读（内部）
 
-## Company Overview
-**Company**: Acme Corp (500-person fintech, Series B)
-**Decision Makers**: CTO, VP Product, CFO
-Source: <mention-page url='...'>CRM Notes</mention-page>
+## 公司概述
+**公司**：Acme Corp（500 人金融科技，B 轮）
+**决策者**：CTO、产品副总裁、CFO
+来源：<mention-page url='...'>CRM 记录</mention-page>
 
-## Their Pain Points → Our Solutions
-- Manual workflows → Workflow automation
-- Data silos → API integrations
-- Scaling issues → Enterprise features
+## 他们的痛点 → 我们的解决方案
+- 手动工作流程 → 工作流程自动化
+- 数据孤岛 → API 集成
+- 扩展问题 → 企业功能
 
-## Competitive Position
-**Our advantages over Competitor A/B**:
-- Better integration ecosystem (Stripe, Plaid)
-- Stronger compliance features
-- Faster implementation (4 weeks vs 12 weeks)
+## 竞争地位
+**我们相对于竞争对手 A/B 的优势**：
+- 更好的集成生态系统（Stripe、Plaid）
+- 更强的合规功能
+- 更快的实施（4 周 vs 12 周）
 
-## Pricing Strategy
-Recommend: $60K/year (mid-range of their budget)
+## 定价策略
+建议：每年 6 万美元（他们预算的中档）
 
-## Potential Objections & Responses
-..."
+## 潜在异议和回应..."
 }]
 ```
 
-### 5. Create Meeting Agenda
+### 5. 创建会议议程
 ```
 Notion:notion-create-pages
 pages: [{
   properties: {
-    title: "Acme Corp - Product Demo & Q&A"
+    title: "Acme Corp - 产品演示和问答"
   },
-  content: "# Acme Corp - Product Demo & Q&A
+  content: "# Acme Corp - 产品演示和问答
 
-## Meeting Details
-**Date**: Thursday, Oct 17, 2025 @ 2pm PST
-**Attendees**: CTO, VP Product, CFO (Acme) | Sales Lead, Solutions Engineer (Us)
-**Duration**: 60 minutes
+## 会议详细信息
+**日期**：2025 年 10 月 17 日星期四下午 2 点太平洋标准时间
+**与会者**：CTO、产品副总裁、CFO（Acme）| 销售负责人、解决方案工程师（我们）
+**时长**：60 分钟
 
-## Objective
-Demonstrate how our platform solves Acme's workflow automation and integration challenges.
+## 目标
+演示我们的平台如何解决 Acme 的工作流程自动化和集成挑战。
 
-## Agenda
+## 议程
 
-**1. Introductions** (5 min)
+**1. 介绍**（5 分钟）
 
-**2. Understand Current Workflow** (10 min)
-- Current pain points
-- Integration requirements
-- Success criteria
+**2. 了解当前工作流程**（10 分钟）
+- 当前痛点
+- 集成需求
+- 成功标准
 
-**3. Product Demo** (25 min)
-- Workflow automation capabilities
-- API integrations (Stripe, Plaid)
-- Security & compliance features
+**3. 产品演示**（25 分钟）
+- 工作流程自动化功能
+- API 集成（Stripe、Plaid）
+- 安全和合规功能
 
-**4. Pricing & Implementation** (10 min)
+**4. 定价和实施**（10 分钟）
 
-**5. Next Steps** (10 min)
+**5. 下一步**（10 分钟）
 "
 }]
 ```
 
-### 6. Link Resources
-Connected agenda to CRM page, pricing sheet, and technical integration docs.
+### 6. 链接资源
+将议程链接到 CRM 页面、定价表和技术集成文档。
 
-## Outputs
+## 输出
 
-**Internal Pre-Read**: Full context for sales team
-**Customer Agenda**: Professional meeting structure
-**Both in Notion** with links to supporting materials
+**内部预读**：销售团队的完整上下文
+**客户议程**：专业的会议结构
+**两者都在 Notion 中**并链接到支持材料
 
-## Key Success Factors
-- Understood customer's specific pain points
-- Researched industry context (fintech compliance)
-- Mapped features to their needs
-- Prepared competitive differentiators
-- Structured demo around their use cases
-- Pre-planned objection responses
-- Clear next steps in agenda
+## 关键成功因素
+- 理解了客户的具体痛点
+- 研究了行业上下文（金融科技合规）
+- 将功能映射到他们的需求
+- 准备了竞争差异化
+- 围绕他们的用例构建演示
+- 预先规划了异议回应
+- 议程中有清晰的下一步

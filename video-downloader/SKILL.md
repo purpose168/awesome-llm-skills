@@ -1,106 +1,106 @@
 ---
 name: video-downloader
-description: Downloads videos from YouTube and other platforms for offline viewing, editing, or archival. Handles various formats and quality options.
+description: 从 YouTube 和其他平台下载视频以供离线观看、编辑或存档。支持多种格式和质量选项。
 ---
 
-# Video Downloader
+# 视频下载器
 
-This skill downloads videos from YouTube and other platforms directly to your computer.
+此技能可直接从 YouTube 和其他平台下载视频到您的计算机。
 
-## When to Use This Skill
+## 何时使用此技能
 
-- Downloading YouTube videos for offline viewing
-- Saving educational content for reference
-- Archiving important videos
-- Getting video files for editing or repurposing
-- Downloading your own content from platforms
-- Saving conference talks or webinars
+- 下载 YouTube 视频以供离线观看
+- 保存教育内容以供参考
+- 存档重要视频
+- 获取视频文件以进行编辑或重新利用
+- 从平台下载您自己的内容
+- 保存会议演讲或网络研讨会
 
-## What This Skill Does
+## 此技能的功能
 
-1. **Downloads Videos**: Fetches videos from YouTube and other platforms
-2. **Quality Selection**: Lets you choose resolution (480p, 720p, 1080p, 4K)
-3. **Format Options**: Downloads in various formats (MP4, WebM, audio-only)
-4. **Batch Downloads**: Can download multiple videos or playlists
-5. **Metadata Preservation**: Saves title, description, and thumbnail
+1. **下载视频**: 从 YouTube 和其他平台获取视频
+2. **质量选择**: 让您选择分辨率（480p、720p、1080p、4K）
+3. **格式选项**: 以多种格式下载（MP4、WebM、仅音频）
+4. **批量下载**: 可下载多个视频或播放列表
+5. **元数据保留**: 保存标题、描述和缩略图
 
-## How to Use
+## 如何使用
 
-### Basic Download
-
-```
-Download this YouTube video: https://youtube.com/watch?v=...
-```
+### 基本下载
 
 ```
-Download this video in 1080p quality
+下载此 YouTube 视频：https://youtube.com/watch?v=...
 ```
 
-### Audio Only
-
 ```
-Download the audio from this YouTube video as MP3
+以 1080p 质量下载此视频
 ```
 
-### Playlist Download
+### 仅音频
 
 ```
-Download all videos from this YouTube playlist: [URL]
+从此 YouTube 视频下载音频为 MP3
 ```
 
-### Batch Download
+### 播放列表下载
 
 ```
-Download these 5 YouTube videos:
+从此 YouTube 播放列表下载所有视频：[URL]
+```
+
+### 批量下载
+
+```
+下载这 5 个 YouTube 视频：
 1. [URL]
 2. [URL]
 ...
 ```
 
-## Example
+## 示例
 
-**User**: "Download this YouTube video: https://youtube.com/watch?v=abc123"
+**用户**: "下载此 YouTube 视频：https://youtube.com/watch?v=abc123"
 
-**Output**:
+**输出**:
 ```
-Downloading from YouTube...
+正在从 YouTube 下载...
 
-Video: "How to Build Products Users Love"
-Channel: Lenny's Podcast
-Duration: 45:32
-Quality: 1080p
+视频："如何构建用户喜爱的产品"
+频道：Lenny's Podcast
+时长：45:32
+质量：1080p
 
-Progress: ████████████████████ 100%
+进度：████████████████████ 100%
 
-✓ Downloaded: how-to-build-products-users-love.mp4
-✓ Saved thumbnail: how-to-build-products-users-love.jpg
-✓ Size: 342 MB
+✓ 已下载：how-to-build-products-users-love.mp4
+✓ 已保存缩略图：how-to-build-products-users-love.jpg
+✓ 大小：342 MB
 
-Saved to: ~/Downloads/
+已保存至：~/Downloads/
 ```
 
-**Inspired by:** Lenny's workflow from his newsletter
+**灵感来源：** Lenny 在其通讯中的工作流程
 
-## Important Notes
+## 重要说明
 
-⚠️ **Copyright & Fair Use**
-- Only download videos you have permission to download
-- Respect copyright laws and platform terms of service
-- Use for personal, educational, or fair use purposes
-- Don't redistribute copyrighted content
+⚠️ **版权与合理使用**
+- 仅下载您有权限下载的视频
+- 尊重版权法和平台服务条款
+- 用于个人、教育或合理使用目的
+- 不要重新分发受版权保护的内容
 
-## Tips
+## 提示
 
-- Specify quality if you need lower file size (720p vs 1080p)
-- Use audio-only for podcasts or music to save space
-- Download to a dedicated folder to stay organized
-- Check file size before downloading on slow connections
+- 如果需要较小的文件大小，请指定质量（720p vs 1080p）
+- 对于播客或音乐，使用仅音频以节省空间
+- 下载到专用文件夹以保持井井有条
+- 在慢速连接上下载前检查文件大小
 
-## Common Use Cases
+## 常见用例
 
-- **Education**: Save tutorials and courses for offline learning
-- **Research**: Archive videos for reference
-- **Content Creation**: Download your own content from platforms
-- **Backup**: Save important videos before they're removed
-- **Offline Viewing**: Watch videos without internet access
+- **教育**: 保存教程和课程以供离线学习
+- **研究**: 存档视频以供参考
+- **内容创作**: 从平台下载您自己的内容
+- **备份**: 在视频被删除前保存重要视频
+- **离线观看**: 在没有互联网的情况下观看视频
 

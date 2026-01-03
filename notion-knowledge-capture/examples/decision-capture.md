@@ -1,126 +1,126 @@
-# Example: Decision Record Capture
+# 示例：决策记录捕获
 
-**User Request**: "Document our decision to move from REST to GraphQL API"
+**用户请求**："记录我们将从 REST 迁移到 GraphQL API 的决策"
 
-## Workflow
+## 工作流程
 
-### 1. Extract Decision from Context
-From conversation, identified:
-- **Decision**: Migrate customer-facing API from REST to GraphQL
-- **Context**: REST endpoints becoming unwieldy (50+ endpoints)
-- **Alternatives**: Keep REST, try gRPC, adopt GraphQL
-- **Rationale**: Better client experience, type safety, single endpoint
+### 1. 从上下文中提取决策
+从对话中识别：
+- **决策**：将面向客户的 API 从 REST 迁移到 GraphQL
+- **上下文**：REST 端点变得难以管理（50+ 个端点）
+- **替代方案**：保持 REST、尝试 gRPC、采用 GraphQL
+- **理由**：更好的客户端体验、类型安全、单一端点
 
-### 2. Find Decision Log
+### 2. 查找决策日志
 ```
 Notion:notion-search
-query: "architecture decisions" or "ADR"
+query: "架构决策" 或 "ADR"
 ```
 
-Found: "Architecture Decision Records" database
+找到："架构决策记录"数据库
 
-### 3. Fetch Schema
+### 3. 获取模式
 ```
 Notion:notion-fetch
 ```
 
-Got properties: Decision (title), Date, Status, Domain, Impact, Deciders, Stakeholders
+获取属性：决策（标题）、日期、状态、领域、影响、决策者、利益相关者
 
-### 4. Create Decision Record
+### 4. 创建决策记录
 ```
 Notion:notion-create-pages
 parent: { data_source_id: "decision-log-collection-id" }
 pages: [{
   properties: {
-    "Decision": "Migrate to GraphQL API",
+    "Decision": "迁移到 GraphQL API",
     "date:Date:start": "2025-10-16",
     "date:Date:is_datetime": 0,
-    "Status": "Accepted",
-    "Domain": "Architecture",
-    "Impact": "High"
+    "Status": "已接受",
+    "Domain": "架构",
+    "Impact": "高"
   },
-  content: "[Full decision record with context, rationale, alternatives...]"
+  content: "[包含上下文、理由、替代方案的完整决策记录...]"
 }]
 ```
 
-**Content sample**:
+**内容示例**：
 
 ```markdown
-# Migrate Customer-Facing API to GraphQL
+# 将面向客户的 API 迁移到 GraphQL
 
-## Context
-Our REST API has grown to 50+ endpoints with inconsistent patterns. Frontend and mobile teams request new endpoints frequently, leading to:
-- API bloat and maintenance burden
-- Over-fetching/under-fetching data
-- Slow iteration on client features
-- Inconsistent error handling
+## 上下文
+我们的 REST API 已增长到 50+ 个端点，模式不一致。前端和移动团队频繁请求新端点，导致：
+- API 膨胀和维护负担
+- 数据过度获取/获取不足
+- 客户端功能迭代缓慢
+- 错误处理不一致
 
-## Decision
-Migrate customer-facing API from REST to GraphQL while maintaining REST for internal services.
+## 决策
+将面向客户的 API 从 REST 迁移到 GraphQL，同时为内部服务保持 REST。
 
-## Rationale
-**Why GraphQL**:
-- Clients fetch exactly what they need (no over/under-fetching)
-- Single endpoint, self-documenting schema
-- Type safety with code generation
-- Better developer experience
-- Industry standard for client-facing APIs
+## 理由
+**为什么选择 GraphQL**：
+- 客户端精确获取所需内容（无过度/不足获取）
+- 单一端点，自文档化模式
+- 带有代码生成的类型安全
+- 更好的开发者体验
+- 面向客户端 API 的行业标准
 
-## Options Considered
+## 考虑的选项
 
-### Option A: Keep REST (Status Quo)
-**Pros**: No migration cost, team familiar
-**Cons**: Doesn't solve core problems, maintenance keeps growing
-**Decision**: Rejected - doesn't address root cause
+### 选项 A：保持 REST（现状）
+**优点**：无迁移成本，团队熟悉
+**缺点**：不解决核心问题，维护负担持续增长
+**决策**：拒绝 - 未解决根本原因
 
-### Option B: gRPC
-**Pros**: Performance, strong typing
-**Cons**: Browser support issues, steeper learning curve, not designed for client-facing
-**Decision**: Rejected - better for internal services
+### 选项 B：gRPC
+**优点**：性能、强类型
+**缺点**：浏览器支持问题、学习曲线陡峭、非为面向客户端设计
+**决策**：拒绝 - 更适合内部服务
 
-### Option C: GraphQL
-**Pros**: Solves over/under-fetching, great DX, strong ecosystem
-**Cons**: Learning curve, caching complexity, migration effort
-**Decision**: **Accepted**
+### 选项 C：GraphQL
+**优点**：解决过度/不足获取、出色的开发者体验、强大的生态系统
+**缺点**：学习曲线、缓存复杂性、迁移工作量
+**决策**：**已接受**
 
-## Consequences
+## 后果
 
-**Positive**:
-- Faster frontend/mobile development
-- Reduced API maintenance burden
-- Better type safety and tooling
-- Single endpoint simplifies deployment
+**积极影响**：
+- 更快的前端/移动端开发
+- 减少 API 维护负担
+- 更好的类型安全和工具
+- 单一端点简化部署
 
-**Negative**:
-- 3-4 month migration timeline
-- Team needs training
-- Need to solve caching strategy
-- Monitoring/debugging patterns different
+**消极影响**：
+- 3-4 个月的迁移时间表
+- 团队需要培训
+- 需要解决缓存策略
+- 监控/调试模式不同
 
-## Implementation Plan
-1. GraphQL server setup (Apollo Server)
-2. Schema design workshop
-3. Gradual migration (start with new features)
-4. Dual-run period (both REST and GraphQL)
-5. Deprecate old REST endpoints
+## 实施计划
+1. GraphQL 服务器设置（Apollo Server）
+2. 模式设计研讨会
+3. 逐步迁移（从新功能开始）
+4. 双运行期（REST 和 GraphQL 并存）
+5. 弃用旧的 REST 端点
 
-**Timeline**: Start Q4 2025, complete Q1 2026
-**Owner**: Backend team lead
+**时间表**：2025 年第四季度开始，2026 年第一季度完成
+**负责人**：后端团队负责人
 
-## Success Metrics
-- API response times improve 30%
-- Client fetch efficiency (less data transferred)
-- Reduced new endpoint requests
-- Developer satisfaction scores
+## 成功指标
+- API 响应时间改善 30%
+- 客户端获取效率（传输的数据更少）
+- 减少新端点请求
+- 开发者满意度评分
 ```
 
-### 5. Make Discoverable
-Added link from Architecture Wiki and notified team in Slack.
+### 5. 使其可发现
+从架构 Wiki 添加链接并在 Slack 中通知团队。
 
-## Key Success Factors
-- Captured decision while context fresh
-- Documented alternatives considered
-- Included both pros and cons
-- Clear implementation plan
-- Saved to decision log for future reference
-- Made discoverable for team
+## 关键成功因素
+- 在上下文新鲜时捕获决策
+- 记录考虑的替代方案
+- 包括优缺点
+- 清晰的实施计划
+- 保存到决策日志以供将来参考
+- 使团队可发现

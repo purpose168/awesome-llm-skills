@@ -1,68 +1,68 @@
-# Example: UI Component Implementation
+# 示例：UI 组件实施
 
-**User Request**: "Implement the new search component from the design spec"
+**用户请求**："从设计规范实施新的搜索组件"
 
-## Workflow
+## 工作流程
 
-### 1. Find Spec
+### 1. 查找规范
 ```
 Notion:notion-search
-query: "search component design spec"
+query: "搜索组件设计规范"
 ```
-Found: "Global Search Redesign Spec"
+找到："全局搜索重新设计规范"
 
-### 2. Fetch & Parse Spec
+### 2. 获取和解析规范
 ```
 Notion:notion-fetch
 ```
 
-**Requirements**:
-- Instant search with debounced API calls
-- Keyboard navigation (↑↓ arrows, Enter, Esc)
-- Recent searches history
-- Result categories (pages, people, files)
-- Mobile responsive
-- Accessibility (ARIA labels, screen reader)
+**需求**：
+- 带有防抖 API 调用的即时搜索
+- 键盘导航（↑↓ 箭头、Enter、Esc）
+- 最近搜索历史
+- 结果类别（页面、人员、文件）
+- 移动响应式
+- 可访问性（ARIA 标签、屏幕阅读器）
 
-### 3. Create Implementation Plan
+### 3. 创建实施计划
 ```
 Notion:notion-create-pages
 ```
 
-**Plan phases**:
-- Phase 1: Base component structure
-- Phase 2: API integration & debouncing
-- Phase 3: Keyboard navigation
-- Phase 4: Recent searches
-- Phase 5: Polish & accessibility
+**计划阶段**：
+- 阶段 1：基础组件结构
+- 阶段 2：API 集成和防抖
+- 阶段 3：键盘导航
+- 阶段 4：最近搜索
+- 阶段 5：完善和可访问性
 
-### 4. Create Tasks
+### 4. 创建任务
 ```
-Notion:notion-create-pages (7 tasks)
+Notion:notion-create-pages (7 个任务)
 ```
 
-**Tasks**:
-1. Create SearchInput component
-2. Implement useDebounce hook
-3. Add keyboard navigation
-4. LocalStorage for recent searches
-5. Result categorization UI
-6. Accessibility audit
-7. Mobile responsive styling
+**任务**：
+1. 创建 SearchInput 组件
+2. 实施 useDebounce hook
+3. 添加键盘导航
+4. 最近搜索的 LocalStorage
+5. 结果分类 UI
+6. 可访问性审计
+7. 移动响应式样式
 
-### 5. Implement & Track
-As each task completed, updated status and added progress notes with screenshots and implementation details.
+### 5. 实施和跟踪
+随着每个任务完成，更新状态并添加进度说明，包括屏幕截图和实施详细信息。
 
-## Key Outputs
+## 关键输出
 
-**Implementation Plan** (linked to design spec)
-**7 Component Tasks** (in Engineering Tasks database)
-**Progress Updates** (with code snippets and demo links)
+**实施计划**（链接到设计规范）
+**7 个组件任务**（在工程任务数据库中）
+**进度更新**（带有代码片段和演示链接）
 
-## Success Factors
-- Clear component breakdown
-- Separated concerns (logic, UI, accessibility)
-- Each task had acceptance criteria
-- Referenced design spec throughout
-- Included accessibility from start, not afterthought
-- Tracked progress with visual updates
+## 成功因素
+- 清晰的组件分解
+- 分离关注点（逻辑、UI、可访问性）
+- 每个任务都有验收标准
+- 全程引用设计规范
+- 从一开始就包含可访问性，而不是事后补充
+- 使用视觉更新跟踪进度

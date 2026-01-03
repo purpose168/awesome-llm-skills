@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Slide Animation - Slide elements in from edges with overshoot/bounce.
+滑动动画 - 从边缘滑入元素，带有过冲/弹跳效果。
 
-Creates smooth entrance and exit animations.
+创建平滑的进入和退出动画。
 """
 
 import sys
@@ -20,8 +20,8 @@ def create_slide_animation(
     object_type: str = 'emoji',
     object_data: dict | None = None,
     num_frames: int = 30,
-    direction: str = 'left',  # 'left', 'right', 'top', 'bottom'
-    slide_type: str = 'in',  # 'in', 'out', 'across'
+    direction: str = 'left',  # 'left'（左）、'right'（右）、'top'（上）、'bottom'（下）
+    slide_type: str = 'in',  # 'in'（进入）、'out'（退出）、'across'（横穿）
     easing: str = 'ease_out',
     overshoot: bool = False,
     final_pos: tuple[int, int] | None = None,
@@ -30,27 +30,27 @@ def create_slide_animation(
     bg_color: tuple[int, int, int] = (255, 255, 255)
 ) -> list[Image.Image]:
     """
-    Create slide animation.
+    创建滑动动画。
 
-    Args:
-        object_type: 'emoji', 'text'
-        object_data: Object configuration
-        num_frames: Number of frames
-        direction: Direction of slide
-        slide_type: Type of slide (in/out/across)
-        easing: Easing function
-        overshoot: Add overshoot/bounce at end
-        final_pos: Final position (None = center)
-        frame_width: Frame width
-        frame_height: Frame height
-        bg_color: Background color
+    参数：
+        object_type: 'emoji'（表情符号）、'text'（文本）
+        object_data: 对象配置
+        num_frames: 帧数
+        direction: 滑动方向
+        slide_type: 滑动类型（进入/退出/横穿）
+        easing: 缓动函数
+        overshoot: 在末尾添加过冲/弹跳
+        final_pos: 最终位置（None = 中心）
+        frame_width: 帧宽度
+        frame_height: 帧高度
+        bg_color: 背景颜色
 
-    Returns:
-        List of frames
+    返回：
+        帧列表
     """
     frames = []
 
-    # Default object data
+    # 默认对象数据
     if object_data is None:
         if object_type == 'emoji':
             object_data = {'emoji': '➡️', 'size': 100}
@@ -58,7 +58,7 @@ def create_slide_animation(
     if final_pos is None:
         final_pos = (frame_width // 2, frame_height // 2)
 
-    # Calculate start and end positions based on direction
+    # 根据方向计算起始和结束位置
     size = object_data.get('size', 100) if object_type == 'emoji' else 100
     margin = size
 
@@ -78,11 +78,11 @@ def create_slide_animation(
         start_pos = (-margin, final_pos[1])
         end_pos = final_pos
 
-    # For 'out' type, swap start and end
+    # 对于'out'类型，交换起始和结束位置
     if slide_type == 'out':
         start_pos, end_pos = final_pos, end_pos
     elif slide_type == 'across':
-        # Slide all the way across
+        # 全程滑动
         if direction == 'left':
             start_pos = (-margin, final_pos[1])
             end_pos = (frame_width + margin, final_pos[1])
@@ -96,7 +96,7 @@ def create_slide_animation(
             start_pos = (final_pos[0], frame_height + margin)
             end_pos = (final_pos[0], -margin)
 
-    # Use overshoot easing if requested
+    # 如果请求，使用过冲缓动
     if overshoot and slide_type == 'in':
         easing = 'back_out'
 
@@ -104,11 +104,11 @@ def create_slide_animation(
         t = i / (num_frames - 1) if num_frames > 1 else 0
         frame = create_blank_frame(frame_width, frame_height, bg_color)
 
-        # Calculate current position
+        # 计算当前位置
         x = int(interpolate(start_pos[0], end_pos[0], t, easing))
         y = int(interpolate(start_pos[1], end_pos[1], t, easing))
 
-        # Draw object
+        # 绘制对象
         if object_type == 'emoji':
             size = object_data['size']
             draw_emoji_enhanced(
@@ -146,18 +146,18 @@ def create_multi_slide(
     bg_color: tuple[int, int, int] = (255, 255, 255)
 ) -> list[Image.Image]:
     """
-    Create animation with multiple objects sliding in sequence.
+    创建多个对象按顺序滑入的动画。
 
-    Args:
-        objects: List of object configs with 'type', 'data', 'direction', 'final_pos'
-        num_frames: Number of frames
-        stagger_delay: Frames between each object starting
-        frame_width: Frame width
-        frame_height: Frame height
-        bg_color: Background color
+    参数：
+        objects: 对象配置列表，包含'type'（类型）、'data'（数据）、'direction'（方向）、'final_pos'（最终位置）
+        num_frames: 帧数
+        stagger_delay: 每个对象开始之间的帧数
+        frame_width: 帧宽度
+        frame_height: 帧高度
+        bg_color: 背景颜色
 
-    Returns:
-        List of frames
+    返回：
+        帧列表
     """
     frames = []
 
@@ -165,12 +165,12 @@ def create_multi_slide(
         frame = create_blank_frame(frame_width, frame_height, bg_color)
 
         for idx, obj in enumerate(objects):
-            # Calculate when this object starts moving
+            # 计算此对象何时开始移动
             start_frame = idx * stagger_delay
             if i < start_frame:
-                continue  # Object hasn't started yet
+                continue  # 对象尚未开始
 
-            # Calculate progress for this object
+            # 计算此对象的进度
             obj_frame = i - start_frame
             obj_duration = num_frames - start_frame
             if obj_duration <= 0:
@@ -178,14 +178,14 @@ def create_multi_slide(
 
             t = obj_frame / obj_duration
 
-            # Get object properties
+            # 获取对象属性
             obj_type = obj.get('type', 'emoji')
             obj_data = obj.get('data', {'emoji': '➡️', 'size': 80})
             direction = obj.get('direction', 'left')
             final_pos = obj.get('final_pos', (frame_width // 2, frame_height // 2))
             easing = obj.get('easing', 'back_out')
 
-            # Calculate position
+            # 计算位置
             size = obj_data.get('size', 80)
             margin = size
 
@@ -210,13 +210,13 @@ def create_multi_slide(
                 end_x = final_pos[0]
                 y = final_pos[1]
 
-            # Interpolate position
+            # 插值位置
             if direction in ['left', 'right']:
                 x = int(interpolate(start_x, end_x, t, easing))
             else:
                 y = int(interpolate(start_y, end_y, t, easing))
 
-            # Draw object
+            # 绘制对象
             if obj_type == 'emoji':
                 draw_emoji_enhanced(
                     frame,
@@ -231,13 +231,13 @@ def create_multi_slide(
     return frames
 
 
-# Example usage
+# 示例用法
 if __name__ == '__main__':
-    print("Creating slide animations...")
+    print("创建滑动动画...")
 
     builder = GIFBuilder(width=480, height=480, fps=20)
 
-    # Example 1: Slide in from left with overshoot
+    # 示例1：从左侧滑入，带过冲
     frames = create_slide_animation(
         object_type='emoji',
         object_data={'emoji': '➡️', 'size': 100},
@@ -249,7 +249,7 @@ if __name__ == '__main__':
     builder.add_frames(frames)
     builder.save('slide_in_left.gif', num_colors=128)
 
-    # Example 2: Slide across
+    # 示例2：横穿滑动
     builder.clear()
     frames = create_slide_animation(
         object_type='emoji',
@@ -262,7 +262,7 @@ if __name__ == '__main__':
     builder.add_frames(frames)
     builder.save('slide_across.gif', num_colors=128)
 
-    # Example 3: Multiple objects sliding in
+    # 示例3：多个对象滑入
     builder.clear()
     objects = [
         {
@@ -288,4 +288,4 @@ if __name__ == '__main__':
     builder.add_frames(frames)
     builder.save('slide_multi.gif', num_colors=128)
 
-    print("Created slide animations!")
+    print("已创建滑动动画！")

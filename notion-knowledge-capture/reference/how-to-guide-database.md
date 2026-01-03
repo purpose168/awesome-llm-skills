@@ -1,38 +1,37 @@
-# How-To Guide Database
+# 操作指南数据库
 
-**Purpose**: Procedural documentation for common tasks.
+**目的**：常见任务的程序文档。
 
-## Schema
+## 模式
 
-| Property | Type | Options | Purpose |
+| 属性 | 类型 | 选项 | 目的 |
 |----------|------|---------|---------|
-| **Title** | title | - | "How to [Task]" |
-| **Complexity** | select | Beginner, Intermediate, Advanced | Skill level required |
-| **Time Required** | number | - | Estimated minutes to complete |
-| **Prerequisites** | relation | Links to other guides | Required knowledge |
-| **Category** | select | Development, Deployment, Testing, Tools | Task category |
-| **Last Tested** | date | - | When procedure was verified |
-| **Tags** | multi_select | - | Technology/tool tags |
+| **标题** | 标题 | - | "如何 [任务]" |
+| **复杂度** | 选择 | 初级、中级、高级 | 所需技能水平 |
+| **所需时间** | 数字 | - | 完成估计分钟数 |
+| **先决条件** | 关系 | 链接到其他指南 | 所需知识 |
+| **类别** | 选择 | 开发、部署、测试、工具 | 任务类别 |
+| **最后测试** | 日期 | - | 程序何时验证 |
+| **标签** | 多选 | - | 技术/工具标签 |
 
-## Usage
+## 使用
 
 ```
-Create how-to guides with properties:
+使用属性创建操作指南：
 {
-  "Title": "How to Set Up Local Development Environment",
-  "Complexity": "Beginner",
+  "Title": "如何设置本地开发环境",
+  "Complexity": "初级",
   "Time Required": 30,
-  "Category": "Development",
+  "Category": "开发",
   "Last Tested": "2025-10-01",
-  "Tags": "setup, environment, docker"
+  "Tags": "设置, 环境, docker"
 }
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Use consistent naming**: Always start with "How to..."
-2. **Test procedures**: Verify steps work before publishing
-3. **Include time estimates**: Help users plan their time
-4. **Link prerequisites**: Make dependencies clear
-5. **Update regularly**: Re-test procedures when tools/systems change
-
+1. **使用一致的命名**：始终以"如何..."开头
+2. **测试程序**：在发布前验证步骤有效
+3. **包括时间估算**：帮助用户规划时间
+4. **链接先决条件**：使依赖关系清晰
+5. **定期更新**：当工具/系统变更时重新测试程序

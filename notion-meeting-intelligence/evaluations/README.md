@@ -1,101 +1,101 @@
-# Meeting Intelligence Skill Evaluations
+# 会议智能技能评估
 
-Evaluation scenarios for testing the Meeting Intelligence skill across different Claude models.
+用于测试不同 Claude 模型的会议智能技能的评估场景。
 
-## Purpose
+## 目的
 
-These evaluations ensure the Meeting Intelligence skill:
-- Gathers context from Notion workspace
-- Enriches with Claude research appropriately
-- Creates both internal pre-reads and external agendas
-- Distinguishes between Notion facts and Claude insights
-- Works consistently across Haiku, Sonnet, and Opus
+这些评估确保会议智能技能：
+- 从 Notion 工作区收集上下文
+- 适当地使用 Claude 研究进行增强
+- 创建内部预读和外部议程
+- 区分 Notion 事实和 Claude 见解
+- 在 Haiku、Sonnet 和 Opus 之间一致地工作
 
-## Evaluation Files
+## 评估文件
 
 ### decision-meeting-prep.json
-Tests preparation for a decision-making meeting.
+测试决策会议的准备。
 
-**Scenario**: Prep for database migration decision meeting  
-**Key Behaviors**:
-- Searches Notion for migration context (specs, discussions, options)
-- Fetches 2-3 relevant pages
-- Enriches with Claude research (decision frameworks, migration best practices)
-- Creates comprehensive internal pre-read with recommendation
-- Creates clean, professional external agenda
-- Clearly distinguishes Notion facts from Claude insights
-- Cross-links both documents
+**场景**：数据库迁移决策会议的准备  
+**关键行为**：
+- 在 Notion 中搜索迁移上下文（规范、讨论、选项）
+- 获取 2-3 个相关页面
+- 使用 Claude 研究进行增强（决策框架、迁移最佳实践）
+- 创建包含建议的全面内部预读
+- 创建整洁、专业的外部议程
+- 清楚地区分 Notion 事实和 Claude 见解
+- 交叉链接两个文档
 
 ### status-meeting-prep.json
-Tests preparation for a status update or review meeting.
+测试状态更新或审查会议的准备。
 
-**Scenario**: Prep for project status review  
-**Key Behaviors**:
-- Gathers project metrics and progress from Notion
-- Fetches relevant pages (roadmap, tasks, milestones)
-- Adds Claude context (industry benchmarks, best practices)
-- Creates internal pre-read with honest assessment
-- Creates external agenda with structured flow
-- Includes source citations using mention-page tags
-- Time-boxes agenda items
+**场景**：项目状态审查的准备  
+**关键行为**：
+- 从 Notion 收集项目指标和进展
+- 获取相关页面（路线图、任务、里程碑）
+- 添加 Claude 上下文（行业基准、最佳实践）
+- 创建包含诚实评估的内部预读
+- 创建具有结构化流程的外部议程
+- 使用 mention-page 标签包含来源引用
+- 为议程项目设置时间框
 
-## Running Evaluations
+## 运行评估
 
-1. Enable the `meeting-intelligence` skill
-2. Submit the query from the evaluation file
-3. Verify the skill searches Notion first (not Claude research)
-4. Check that TWO documents are created (internal + external)
-5. Verify Claude enrichment adds value without replacing Notion content
-6. Test with Haiku, Sonnet, and Opus
+1. 启用 `meeting-intelligence` 技能
+2. 提交评估文件中的查询
+3. 验证技能首先搜索 Notion（而不是 Claude 研究）
+4. 检查是否创建了两个文档（内部 + 外部）
+5. 验证 Claude 增强增加了价值而不替换 Notion 内容
+6. 使用 Haiku、Sonnet 和 Opus 进行测试
 
-## Expected Skill Behaviors
+## 预期技能行为
 
-Meeting Intelligence evaluations should verify:
+会议智能评估应验证：
 
-### Notion Context Gathering
-- Searches workspace for relevant context first
-- Fetches specific pages (not generic)
-- Extracts key information from Notion content
-- Cites sources using mention-page tags
+### Notion 上下文收集
+- 首先在工作区中搜索相关上下文
+- 获取特定页面（不是通用的）
+- 从 Notion 内容中提取关键信息
+- 使用 mention-page 标签引用来源
 
-### Claude Research Integration
-- Adds industry context, frameworks, or best practices
-- Enrichment is relevant and valuable (not filler)
-- Clearly distinguishes Notion facts from Claude insights
-- Research complements (doesn't replace) Notion content
+### Claude 研究集成
+- 添加行业上下文、框架或最佳实践
+- 增强是相关且有价值的（不是填充物）
+- 清楚地区分 Notion 事实和 Claude 见解
+- 研究补充（不替换）Notion 内容
 
-### Two-Document Creation
-- **Internal Pre-Read**: Comprehensive, includes strategy, recommendations, detailed pros/cons
-- **External Agenda**: Professional, focused on meeting flow, no internal strategy
-- Both documents are clearly labeled
-- Documents are cross-linked
+### 双文档创建
+- **内部预读**：全面、包括策略、建议、详细的优/缺
+- **外部议程**：专业、专注于会议流程、无内部策略
+- 两个文档都清楚标记
+- 文档交叉链接
 
-### Document Quality
-- Pre-read follows structure: Overview → Background → Current Status → Context & Insights → Discussion Points
-- Agenda follows structure: Details → Objective → Agenda Items (with times) → Decisions → Actions → Resources
-- Titles include date or meeting context
-- Content is actionable and meeting-ready
+### 文档质量
+- 预读遵循结构：概述 → 背景 → 当前状态 → 上下文和见解 → 讨论要点
+- 议程遵循结构：详细信息 → 目标 → 议程项目（带时间）→ 决策 → 行动 → 资源
+- 标题包括日期或会议上下文
+- 内容可操作且会议就绪
 
-## Creating New Evaluations
+## 创建新评估
 
-When adding Meeting Intelligence evaluations:
+添加会议智能评估时：
 
-1. **Test different meeting types** - Decision, status, brainstorm, 1:1, sprint planning, retrospective
-2. **Vary complexity** - Simple updates vs. complex strategic decisions
-3. **Test with/without Notion content** - Rich workspace vs. minimal existing pages
-4. **Verify enrichment value** - Is Claude research genuinely helpful?
-5. **Check internal/external distinction** - Is sensitive info kept in pre-read only?
+1. **测试不同的会议类型** - 决策、状态、头脑风暴、1:1、冲刺规划、回顾
+2. **变化复杂度** - 简单更新 vs. 复杂战略决策
+3. **有/无 Notion 内容测试** - 丰富的工作区 vs. 最少的现有页面
+4. **验证增强价值** - Claude 研究真的有帮助吗？
+5. **检查内部/外部区别** - 敏感信息是否仅保留在预读中？
 
-## Example Success Criteria
+## 示例成功标准
 
-**Good** (specific, testable):
-- "Creates TWO documents (internal pre-read + external agenda)"
-- "Internal pre-read marked 'INTERNAL ONLY' or 'For team only'"
-- "Cites at least 2-3 Notion pages using mention-page tags"
-- "Agenda includes time allocations for each section"
-- "Claude enrichment includes decision frameworks or best practices"
+**好**（具体、可测试）：
+- "创建两个文档（内部预读 + 外部议程）"
+- "内部预读标记为'仅内部'或'仅供团队'"
+- "使用 mention-page 标签引用至少 2-3 个 Notion 页面"
+- "议程包括每个部分的时间分配"
+- "Claude 增强包括决策框架或最佳实践"
 
-**Bad** (vague, untestable):
-- "Creates meeting materials"
-- "Gathers context effectively"
-- "Prepares well"
+**差**（模糊、不可测试）：
+- "创建会议材料"
+- "有效收集上下文"
+- "准备良好"

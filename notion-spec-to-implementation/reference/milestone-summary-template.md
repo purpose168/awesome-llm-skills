@@ -1,27 +1,26 @@
-# Milestone Summary Template
+# 里程碑摘要模板
 
-Use this when completing major phases or milestones.
+在完成主要阶段或里程碑时使用此模板。
 
 ```markdown
-## Phase [N] Complete: [Date]
+## 阶段 [N] 完成：[日期]
 
-### Accomplishments
-- [Major item delivered]
-- [Major item delivered]
+### 成就
+- [交付的主要项目]
+- [交付的主要项目]
 
-### Deliverables
-- <mention-page url="...">Deliverable 1</mention-page>
-- [Link to PR/deployment]
+### 交付物
+- <mention-page url="...">交付物 1</mention-page>
+- [链接到 PR/部署]
 
-### Metrics
-- [Relevant metric]
-- [Relevant metric]
+### 指标
+- [相关指标]
+- [相关指标]
 
-### Learnings
-- [What went well]
-- [What to improve]
+### 经验教训
+- [做得好的地方]
+- [需要改进的地方]
 
-### Next Phase
-Starting [Phase name] on [Date]
+### 下一阶段
+于 [日期] 开始 [阶段名称]
 ```
-

@@ -1,421 +1,421 @@
-# Progress Tracking
+# 进度跟踪
 
-## Update Frequency
+## 更新频率
 
-### Daily Updates
+### 每日更新
 
-For active implementation work:
+对于活跃的实施工作：
 
-**What to update**:
-- Task status if changed
-- Add progress note to task
-- Update blockers
+**更新内容**：
+- 任务状态（如果变更）
+- 向任务添加进度说明
+- 更新阻碍因素
 
-**When**:
-- End of work day
-- After completing significant work
-- When encountering blockers
+**更新时机**：
+- 工作日结束时
+- 完成重要工作后
+- 遇到阻碍因素时
 
-### Milestone Updates
+### 里程碑更新
 
-For phase/milestone completion:
+对于阶段/里程碑完成：
 
-**What to update**:
-- Mark phase complete in plan
-- Add milestone summary
-- Update timeline if needed
-- Report to stakeholders
+**更新内容**：
+- 在计划中标记阶段完成
+- 添加里程碑摘要
+- 如需要，更新时间线
+- 向利益相关者报告
 
-**When**:
-- Phase completion
-- Major deliverable ready
-- Sprint end
-- Release
+**更新时机**：
+- 阶段完成
+- 主要交付物就绪
+- 冲刺结束
+- 发布
 
-### Status Change Updates
+### 状态变更更新
 
-For task state transitions:
+对于任务状态转换：
 
-**What to update**:
-- Task status property
-- Add transition note
-- Notify relevant people
+**更新内容**：
+- 任务状态属性
+- 添加转换说明
+- 通知相关人员
 
-**When**:
-- Start work (To Do → In Progress)
-- Ready for review (In Progress → In Review)
-- Complete (In Review → Done)
-- Block (Any → Blocked)
+**更新时机**：
+- 开始工作（待办 → 进行中）
+- 准备审查（进行中 → 审查中）
+- 完成（审查中 → 已完成）
+- 阻塞（任何状态 → 已阻塞）
 
-## Progress Note Format
+## 进度说明格式
 
-### Daily Progress Note
+### 每日进度说明
 
 ```markdown
-## Progress: [Date]
+## 进度：[日期]
 
-### Completed
-- [Specific accomplishment with details]
-- [Specific accomplishment with details]
+### 已完成
+- [带有详细信息的具体成就]
+- [带有详细信息的具体成就]
 
-### In Progress
-- [Current work item]
-- Current status: [Percentage or description]
+### 进行中
+- [当前工作项]
+- 当前状态：[百分比或描述]
 
-### Next Steps
-1. [Next planned action]
-2. [Next planned action]
+### 后续步骤
+1. [下一个计划行动]
+2. [下一个计划行动]
 
-### Blockers
-- [Blocker description and who/what needed to unblock]
-- Or: None
+### 阻碍因素
+- [阻碍因素描述以及解除阻碍所需的人员/内容]
+- 或：无
 
-### Decisions Made
-- [Any technical/product decisions]
+### 做出的决策
+- [任何技术/产品决策]
 
-### Notes
-[Additional context, learnings, issues encountered]
+### 说明
+[其他上下文、经验教训、遇到的问题]
 ```
 
-Example:
+示例：
 
 ```markdown
-## Progress: Oct 14, 2025
+## 进度：2025 年 10 月 14 日
 
-### Completed
-- Implemented user authentication API endpoints (login, logout, refresh)
-- Added JWT token generation and validation
-- Wrote unit tests for auth service (95% coverage)
+### 已完成
+- 实施了用户身份验证 API 端点（登录、注销、刷新）
+- 添加了 JWT 令牌生成和验证
+- 为身份验证服务编写了单元测试（95% 覆盖率）
 
-### In Progress
-- Frontend login form integration
-- Currently: Form submits but need to handle error states
+### 进行中
+- 前端登录表单集成
+- 当前：表单提交但需要处理错误状态
 
-### Next Steps
-1. Complete error handling in login form
-2. Add loading states
-3. Implement "remember me" functionality
+### 后续步骤
+1. 完成登录表单中的错误处理
+2. 添加加载状态
+3. 实施"记住我"功能
 
-### Blockers
-None
+### 阻碍因素
+无
 
-### Decisions Made
-- Using HttpOnly cookies for refresh tokens (more secure than localStorage)
-- Session timeout set to 24 hours based on security review
+### 做出的决策
+- 对刷新令牌使用 HttpOnly cookie（比 localStorage 更安全）
+- 根据安全审查，会话超时设置为 24 小时
 
-### Notes
-- Found edge case with concurrent login attempts, added to backlog
-- Performance of auth check is good (<10ms)
+### 说明
+- 发现并发登录尝试的边缘情况，已添加到待办事项
+- 身份验证检查的性能良好（<10ms）
 ```
 
-### Milestone Summary
+### 里程碑摘要
 
 ```markdown
-## Phase [N] Complete: [Date]
+## 阶段 [N] 完成：[日期]
 
-### Overview
-[Brief description of what was accomplished in this phase]
+### 概述
+[在此阶段完成的工作的简要描述]
 
-### Completed Tasks
-- <mention-page url="...">Task 1</mention-page> ✅
-- <mention-page url="...">Task 2</mention-page> ✅
-- <mention-page url="...">Task 3</mention-page> ✅
+### 已完成的任务
+- <mention-page url="...">任务 1</mention-page> ✅
+- <mention-page url="...">任务 2</mention-page> ✅
+- <mention-page url="...">任务 3</mention-page> ✅
 
-### Deliverables
-- [Deliverable 1]: [Link/description]
-- [Deliverable 2]: [Link/description]
+### 交付物
+- [交付物 1]：[链接/描述]
+- [交付物 2]：[链接/描述]
 
-### Key Accomplishments
-- [Major achievement]
-- [Major achievement]
+### 关键成就
+- [主要成就]
+- [主要成就]
 
-### Metrics
-- [Relevant metric]: [Value]
-- [Relevant metric]: [Value]
+### 指标
+- [相关指标]：[值]
+- [相关指标]：[值]
 
-### Challenges Overcome
-- [Challenge and how it was solved]
+### 克服的挑战
+- [挑战及其解决方法]
 
-### Learnings
-**What went well**:
-- [Success factor]
+### 经验教训
+**做得好的地方**：
+- [成功因素]
 
-**What to improve**:
-- [Area for improvement]
+**需要改进的地方**：
+- [改进领域]
 
-### Impact on Timeline
-- On schedule / [X days ahead/behind]
-- Reason: [If deviation, explain why]
+### 对时间线的影响
+- 按计划进行 / [提前/落后 X 天]
+- 原因：[如果有偏差，解释原因]
 
-### Next Phase
-- **Starting**: [Next phase name]
-- **Target start date**: [Date]
-- **Focus**: [Main objectives]
+### 下一阶段
+- **开始**：[下一阶段名称]
+- **目标开始日期**：[日期]
+- **重点**：[主要目标]
 ```
 
-## Updating Implementation Plan
+## 更新实施计划
 
-### Progress Indicators
+### 进度指示器
 
-Update plan page regularly:
+定期更新计划页面：
 
 ```markdown
-## Status Overview
+## 状态概述
 
-**Overall Progress**: 45% complete
+**总体进度**：45% 完成
 
-### Phase Status
-- ✅ Phase 1: Foundation - Complete
-- 🔄 Phase 2: Core Features - In Progress (60%)
-- ⏳ Phase 3: Integration - Not Started
+### 阶段状态
+- ✅ 阶段 1：基础 - 已完成
+- 🔄 阶段 2：核心功能 - 进行中（60%）
+- ⏳ 阶段 3：集成 - 未开始
 
-### Task Summary
-- ✅ Completed: 12 tasks
-- 🔄 In Progress: 5 tasks
-- 🚧 Blocked: 1 task
-- ⏳ Not Started: 8 tasks
+### 任务摘要
+- ✅ 已完成：12 个任务
+- 🔄 进行中：5 个任务
+- 🚧 已阻塞：1 个任务
+- ⏳ 未开始：8 个任务
 
-**Last Updated**: [Date]
+**最后更新**：[日期]
 ```
 
-### Task Checklist Updates
+### 任务清单更新
 
-Mark completed tasks:
+标记已完成的任务：
 
 ```markdown
-## Implementation Phases
+## 实施阶段
 
-### Phase 1: Foundation
-- [x] <mention-page url="...">Database schema</mention-page>
-- [x] <mention-page url="...">API scaffolding</mention-page>
-- [x] <mention-page url="...">Auth setup</mention-page>
+### 阶段 1：基础
+- [x] <mention-page url="...">数据库架构</mention-page>
+- [x] <mention-page url="...">API 框架</mention-page>
+- [x] <mention-page url="...">身份验证设置</mention-page>
 
-### Phase 2: Core Features
-- [x] <mention-page url="...">User management</mention-page>
-- [ ] <mention-page url="...">Dashboard</mention-page>
-- [ ] <mention-page url="...">Reporting</mention-page>
+### 阶段 2：核心功能
+- [x] <mention-page url="...">用户管理</mention-page>
+- [ ] <mention-page url="...">仪表板</mention-page>
+- [ ] <mention-page url="...">报告</mention-page>
 ```
 
-### Timeline Updates
+### 时间线更新
 
-Update milestone dates:
+更新里程碑日期：
 
 ```markdown
-## Timeline
+## 时间线
 
-| Milestone | Original | Current | Status |
+| 里程碑 | 原始 | 当前 | 状态 |
 |-----------|----------|---------|--------|
-| Phase 1 | Oct 15 | Oct 14 | ✅ Complete (1 day early) |
-| Phase 2 | Oct 30 | Nov 2 | 🔄 In Progress (3 days delay) |
-| Phase 3 | Nov 15 | Nov 18 | ⏳ Planned (adjusted) |
-| Launch | Nov 20 | Nov 22 | ⏳ Planned (adjusted) |
+| 阶段 1 | 10 月 15 日 | 10 月 14 日 | ✅ 完成（提前 1 天） |
+| 阶段 2 | 10 月 30 日 | 11 月 2 日 | 🔄 进行中（延迟 3 天） |
+| 阶段 3 | 11 月 15 日 | 11 月 18 日 | ⏳ 计划中（已调整） |
+| 发布 | 11 月 20 日 | 11 月 22 日 | ⏳ 计划中（已调整） |
 
-**Timeline Status**: Slightly behind due to [reason]
+**时间线状态**：因 [原因] 略有延迟
 ```
 
-## Task Status Tracking
+## 任务状态跟踪
 
-### Status Definitions
+### 状态定义
 
-**To Do**: Not started
-- Task is ready to begin
-- Dependencies met
-- Assigned (or available)
+**待办**：未开始
+- 任务准备开始
+- 依赖关系已满足
+- 已分配（或可用）
 
-**In Progress**: Actively being worked
-- Work has started
-- Assigned to someone
-- Regular updates expected
+**进行中**：正在积极工作
+- 工作已开始
+- 已分配给某人
+- 期望定期更新
 
-**Blocked**: Cannot proceed
-- Dependency not met
-- External blocker
-- Waiting on decision/resource
+**已阻塞**：无法继续
+- 依赖关系未满足
+- 外部阻碍因素
+- 等待决策/资源
 
-**In Review**: Awaiting review
-- Work complete from implementer perspective
-- Needs code review, QA, or approval
-- Reviewers identified
+**审查中**：等待审查
+- 从实施者角度工作已完成
+- 需要代码审查、QA 或批准
+- 已识别审查者
 
-**Done**: Complete
-- All acceptance criteria met
-- Reviewed and approved
-- Deployed/delivered
+**已完成**：完成
+- 满足所有验收标准
+- 已审查和批准
+- 已部署/已交付
 
-### Updating Task Status
+### 更新任务状态
 
-When updating:
+更新时：
 
 ```
-1. Update Status property
-2. Add progress note explaining change
-3. Update related tasks if needed
-4. Notify relevant people via comment
+1. 更新状态属性
+2. 添加说明变更的进度说明
+3. 如需要，更新相关任务
+4. 通过评论通知相关人员
 
-Example:
-properties: { "Status": "In Progress" }
+示例：
+properties: { "Status": "进行中" }
 
-Content update:
-## Progress: Oct 14, 2025
-Started implementation. Set up basic structure and wrote initial tests.
+内容更新：
+## 进度：2025 年 10 月 14 日
+开始实施。设置基本结构并编写了初始测试。
 ```
 
-## Blocker Tracking
+## 阻碍因素跟踪
 
-### Recording Blockers
+### 记录阻碍因素
 
-When encountering a blocker:
+遇到阻碍因素时：
 
 ```markdown
-## Blockers
+## 阻碍因素
 
-### [Date]: [Blocker Description]
-**Status**: 🚧 Active
-**Impact**: [What's blocked]
-**Needed to unblock**: [Action/person/decision needed]
-**Owner**: [Who's responsible for unblocking]
-**Target resolution**: [Date or timeframe]
+### [日期]：[阻碍因素描述]
+**状态**：🚧 活跃
+**影响**：[被阻塞的内容]
+**解除阻碍所需**：[需要的行动/人员/决策]
+**负责人**：[谁负责解除阻碍]
+**目标解决时间**：[日期或时间范围]
 ```
 
-### Resolving Blockers
+### 解决阻碍因素
 
-When unblocked:
+解除阻碍时：
 
 ```markdown
-## Blockers
+## 阻碍因素
 
-### [Date]: [Blocker Description]
-**Status**: ✅ Resolved on [Date]
-**Resolution**: [How it was resolved]
-**Impact**: [Any timeline/scope impact]
+### [日期]：[阻碍因素描述]
+**状态**：✅ 于 [日期] 已解决
+**解决方案**：[如何解决]
+**影响**：[任何时间线/范围影响]
 ```
 
-### Escalating Blockers
+### 升级阻碍因素
 
-If blocker needs escalation:
+如果阻碍因素需要升级：
 
 ```
-1. Update blocker status in task
-2. Add comment tagging stakeholder
-3. Update plan with blocker impact
-4. Propose mitigation if possible
+1. 在任务中更新阻碍因素状态
+2. 添加评论标记利益相关者
+3. 使用阻碍因素影响更新计划
+4. 如可能，提出缓解措施
 ```
 
-## Metrics Tracking
+## 指标跟踪
 
-### Velocity Tracking
+### 速度跟踪
 
-Track completion rate:
+跟踪完成率：
 
 ```markdown
-## Velocity
+## 速度
 
-### Week 1
-- Tasks completed: 8
-- Story points: 21
-- Velocity: Strong
+### 第 1 周
+- 已完成任务：8
+- 故事点：21
+- 速度：强
 
-### Week 2
-- Tasks completed: 6
-- Story points: 18
-- Velocity: Moderate (1 blocker)
+### 第 2 周
+- 已完成任务：6
+- 故事点：18
+- 速度：中等（1 个阻碍因素）
 
-### Week 3
-- Tasks completed: 9
-- Story points: 24
-- Velocity: Strong (blocker resolved)
+### 第 3 周
+- 已完成任务：9
+- 故事点：24
+- 速度：强（阻碍因素已解决）
 ```
 
-### Quality Metrics
+### 质量指标
 
-Track quality indicators:
+跟踪质量指标：
 
 ```markdown
-## Quality Metrics
+## 质量指标
 
-- Test coverage: 87%
-- Code review approval rate: 95%
-- Bug count: 3 (2 minor, 1 cosmetic)
-- Performance: All targets met
-- Security: No issues found
+- 测试覆盖率：87%
+- 代码审查批准率：95%
+- 错误计数：3（2 个次要，1 个外观）
+- 性能：满足所有目标
+- 安全性：未发现问题
 ```
 
-### Progress Metrics
+### 进度指标
 
-Quantitative progress:
+定量进度：
 
 ```markdown
-## Progress Metrics
+## 进度指标
 
-- Requirements implemented: 15/20 (75%)
-- Acceptance criteria met: 42/56 (75%)
-- Test cases passing: 128/135 (95%)
-- Code complete: 80%
-- Documentation: 60%
+- 已实施需求：15/20（75%）
+- 已满足验收标准：42/56（75%）
+- 通过测试用例：128/135（95%）
+- 代码完成度：80%
+- 文档：60%
 ```
 
-## Stakeholder Communication
+## 利益相关者沟通
 
-### Weekly Status Report
+### 每周状态报告
 
 ```markdown
-## Weekly Status: [Week of Date]
+## 每周状态：[日期周]
 
-### Summary
-[One paragraph overview of progress and status]
+### 摘要
+[进度和状态的一段概述]
 
-### This Week's Accomplishments
-- [Key accomplishment]
-- [Key accomplishment]
-- [Key accomplishment]
+### 本周成就
+- [关键成就]
+- [关键成就]
+- [关键成就]
 
-### Next Week's Plan
-- [Planned work]
-- [Planned work]
+### 下周计划
+- [计划工作]
+- [计划工作]
 
-### Status
-- On track / At risk / Behind schedule
-- [If at risk or behind, explain and provide mitigation plan]
+### 状态
+- 按计划进行 / 有风险 / 落后于计划
+- [如果有风险或落后，解释并提供缓解计划]
 
-### Blockers & Needs
-- [Active blocker or need for help]
-- Or: None
+### 阻碍因素和需求
+- [活跃的阻碍因素或需要帮助]
+- 或：无
 
-### Risks
-- [New or evolving risk]
-- Or: None currently identified
+### 风险
+- [新或演变的风险]
+- 或：目前未识别
 ```
 
-### Executive Summary
+### 执行摘要
 
-For leadership updates:
+用于领导层更新：
 
 ```markdown
-## Implementation Status: [Feature Name]
+## 实施状态：[功能名称]
 
-**Overall Status**: 🟢 On Track / 🟡 At Risk / 🔴 Behind
+**总体状态**：🟢 按计划进行 / 🟡 有风险 / 🔴 落后
 
-**Progress**: [X]% complete
+**进度**：[X]% 完成
 
-**Key Updates**:
-- [Most important update]
-- [Most important update]
+**关键更新**：
+- [最重要的更新]
+- [最重要的更新]
 
-**Timeline**: [Status vs original plan]
+**时间线**：[状态与原始计划对比]
 
-**Risks**: [Top 1-2 risks]
+**风险**：[前 1-2 个风险]
 
-**Next Milestone**: [Upcoming milestone and date]
+**下一里程碑**：[即将到来的里程碑和日期]
 ```
 
-## Automated Progress Tracking
+## 自动化进度跟踪
 
-### Query-Based Status
+### 基于查询的状态
 
-Generate status from task database:
+从任务数据库生成状态：
 
 ```
-Query task database:
+查询任务数据库：
 SELECT 
   "Status",
   COUNT(*) as count
@@ -423,36 +423,35 @@ FROM "collection://tasks-uuid"
 WHERE "Related Tasks" CONTAINS 'plan-page-id'
 GROUP BY "Status"
 
-Generate summary:
-- To Do: 8
-- In Progress: 5
-- Blocked: 1
-- In Review: 2
-- Done: 12
+生成摘要：
+- 待办：8
+- 进行中：5
+- 已阻塞：1
+- 审查中：2
+- 已完成：12
 
-Overall: 44% complete (12/28 tasks)
+总体：44% 完成（12/28 个任务）
 ```
 
-### Timeline Calculation
+### 时间线计算
 
-Calculate projected completion:
+计算预计完成时间：
 
 ```
-Average velocity: 6 tasks/week
-Remaining tasks: 14
-Projected completion: 2.3 weeks from now
+平均速度：6 个任务/周
+剩余任务：14
+预计完成：从现在起 2.3 周
 
-Compares to target: [On schedule/Behind/Ahead]
+与目标对比：[按计划进行/落后/提前]
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Update regularly**: Don't let updates pile up
-2. **Be specific**: "Completed login" vs "Made progress"
-3. **Quantify progress**: Use percentages, counts, metrics
-4. **Note blockers immediately**: Don't wait to report blockers
-5. **Link to work**: Reference PRs, deployments, demos
-6. **Track decisions**: Document why, not just what
-7. **Be honest**: Report actual status, not optimistic status
-8. **Update in one place**: Keep implementation plan as source of truth
-
+1. **定期更新**：不要让更新堆积
+2. **具体明确**："完成登录"与"取得进展"
+3. **量化进度**：使用百分比、计数、指标
+4. **立即记录阻碍因素**：不要等待报告阻碍因素
+5. **链接到工作**：引用 PR、部署、演示
+6. **跟踪决策**：记录原因，而不仅仅是内容
+7. **诚实报告**：报告实际状态，而不是乐观状态
+8. **在一处更新**：保持实施计划作为真实来源

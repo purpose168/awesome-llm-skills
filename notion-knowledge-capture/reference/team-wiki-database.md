@@ -1,27 +1,26 @@
-# Team Wiki Database
+# 团队 Wiki 数据库
 
-**Purpose**: Centralized team knowledge and resources.
+**目的**：集中化的团队知识和资源。
 
-## Schema
+## 模式
 
-| Property | Type | Options | Purpose |
+| 属性 | 类型 | 选项 | 目的 |
 |----------|------|---------|---------|
-| **Title** | title | - | Page name |
-| **Section** | select | Getting Started, Processes, Tools, Reference, Onboarding | Wiki organization |
-| **Tags** | multi_select | - | Topic tags |
-| **Owner** | people | - | Page maintainer |
-| **Last Updated** | last_edited_time | - | Auto-tracked |
-| **Visibility** | select | Public, Team Only, Confidential | Access level |
+| **标题** | 标题 | - | 页面名称 |
+| **部分** | 选择 | 入门、流程、工具、参考、入职 | Wiki 组织 |
+| **标签** | 多选 | - | 主题标签 |
+| **所有者** | 人员 | - | 页面维护者 |
+| **最后更新** | 最后编辑时间 | - | 自动跟踪 |
+| **可见性** | 选择 | 公开、仅团队、机密 | 访问级别 |
 
-## Usage
+## 使用
 
-Use for team-specific documentation that doesn't fit other databases.
+用于不适合其他数据库的团队特定文档。
 
-## Best Practices
+## 最佳实践
 
-1. **Organize by sections**: Use clear top-level organization
-2. **Assign owners**: Every page should have a maintainer
-3. **Control visibility**: Set appropriate access levels
-4. **Link extensively**: Connect related pages
-5. **Keep current**: Regular reviews to remove outdated content
-
+1. **按部分组织**：使用清晰的顶级组织
+2. **分配所有者**：每个页面都应有维护者
+3. **控制可见性**：设置适当的访问级别
+4. **广泛链接**：连接相关页面
+5. **保持最新**：定期审查以删除过时内容

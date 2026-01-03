@@ -1,295 +1,294 @@
 ---
 name: notion-meeting-intelligence
-description: Prepares meeting materials by gathering context from Notion, enriching with Claude research, and creating both an internal pre-read and external agenda saved to Notion. Helps you arrive prepared with comprehensive background and structured meeting docs.
+description: 通过从 Notion 收集上下文、使用 Claude 研究进行增强，并创建内部预读材料和外部议程保存到 Notion 来准备会议材料。帮助您带着全面的背景和结构化的会议文档做好准备。
 ---
 
-# Meeting Intelligence
+# 会议智能
 
-Prepares you for meetings by gathering context from Notion, enriching it with Claude research, and creating comprehensive meeting materials. Generates both an internal pre-read for attendees and an external-facing agenda for the meeting itself.
+通过从 Notion 收集上下文、使用 Claude 研究进行增强，并创建全面的会议材料来为会议做准备。生成内部预读文档供与会者使用，以及面向会议本身的外部议程。
 
-## Quick Start
+## 快速开始
 
-When asked to prep for a meeting:
+当被要求为会议做准备时：
 
-1. **Gather Notion context**: Use `Notion:notion-search` to find related pages
-2. **Fetch details**: Use `Notion:notion-fetch` to read relevant content
-3. **Enrich with research**: Use Claude's knowledge to add context, industry insights, or best practices
-4. **Create internal pre-read**: Use `Notion:notion-create-pages` for background context document (for attendees)
-5. **Create external agenda**: Use `Notion:notion-create-pages` for meeting agenda (shared with all participants)
-6. **Link resources**: Connect both docs to related projects and each other
+1. **收集 Notion 上下文**：使用 `Notion:notion-search` 查找相关页面
+2. **获取详细信息**：使用 `Notion:notion-fetch` 读取相关内容
+3. **使用研究进行增强**：使用 Claude 的知识添加上下文、行业见解或最佳实践
+4. **创建内部预读**：使用 `Notion:notion-create-pages` 创建背景上下文文档（供与会者使用）
+5. **创建外部议程**：使用 `Notion:notion-create-pages` 创建会议议程（与所有参与者共享）
+6. **链接资源**：将两个文档都链接到相关项目和彼此
 
-## Meeting Prep Workflow
+## 会议准备工作流程
 
-### Step 1: Understand meeting context
-
-```
-Collect meeting details:
-- Meeting topic/title
-- Attendees (internal team + external participants)
-- Meeting purpose (decision, brainstorm, status update, customer demo, etc.)
-- Meeting type (internal only vs. external participants)
-- Related project/initiative
-- Specific topics to cover
-```
-
-### Step 2: Search for Notion context
+### 步骤 1：了解会议上下文
 
 ```
-Use Notion:notion-search to find:
-- Project pages related to meeting topic
-- Previous meeting notes
-- Specifications or design docs
-- Related tasks or issues
-- Recent updates or reports
-- Customer/partner information (if applicable)
-
-Search strategies:
-- Topic-based: "mobile app redesign"
-- Project-scoped: search within project teamspace
-- Attendee-created: filter by created_by_user_ids
-- Recent updates: use created_date_range filters
+收集会议详细信息：
+- 会议主题/标题
+- 与会者（内部团队 + 外部参与者）
+- 会议目的（决策、头脑风暴、状态更新、客户演示等）
+- 会议类型（仅内部 vs. 外部参与者）
+- 相关项目/计划
+- 要涵盖的具体主题
 ```
 
-### Step 3: Fetch and analyze Notion content
+### 步骤 2：搜索 Notion 上下文
 
 ```
-For each relevant page:
-1. Fetch with Notion:notion-fetch
-2. Extract key information:
-   - Project status and timeline
-   - Recent decisions and updates
-   - Open questions or blockers
-   - Relevant metrics or data
-   - Action items from previous meetings
-3. Note gaps in information
+使用 Notion:notion-search 查找：
+- 与会议主题相关的项目页面
+- 之前的会议记录
+- 规范或设计文档
+- 相关任务或问题
+- 最近的更新或报告
+- 客户/合作伙伴信息（如适用）
+
+搜索策略：
+- 基于主题："移动应用重新设计"
+- 项目范围：在项目团队空间内搜索
+- 创建者筛选：按 created_by_user_ids 筛选
+- 最近更新：使用 created_date_range 筛选器
 ```
 
-### Step 4: Enrich with Claude research
+### 步骤 3：获取并分析 Notion 内容
 
 ```
-Beyond Notion context, add value through:
-
-For technical meetings:
-- Explain complex concepts for broader audience
-- Summarize industry best practices
-- Provide competitive context
-- Suggest discussion frameworks
-
-For customer meetings:
-- Research company background (if public info)
-- Industry trends relevant to discussion
-- Common pain points in their sector
-- Best practices for similar customers
-
-For decision meetings:
-- Decision-making frameworks
-- Risk analysis patterns
-- Trade-off considerations
-- Implementation best practices
-
-Note: Use general knowledge only - don't fabricate specific facts
+对于每个相关页面：
+1. 使用 Notion:notion-fetch 获取
+2. 提取关键信息：
+   - 项目状态和时间线
+   - 最近的决策和更新
+   - 未解决的问题或阻碍
+   - 相关指标或数据
+   - 之前会议的行动项
+3. 记录信息缺口
 ```
 
-### Step 5: Create internal pre-read
+### 步骤 4：使用 Claude 研究进行增强
 
 ```
-Use Notion:notion-create-pages for internal doc:
+除了 Notion 上下文，通过以下方式增加价值：
 
-Title: "[Meeting Topic] - Pre-Read (Internal)"
+对于技术会议：
+- 为更广泛的受众解释复杂概念
+- 总结行业最佳实践
+- 提供竞争背景
+- 建议讨论框架
 
-Content structure:
-- **Meeting Overview**: Date, time, attendees, purpose
-- **Background Context**: 
-  - What this meeting is about (2-3 sentences)
-  - Why it matters (business context)
-  - Links to related Notion pages
-- **Current Status**: 
-  - Where we are now (from Notion content)
-  - Recent updates and progress
-  - Key metrics or data
-- **Context & Insights** (from Claude research):
-  - Industry context or best practices
-  - Relevant considerations
-  - Potential approaches to discuss
-- **Key Discussion Points**:
-  - Topics that need airtime
-  - Open questions to resolve
-  - Decisions required
-- **What We Need from This Meeting**:
-  - Expected outcomes
-  - Decisions to make
-  - Next steps to define
+对于客户会议：
+- 研究公司背景（如果是公开信息）
+- 与讨论相关的行业趋势
+- 他们所在领域的常见痛点
+- 类似客户的最佳实践
 
-Audience: Internal attendees only
-Purpose: Give team full context and alignment before meeting
+对于决策会议：
+- 决策制定框架
+- 风险分析模式
+- 权衡考虑因素
+- 实施最佳实践
+
+注意：仅使用一般知识 - 不要捏造具体事实
 ```
 
-### Step 6: Create external agenda
+### 步骤 5：创建内部预读
 
 ```
-Use Notion:notion-create-pages for meeting doc:
+使用 Notion:notion-create-pages 创建内部文档：
 
-Title: "[Meeting Topic] - Agenda"
+标题："[会议主题] - 预读（内部）"
 
-Content structure:
-- **Meeting Details**: Date, time, attendees
-- **Objective**: Clear meeting goal (1-2 sentences)
-- **Agenda Items** (with time allocations):
-  1. Topic 1 (10 min)
-  2. Topic 2 (20 min)
-  3. Topic 3 (15 min)
-- **Discussion Topics**: 
-  - Key items to cover
-  - Questions to answer
-- **Decisions Needed**: 
-  - Clear decision points
-- **Action Items**: 
-  - (To be filled during meeting)
-- **Related Resources**:
-  - Links to relevant pages
-  - Link to pre-read document
+内容结构：
+- **会议概述**：日期、时间、与会者、目的
+- **背景上下文**：
+  - 本次会议的内容（2-3 句话）
+  - 为什么重要（业务上下文）
+  - 链接到相关 Notion 页面
+- **当前状态**：
+  - 我们现在的位置（来自 Notion 内容）
+  - 最近的更新和进展
+  - 关键指标或数据
+- **上下文和见解**（来自 Claude 研究）：
+  - 行业上下文或最佳实践
+  - 相关考虑因素
+  - 要讨论的潜在方法
+- **关键讨论要点**：
+  - 需要时间的主题
+  - 要解决的问题
+  - 需要的决策
+- **我们需要从本次会议获得什么**：
+  - 预期结果
+  - 要做出的决策
+  - 要定义的下一步
 
-Audience: All participants (internal + external)
-Purpose: Structure the meeting, keep it on track
-Tone: Professional, focused, clear
+受众：仅内部与会者
+目的：在会议前为团队提供完整的上下文和一致性
 ```
 
-See [reference/template-selection-guide.md](reference/template-selection-guide.md) for full templates.
-
-### Step 7: Link documents
+### 步骤 6：创建外部议程
 
 ```
-1. Link pre-read to agenda:
-   - Add mention in agenda: "See <mention-page>Pre-Read</mention-page> for background"
+使用 Notion:notion-create-pages 创建会议文档：
 
-2. Link both to project:
-   - Update project page with meeting links
-   - Add to "Meetings" section
+标题："[会议主题] - 议程"
 
-3. Cross-reference:
-   - Agenda mentions pre-read for internal attendees
-   - Pre-read mentions agenda for meeting structure
+内容结构：
+- **会议详细信息**：日期、时间、与会者
+- **目标**：清晰的会议目标（1-2 句话）
+- **议程项目**（带时间分配）：
+  1. 主题 1（10 分钟）
+  2. 主题 2（20 分钟）
+  3. 主题 3（15 分钟）
+- **讨论主题**：
+  - 要涵盖的关键项目
+  - 要回答的问题
+- **需要的决策**：
+  - 清晰的决策点
+- **行动项**：
+  - （会议期间填写）
+- **相关资源**：
+  - 链接到相关页面
+  - 链接到预读文档
+
+受众：所有参与者（内部 + 外部）
+目的：构建会议结构，保持会议正轨
+语气：专业、专注、清晰
 ```
 
-## Document Types
+有关完整模板，请参阅 [reference/template-selection-guide.md](reference/template-selection-guide.md)。
 
-### Internal Pre-Read (for team)
+### 步骤 7：链接文档
 
-More comprehensive, internal context:
-- Full background and history
-- Internal metrics and data
-- Honest assessment of challenges
-- Strategic considerations
-- What we need to achieve
-- Internal discussion points
+```
+1. 将预读链接到议程：
+   - 在议程中添加提及："查看 <mention-page>预读</mention-page> 了解背景"
 
-**When to create**: Always for important meetings with internal team
+2. 将两者链接到项目：
+   - 更新项目页面并添加会议链接
+   - 添加到"会议"部分
 
-### External Agenda (for all participants)
+3. 交叉引用：
+   - 议程为内部与会者提及预读
+   - 预读为会议结构提及议程
+```
 
-Clean, professional, focused:
-- Clear objectives
-- Structured agenda with times
-- Discussion topics
-- Decision items
-- Professional tone
+## 文档类型
 
-**When to create**: Every meeting
+### 内部预读（供团队使用）
 
-### Agenda Types by Meeting Purpose
+更全面、内部上下文：
+- 完整的背景和历史
+- 内部指标和数据
+- 对挑战的诚实评估
+- 战略考虑
+- 我们需要实现的目标
+- 内部讨论要点
 
-**Decision Meeting**: Meeting Details → Objective → Options (Pros/Cons) → Recommendation → Discussion → Decision → Action Items
+**何时创建**：始终为与内部团队的重要会议创建
 
-**Status Update**: Meeting Details → Project Status → Progress → Upcoming Work → Blockers → Discussion → Action Items
+### 外部议程（供所有参与者使用）
 
-**Customer/External**: Meeting Details → Objective → Agenda Items (timed) → Discussion Topics → Next Steps
+整洁、专业、专注：
+- 清晰的目标
+- 带时间的结构化议程
+- 讨论主题
+- 决策项目
+- 专业语气
 
-**Brainstorming**: Meeting Details → Objective → Constraints → Ideas → Discussion → Next Steps
+**何时创建**：每次会议
 
-See [reference/template-selection-guide.md](reference/template-selection-guide.md) for complete templates.
+### 按会议目的的议程类型
 
-## Research Enrichment Patterns
+**决策会议**：会议详细信息 → 目标 → 选项（优/缺）→ 建议 → 讨论 → 决策 → 行动项
 
-Beyond Notion content, add value through Claude's capabilities:
+**状态更新**：会议详细信息 → 项目状态 → 进展 → 即将进行的工作 → 阻碍 → 讨论 → 行动项
 
-**Technical Context**: Explain technologies, architectures, or approaches. Provide industry standard practices. Compare common solutions. Suggest evaluation criteria.
+**客户/外部**：会议详细信息 → 目标 → 议程项目（带时间）→ 讨论主题 → 下一步
 
-**Business Context**: Industry trends affecting topic. Competitive landscape insights. Common challenges in space. ROI considerations.
+**头脑风暴**：会议详细信息 → 目标 → 约束 → 想法 → 讨论 → 下一步
 
-**Decision Support**: Decision-making frameworks (e.g., RICE, cost-benefit). Risk assessment patterns. Trade-off analysis approaches. Success criteria suggestions.
+有关完整模板，请参阅 [reference/template-selection-guide.md](reference/template-selection-guide.md)。
 
-**Customer Context** (for external meetings): Industry-specific challenges. Common pain points. Best practices from similar companies. Value proposition framing.
+## 研究增强模式
 
-**Process Guidance**: Meeting facilitation techniques. Discussion frameworks. Retrospective patterns. Brainstorming structures.
+除了 Notion 内容，通过 Claude 的能力增加价值：
 
-Note: Use general knowledge and analytical capabilities. Don't fabricate specific facts. Clearly distinguish Notion facts from Claude insights.
+**技术上下文**：解释技术、架构或方法。提供行业标准实践。比较常见解决方案。建议评估标准。
 
-## Meeting Context Sources
+**业务上下文**：影响主题的行业趋势。竞争格局见解。该领域的常见挑战。ROI（投资回报率）考虑。
 
-**Project Pages**: Status, goals, team, timelines (most important)
-**Previous Meeting Notes**: Historical discussions, action items, decisions (recurring meetings)
-**Task/Issue Database**: Current status, blockers, completed/upcoming work (project meetings)
-**Specifications/Designs**: Requirements, decisions, approach, open questions (technical meetings)
-**Reports/Dashboards**: Metrics, KPIs, performance data, trends (executive meetings)
+**决策支持**：决策制定框架（例如，RICE、成本效益）。风险评估模式。权衡分析方法。成功标准建议。
 
-## Linking Meetings to Projects
+**客户上下文**（用于外部会议）：行业特定挑战。常见痛点。类似公司的最佳实践。价值主张框架。
 
-**Forward Link**: Add meeting to project page's "Meetings" section
-**Backward Link**: Include "Related Project" section in agenda with project mention
-**Maintain bidirectional** links for easy navigation
+**流程指导**：会议促进技巧。讨论框架。回顾模式。头脑风暴结构。
 
-## Meeting Series Management
+注意：使用一般知识和分析能力。不要捏造具体事实。清楚区分 Notion 事实和 Claude 见解。
 
-**Recurring Meetings**: Create series parent page with schedule, meeting notes list, standing agenda, and action items tracker. Link individual meetings to parent.
+## 会议上下文来源
 
-**Meeting Database**: For organizations, use database with properties: Meeting Title, Date, Type (Decision/Status/Brainstorm), Project, Attendees, Status (Scheduled/Completed)
+**项目页面**：状态、目标、团队、时间线（最重要）
+**之前的会议记录**：历史讨论、行动项、决策（定期会议）
+**任务/问题数据库**：当前状态、阻碍、已完成/即将进行的工作（项目会议）
+**规范/设计**：需求、决策、方法、未解决的问题（技术会议）
+**报告/仪表板**：指标、KPI、性能数据、趋势（执行会议）
 
-## Post-Meeting Actions
+## 将会议链接到项目
 
-Update agenda with:
+**前向链接**：将会议添加到项目页面的"会议"部分
+**后向链接**：在议程中包含"相关项目"部分并提及项目
+**维护双向**链接以便于导航
 
-**Decisions**: List each decision with rationale and owner
-**Action Items**: Checkbox list with owner and due date (consider creating tasks in database)
-**Key Outcomes**: Bullet list of main outcomes
+## 会议系列管理
 
-## Meeting Prep Timing
+**定期会议**：创建系列父页面，包含日程安排、会议记录列表、常设计程和行动项跟踪器。将单个会议链接到父页面。
 
-**Day-Before** (next-day meetings): Gather context → create agenda → share with attendees → allow review time
-**Hour-Before** (last-minute): Quick context → brief pre-read → basic agenda → essentials only
-**Week-Before** (major meetings): Comprehensive research → detailed pre-read → structured agenda → pre-meeting reviews
+**会议数据库**：对于组织，使用具有以下属性的数据库：会议标题、日期、类型（决策/状态/头脑风暴）、项目、与会者、状态（已安排/已完成）
 
-## Best Practices
+## 会议后行动
 
-1. **Create both documents**: Internal pre-read + external agenda for important meetings
-2. **Distinguish sources**: Label what's from Notion vs. Claude research
-3. **Start with search**: Cast wide net in Notion, then narrow
-4. **Keep pre-read concise**: 2-3 pages maximum, even with research
-5. **Professional external docs**: Agenda should be polished and focused
-6. **Enrich thoughtfully**: Claude research should add real value, not fluff
-7. **Link documents**: Pre-read mentions agenda, agenda mentions pre-read
-8. **Include metrics**: Data from Notion helps ground discussions
-9. **Share appropriately**: Pre-read to internal team, agenda to all participants
-10. **Share early**: Give attendees time to review (24hr+ for important meetings)
-11. **Update post-meeting**: Capture decisions and actions in agenda
+更新议程并添加：
 
-## Advanced Features
+**决策**：列出每个决策及其理由和负责人
+**行动项**：带有负责人和截止日期的复选框列表（考虑在数据库中创建任务）
+**关键结果**：主要结果的要点列表
 
-**Meeting templates**: See [reference/template-selection-guide.md](reference/template-selection-guide.md) for comprehensive template library
+## 会议准备时机
 
-## Common Issues
+**前一天**（第二天的会议）：收集上下文 → 创建议程 → 与与会者共享 → 允许审查时间
+**前一小时**（最后一刻）：快速上下文 → 简要预读 → 基本议程 → 仅必需内容
+**前一周**（重要会议）：全面研究 → 详细预读 → 结构化议程 → 会前审查
 
-**"Too much context"**: Split into pre-read (internal, comprehensive) and agenda (external, focused)
-**"Can't find relevant pages"**: Broaden search, try different terms, ask user for page URLs
-**"Meeting purpose unclear"**: Ask user to clarify before proceeding
-**"No recent updates"**: Note that in pre-read, focus on historical context and strategic considerations
-**"External meeting - no internal context"**: Create simpler structure with just agenda, skip internal pre-read or keep it minimal
-**"Claude research too generic"**: Focus on specific insights relevant to the actual meeting topic, not general platitudes
+## 最佳实践
 
-## Examples
+1. **创建两个文档**：为重要会议创建内部预读 + 外部议程
+2. **区分来源**：标记什么来自 Notion vs. Claude 研究
+3. **从搜索开始**：在 Notion 中广泛搜索，然后缩小范围
+4. **保持预读简洁**：最多 2-3 页，即使有研究
+5. **专业的外部文档**：议程应该经过润色且专注
+6. **深思熟虑地增强**：Claude 研究应该增加真正的价值，而不是废话
+7. **链接文档**：预读提及议程，议程提及预读
+8. **包括指标**：来自 Notion 的数据有助于将讨论建立在事实基础上
+9. **适当共享**：预读共享给内部团队，议程共享给所有参与者
+10. **尽早共享**：给与会者审查时间（重要会议 24 小时以上）
+11. **会后更新**：在议程中捕获决策和行动
 
-See [examples/](examples/) for complete workflows:
-- [examples/project-decision.md](examples/project-decision.md) - Decision meeting prep with pre-read
-- [examples/sprint-planning.md](examples/sprint-planning.md) - Sprint planning meeting
-- [examples/executive-review.md](examples/executive-review.md) - Executive review prep
-- [examples/customer-meeting.md](examples/customer-meeting.md) - External meeting with customer (pre-read + agenda)
+## 高级功能
 
+**会议模板**：有关全面的模板库，请参阅 [reference/template-selection-guide.md](reference/template-selection-guide.md)
+
+## 常见问题
+
+**"上下文太多"**：拆分为预读（内部、全面）和议程（外部、专注）
+**"找不到相关页面"**：扩大搜索范围，尝试不同的术语，询问用户页面 URL
+**"会议目的不清楚"**：在继续之前请用户澄清
+**"没有最近的更新"**：在预读中注明，专注于历史上下文和战略考虑
+**"外部会议 - 没有内部上下文"**：创建仅包含议程的简单结构，跳过内部预读或保持最小化
+**"Claude 研究太通用"**：专注于与实际会议主题相关的具体见解，而不是一般陈词滥调
+
+## 示例
+
+有关完整工作流程，请参阅 [examples/](examples/)：
+- [examples/project-decision.md](examples/project-decision.md) - 带预读的决策会议准备
+- [examples/sprint-planning.md](examples/sprint-planning.md) - 冲刺规划会议
+- [examples/executive-review.md](examples/executive-review.md) - 执行审查准备
+- [examples/customer-meeting.md](examples/customer-meeting.md) - 与客户的外部会议（预读 + 议程）

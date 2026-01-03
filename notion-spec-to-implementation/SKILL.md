@@ -1,219 +1,216 @@
 ---
 name: notion-spec-to-implementation
-description: Turns product or tech specs into concrete Notion tasks that Claude code can implement. Breaks down spec pages into detailed implementation plans with clear tasks, acceptance criteria, and progress tracking to guide development from requirements to completion.
+description: 将产品或技术规范转换为 Claude 代码可以实施的具体 Notion 任务。将规范页面分解为详细的实施计划，包含明确的任务、验收标准和进度跟踪，指导从需求到完成的开发过程。
 ---
 
-# Spec to Implementation
+# 规范到实现
 
-Transforms specifications into actionable implementation plans with progress tracking. Fetches spec documents, extracts requirements, breaks down into tasks, and manages implementation workflow.
+将规范转换为可操作的实施计划并跟踪进度。获取规范文档，提取需求，分解为任务，并管理实施工作流程。
 
-## Quick Start
+## 快速开始
 
-When asked to implement a specification:
+当被要求实施规范时：
 
-1. **Find spec**: Use `Notion:notion-search` to locate specification page
-2. **Fetch spec**: Use `Notion:notion-fetch` to read specification content
-3. **Extract requirements**: Parse and structure requirements from spec
-4. **Create plan**: Use `Notion:notion-create-pages` for implementation plan
-5. **Find task database**: Use `Notion:notion-search` to locate tasks database
-6. **Create tasks**: Use `Notion:notion-create-pages` for individual tasks in task database
-7. **Track progress**: Use `Notion:notion-update-page` to log progress and update status
+1. **查找规范**：使用 `Notion:notion-search` 定位规范页面
+2. **获取规范**：使用 `Notion:notion-fetch` 读取规范内容
+3. **提取需求**：从规范中解析和结构化需求
+4. **创建计划**：使用 `Notion:notion-create-pages` 创建实施计划
+5. **查找任务数据库**：使用 `Notion:notion-search` 定位任务数据库
+6. **创建任务**：使用 `Notion:notion-create-pages` 在任务数据库中创建各个任务
+7. **跟踪进度**：使用 `Notion:notion-update-page` 记录进度和更新状态
 
-## Implementation Workflow
+## 实施工作流程
 
-### Step 1: Find the specification
-
-```
-1. Search for spec:
-   - Use Notion:notion-search with spec name or topic
-   - Apply filters if needed (e.g., created_date_range, teamspace_id)
-   - Look for spec title or keyword matches
-   - If not found or ambiguous, ask user for spec URL/ID
-
-Example searches:
-- "User Authentication spec"
-- "Payment Integration specification"
-- "Mobile App Redesign PRD"
-```
-
-### Step 2: Fetch and analyze specification
+### 步骤 1：查找规范
 
 ```
-1. Fetch spec page:
-   - Use Notion:notion-fetch with spec URL/ID from search results
-   - Read full content including requirements, design, constraints
+1. 搜索规范：
+   - 使用 Notion:notion-search 和规范名称或主题
+   - 如需要，应用过滤器（例如，created_date_range、teamspace_id）
+   - 查找规范标题或关键字匹配
+   - 如果未找到或不明确，请用户提供规范 URL/ID
 
-2. Parse specification:
-   - Identify functional requirements
-   - Note non-functional requirements (performance, security, etc.)
-   - Extract acceptance criteria
-   - Identify dependencies and blockers
+示例搜索：
+- "用户身份验证规范"
+- "支付集成规范"
+- "移动应用重新设计 PRD"
 ```
 
-See [reference/spec-parsing.md](reference/spec-parsing.md) for parsing patterns.
-
-### Step 3: Create implementation plan
+### 步骤 2：获取和分析规范
 
 ```
-1. Break down into phases/milestones
-2. Identify technical approach
-3. List required tasks
-4. Estimate effort
-5. Identify risks
+1. 获取规范页面：
+   - 使用 Notion:notion-fetch 和搜索结果中的规范 URL/ID
+   - 读取完整内容，包括需求、设计、约束
 
-Use implementation plan template (see [reference/standard-implementation-plan.md](reference/standard-implementation-plan.md) or [reference/quick-implementation-plan.md](reference/quick-implementation-plan.md))
+2. 解析规范：
+   - 识别功能需求
+   - 注意非功能需求（性能、安全性等）
+   - 提取验收标准
+   - 识别依赖关系和阻碍因素
 ```
 
-### Step 4: Create implementation plan page
+有关解析模式，请参见 [reference/spec-parsing.md](reference/spec-parsing.md)。
+
+### 步骤 3：创建实施计划
 
 ```
-Use Notion:notion-create-pages:
-- Title: "Implementation Plan: [Feature Name]"
-- Content: Structured plan with phases, tasks, timeline
-- Link back to original spec
-- Add to appropriate location (project page, database)
+1. 分解为阶段/里程碑
+2. 识别技术方法
+3. 列出所需任务
+4. 估算工作量
+5. 识别风险
+
+使用实施计划模板（参见 [reference/standard-implementation-plan.md](reference/standard-implementation-plan.md) 或 [reference/quick-implementation-plan.md](reference/quick-implementation-plan.md)）
 ```
 
-### Step 5: Find task database
+### 步骤 4：创建实施计划页面
 
 ```
-1. Search for task database:
-   - Use Notion:notion-search to find "Tasks" or "Task Management" database
-   - Look for engineering/project task tracking system
-   - If not found or ambiguous, ask user for database location
-
-2. Fetch database schema:
-   - Use Notion:notion-fetch with database URL/ID
-   - Get property names, types, and options
-   - Identify correct data source from <data-source> tags
-   - Note required properties for new tasks
+使用 Notion:notion-create-pages：
+- 标题："实施计划：[功能名称]"
+- 内容：包含阶段、任务、时间线的结构化计划
+- 链接回原始规范
+- 添加到适当位置（项目页面、数据库）
 ```
 
-### Step 6: Create implementation tasks
+### 步骤 5：查找任务数据库
 
 ```
-For each task in plan:
-1. Create task in task database using Notion:notion-create-pages
-2. Use parent: { data_source_id: 'collection://...' }
-3. Set properties from schema:
-   - Name/Title: Task description
-   - Status: To Do
-   - Priority: Based on criticality
-   - Related Tasks: Link to spec and plan
-4. Add implementation details in content
+1. 搜索任务数据库：
+   - 使用 Notion:notion-search 查找"任务"或"任务管理"数据库
+   - 查找工程/项目任务跟踪系统
+   - 如果未找到或不明确，请用户提供数据库位置
+
+2. 获取数据库架构：
+   - 使用 Notion:notion-fetch 和数据库 URL/ID
+   - 获取属性名称、类型和选项
+   - 从 <data-source> 标签中识别正确的数据源
+   - 注意新任务所需的属性
 ```
 
-See [reference/task-creation.md](reference/task-creation.md) for task patterns.
-
-### Step 7: Begin implementation
+### 步骤 6：创建实施任务
 
 ```
-1. Update task status to "In Progress"
-2. Add initial progress note
-3. Document approach and decisions
-4. Link relevant resources
+对于计划中的每个任务：
+1. 使用 Notion:notion-create-pages 在任务数据库中创建任务
+2. 使用 parent: { data_source_id: 'collection://...' }
+3. 根据架构设置属性：
+   - 名称/标题：任务描述
+   - 状态：待办
+   - 优先级：基于关键性
+   - 相关任务：链接到规范和计划
+4. 在内容中添加实施详细信息
 ```
 
-### Step 8: Track progress
+有关任务模式，请参见 [reference/task-creation.md](reference/task-creation.md)。
+
+### 步骤 7：开始实施
 
 ```
-Regular updates:
-1. Update task properties (status, progress)
-2. Add progress notes with:
-   - What's completed
-   - Current focus
-   - Blockers/issues
-3. Update implementation plan with milestone completion
-4. Link to related work (PRs, designs, etc.)
+1. 将任务状态更新为"进行中"
+2. 添加初始进度说明
+3. 记录方法和决策
+4. 链接相关资源
 ```
 
-See [reference/progress-tracking.md](reference/progress-tracking.md) for tracking patterns.
+### 步骤 8：跟踪进度
 
-## Spec Analysis Patterns
+```
+定期更新：
+1. 更新任务属性（状态、进度）
+2. 添加进度说明，包括：
+   - 已完成的内容
+   - 当前重点
+   - 阻碍因素/问题
+3. 更新实施计划的里程碑完成情况
+4. 链接到相关工作（PR、设计等）
+```
 
-**Functional Requirements**: User stories, feature descriptions, workflows, data requirements, integration points
+有关跟踪模式，请参见 [reference/progress-tracking.md](reference/progress-tracking.md)。
 
-**Non-Functional Requirements**: Performance targets, security requirements, scalability needs, availability, compliance
+## 规范分析模式
 
-**Acceptance Criteria**: Testable conditions, user validation points, performance benchmarks, completion definitions
+**功能需求**：用户故事、功能描述、工作流程、数据需求、集成点
 
-See [reference/spec-parsing.md](reference/spec-parsing.md) for detailed parsing techniques.
+**非功能需求**：性能目标、安全要求、可扩展性需求、可用性、合规性
 
-## Implementation Plan Structure
+**验收标准**：可测试条件、用户验证点、性能基准、完成定义
 
-**Plan includes**: Overview → Linked Spec → Requirements Summary → Technical Approach → Implementation Phases (Goal, Tasks checklist, Estimated effort) → Dependencies → Risks & Mitigation → Timeline → Success Criteria
+有关详细的解析技术，请参见 [reference/spec-parsing.md](reference/spec-parsing.md)。
 
-See [reference/standard-implementation-plan.md](reference/standard-implementation-plan.md) for full plan template.
+## 实施计划结构
 
-## Task Breakdown Patterns
+**计划包括**：概述 → 链接规范 → 需求摘要 → 技术方法 → 实施阶段（目标、任务清单、估算工作量）→ 依赖关系 → 风险与缓解 → 时间线 → 成功标准
 
-**By Component**: Database, API endpoints, frontend components, integration, testing
-**By Feature Slice**: Vertical slices (auth flow, data entry, report generation)
-**By Priority**: P0 (must have), P1 (important), P2 (nice to have)
+有关完整计划模板，请参见 [reference/standard-implementation-plan.md](reference/standard-implementation-plan.md)。
 
+## 任务分解模式
 
-## Progress Logging
+**按组件**：数据库、API 端点、前端组件、集成、测试
+**按功能切片**：垂直切片（身份验证流程、数据输入、报告生成）
+**按优先级**：P0（必须有）、P1（重要）、P2（最好有）
 
-**Daily Updates** (active work): Add progress note with completed items, current focus, blockers
-**Milestone Updates** (major progress): Update plan checkboxes, add milestone summary, adjust timeline
-**Status Changes** (task transitions): Update properties (In Progress → In Review → Done), add completion notes, link deliverables
+## 进度记录
 
-**Progress Format**: Date heading → Completed → In Progress → Next Steps → Blockers → Notes
+**每日更新**（活跃工作）：添加进度说明，包括已完成项目、当前重点、阻碍因素
+**里程碑更新**（重大进展）：更新计划复选框、添加里程碑摘要、调整时间线
+**状态变更**（任务转换）：更新属性（进行中 → 审查中 → 已完成）、添加完成说明、链接交付物
 
-See [reference/progress-tracking.md](reference/progress-tracking.md) for detailed patterns.
+**进度格式**：日期标题 → 已完成 → 进行中 → 后续步骤 → 阻碍因素 → 说明
 
-## Linking Spec to Implementation
+有关详细模式，请参见 [reference/progress-tracking.md](reference/progress-tracking.md)。
 
-**Forward Links**: Update spec page with "Implementation" section linking to plan and tasks
-**Backward Links**: Reference spec in plan and tasks with "Specification" section
-**Bidirectional Traceability**: Maintain both directions for easy tracking
+## 链接规范到实现
 
-## Implementation Status Tracking
+**前向链接**：更新规范页面，添加"实施"章节链接到计划和任务
+**后向链接**：在计划和任务中引用规范，添加"规范"章节
+**双向可追溯性**：维护两个方向以便于跟踪
 
-**Plan Status**: Update with phase completion (✅ Complete, 🔄 In Progress %, ⏳ Not Started) and overall percentage
-**Task Aggregation**: Query task database by plan ID to generate summary (complete, in progress, blocked, not started)
+## 实施状态跟踪
 
-## Handling Spec Changes
+**计划状态**：更新阶段完成情况（✅ 完成、🔄 进行中 %、⏳ 未开始）和总体百分比
+**任务聚合**：按计划 ID 查询任务数据库以生成摘要（已完成、进行中、已阻塞、未开始）
 
-**Detection**: Fetch updated spec → compare with plan → identify new requirements → assess impact
-**Propagation**: Update plan → create new tasks → update affected tasks → add change note → notify via comments
-**Change Log**: Track spec evolution with date, what changed, and impact
+## 处理规范变更
 
-## Common Patterns
+**检测**：获取更新的规范 → 与计划比较 → 识别新需求 → 评估影响
+**传播**：更新计划 → 创建新任务 → 更新受影响的任务 → 添加变更说明 → 通过评论通知
+**变更日志**：跟踪规范演变，包括日期、变更内容和影响
 
-**Feature Flag**: Backend (behind flag) → Testing → Frontend (flagged) → Internal rollout → External rollout
-**Database Migration**: Schema design → Migration script → Staging test → Production migration → Validation
-**API Development**: API design → Backend implementation → Testing & docs → Client integration → Deployment
+## 常见模式
 
+**功能标志**：后端（标志后）→ 测试 → 前端（标志）→ 内部推出 → 外部推出
+**数据库迁移**：架构设计 → 迁移脚本 → 预发布测试 → 生产迁移 → 验证
+**API 开发**：API 设计 → 后端实施 → 测试和文档 → 客户端集成 → 部署
 
-## Best Practices
+## 最佳实践
 
-1. **Always link spec and implementation**: Maintain bidirectional references
-2. **Break down into small tasks**: Each task should be completable in 1-2 days
-3. **Extract clear acceptance criteria**: Know when "done" is done
-4. **Identify dependencies early**: Note blockers in plan
-5. **Update progress regularly**: Daily notes for active work
-6. **Track changes**: Document spec updates and their impact
-7. **Use checklists**: Visual progress indicators help everyone
-8. **Link deliverables**: PRs, designs, docs should link back to tasks
+1. **始终链接规范和实现**：维护双向引用
+2. **分解为小任务**：每个任务应在 1-2 天内完成
+3. **提取清晰的验收标准**：知道何时"完成"
+4. **尽早识别依赖关系**：在计划中注明阻碍因素
+5. **定期更新进度**：活跃工作的每日说明
+6. **跟踪变更**：记录规范更新及其影响
+7. **使用清单**：可视化进度指标有助于每个人
+8. **链接交付物**：PR、设计、文档应链接回任务
 
-## Advanced Features
+## 高级功能
 
-For additional implementation patterns and techniques, see the reference files in [reference/](reference/).
+有关额外的实施模式和技术，请参见 [reference/](reference/) 中的参考文件。
 
-## Common Issues
+## 常见问题
 
-**"Can't find spec"**: Use Notion:notion-search with spec name/topic, try broader terms, or ask user for URL
-**"Multiple specs found"**: Ask user which spec to implement or show options
-**"Can't find task database"**: Search for "Tasks" or "Task Management", or ask user for database location
-**"Spec unclear"**: Note ambiguities in plan, create clarification tasks
-**"Requirements conflicting"**: Document conflicts, create decision task
-**"Scope too large"**: Break into smaller specs/phases
+**"找不到规范"**：使用 Notion:notion-search 和规范名称/主题，尝试更广泛的术语，或请用户提供 URL
+**"找到多个规范"**：询问用户要实施哪个规范或显示选项
+**"找不到任务数据库"**：搜索"任务"或"任务管理"，或请用户提供数据库位置
+**"规范不明确"**：在计划中注明歧义，创建澄清任务
+**"需求冲突"**：记录冲突，创建决策任务
+**"范围太大"**：分解为更小的规范/阶段
 
-## Examples
+## 示例
 
-See [examples/](examples/) for complete workflows:
-- [examples/api-feature.md](examples/api-feature.md) - API feature implementation
-- [examples/ui-component.md](examples/ui-component.md) - Frontend component
-- [examples/database-migration.md](examples/database-migration.md) - Schema changes
-
+参见 [examples/](examples/) 获取完整的工作流程：
+- [examples/api-feature.md](examples/api-feature.md) - API 功能实施
+- [examples/ui-component.md](examples/ui-component.md) - 前端组件
+- [examples/database-migration.md](examples/database-migration.md) - 架构变更

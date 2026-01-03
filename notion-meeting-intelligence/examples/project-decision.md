@@ -1,12 +1,12 @@
-# Example: Project Decision Meeting Prep
+# 示例：项目决策会议准备
 
-## User Request
+## 用户请求
 
-> "Prep for tomorrow's architecture meeting where we need to decide on database migration strategy"
+> "为明天需要决定数据库迁移策略的架构会议做准备"
 
-## Workflow Execution
+## 工作流程执行
 
-### Step 1: Search for Context
+### 步骤 1：搜索上下文
 
 ```
 Notion:notion-search
@@ -20,55 +20,55 @@ filters: {
 }
 ```
 
-**Results Found:**
-- "Database Migration Proposal" (Engineering)
-- "Current Database Performance Issues" (Engineering)
-- "Migration Options Analysis" (Architecture)
-- "Previous Migration Post-mortem" (Engineering)
+**找到的结果：**
+- "数据库迁移提案" (Engineering)
+- "当前数据库性能问题" (Engineering)
+- "迁移选项分析" (Architecture)
+- "先前迁移事后分析" (Engineering)
 
-### Step 2: Fetch Relevant Pages
+### 步骤 2：获取相关页面
 
 ```
 Notion:notion-fetch
 id: "database-migration-proposal-page-id"
 ```
 
-**Extracted**: Proposes migrating from MongoDB to PostgreSQL, outlines timeline and risks
+**提取内容**：提议从 MongoDB 迁移到 PostgreSQL，概述时间表和风险
 
 ```
 Notion:notion-fetch
 id: "database-performance-issues-page-id"
 ```
 
-**Extracted**: Current pain points - slow queries, schema flexibility issues, transaction limitations
+**提取内容**：当前痛点 - 查询缓慢、模式灵活性问题、事务限制
 
 ```
 Notion:notion-fetch
 id: "migration-options-analysis-page-id"
 ```
 
-**Extracted**: Three options analyzed:
-1. Stay on MongoDB with optimizations
-2. Migrate to PostgreSQL
-3. Hybrid approach (MongoDB + PostgreSQL)
+**提取内容**：分析了三个选项：
+1. 继续使用 MongoDB 并进行优化
+2. 迁移到 PostgreSQL
+3. 混合方法 (MongoDB + PostgreSQL)
 
 ```
 Notion:notion-fetch
 id: "previous-migration-postmortem-page-id"
 ```
 
-**Extracted**: Lessons from 2023 Redis migration - importance of rollback plan, testing strategy
+**提取内容**：从 2023 年 Redis 迁移中学到的经验 - 回滚计划的重要性、测试策略
 
-### Step 3: Synthesize Pre-Read
+### 步骤 3：综合预读材料
 
-**Key Information Identified:**
-- **Problem**: MongoDB performance degrading, schema flexibility causing data consistency issues
-- **Options**: Three approaches with different trade-offs
-- **Recommendation**: PostgreSQL migration favored by engineering team
-- **Concerns**: Downtime requirements, data migration complexity, application changes needed
-- **Historical context**: Previous migration took 6 weeks, had rollback issues
+**识别的关键信息：**
+- **问题**：MongoDB 性能下降，模式灵活性导致数据一致性问题
+- **选项**：三种具有不同权衡的方法
+- **建议**：工程团队倾向于 PostgreSQL 迁移
+- **关注点**：停机时间要求、数据迁移复杂性、需要应用程序更改
+- **历史背景**：先前迁移耗时 6 周，存在回滚问题
 
-### Step 4: Create Meeting Agenda
+### 步骤 4：创建会议议程
 
 ```
 Notion:notion-create-pages
@@ -77,355 +77,355 @@ parent: { page_id: "meetings-parent-id" }
 
 pages: [{
   properties: {
-    "title": "Architecture Decision: Database Migration Strategy - Oct 15, 2025"
+    "title": "架构决策：数据库迁移策略 - 2025年10月15日"
   },
-  content: "[Decision meeting agenda]"
+  content: "[决策会议议程]"
 }]
 ```
 
-**Agenda Created:**
+**已创建议程：**
 
 ```markdown
-# Architecture Decision: Database Migration Strategy
+# 架构决策：数据库迁移策略
 
-## Meeting Details
-**Date & Time**: October 15, 2025 at 2:00 PM  
-**Duration**: 90 minutes  
-**Location**: Conference Room B / Zoom  
-**Facilitator**: Sarah Chen (Engineering Lead)  
-**Attendees**:
-- Sarah Chen (Engineering Lead)
-- David Kim (CTO)
-- Alice Wang (Backend Team Lead)
-- Bob Martinez (DevOps Lead)
-- Carol Johnson (Product Director)
+## 会议详情
+**日期和时间**：2025年10月15日下午2:00
+**时长**：90分钟
+**地点**：会议室 B / Zoom
+**主持人**：Sarah Chen（工程主管）
+**参会者**：
+- Sarah Chen（工程主管）
+- David Kim（CTO）
+- Alice Wang（后端团队主管）
+- Bob Martinez（DevOps 主管）
+- Carol Johnson（产品总监）
 
-## Pre-Read Summary
+## 预读摘要
 
-### Background
+### 背景
 
-Our MongoDB database is experiencing performance degradation as we scale. Query response times have increased from 50ms to 400ms average over the past 6 months. The schema-less nature that initially provided flexibility is now causing data consistency issues and making application logic more complex.
+随着我们的扩展，MongoDB 数据库正经历性能下降。在过去 6 个月中，查询响应时间从 50ms 平均增加到 400ms。最初提供灵活性的无模式特性现在正导致数据一致性问题，并使应用程序逻辑更加复杂。
 
-**Source**: <mention-page url="...">Current Database Performance Issues</mention-page>
+**来源**：<mention-page url="...">当前数据库性能问题</mention-page>
 
-### Current Situation
+### 当前情况
 
-**Performance metrics**:
-- Average query time: 400ms (was 50ms 6 months ago)
-- p95 query time: 1.2s (was 200ms)
-- Database size: 500GB (growing 20GB/month)
-- Connection pool exhaustion during peak traffic
+**性能指标**：
+- 平均查询时间：400ms（6 个月前为 50ms）
+- p95 查询时间：1.2s（之前为 200ms）
+- 数据库大小：500GB（每月增长 20GB）
+- 高峰流量期间连接池耗尽
 
-**Technical debt**:
-- 15+ application-layer validation rules compensating for lack of schema
-- Complex data migration scripts for schema changes
-- Limited transaction support causing race conditions
+**技术债务**：
+- 15+ 应用层验证规则以补偿缺乏模式
+- 模式更改的复杂数据迁移脚本
+- 有限的事务支持导致竞态条件
 
-**Source**: <mention-page url="...">Database Migration Proposal</mention-page>
+**来源**：<mention-page url="...">数据库迁移提案</mention-page>
 
-### Historical Context
+### 历史背景
 
-We successfully migrated from Redis to Memcached in 2023, which took 6 weeks. Key learnings:
-- Underestimated application code changes (3 weeks instead of 1 week)
-- Rollback plan was crucial when we discovered compatibility issues
-- Parallel running period (dual writes) was essential for safe migration
+我们在 2023 年成功从 Redis 迁移到 Memcached，耗时 6 周。主要经验：
+- 低估了应用程序代码更改（3 周而不是 1 周）
+- 当发现兼容性问题时，回滚计划至关重要
+- 并行运行期（双写）对于安全迁移至关重要
 
-**Source**: <mention-page url="...">Previous Migration Post-mortem</mention-page>
+**来源**：<mention-page url="...">先前迁移事后分析</mention-page>
 
-## Decision Required
+## 需要决策
 
-**Question**: Which database migration strategy should we adopt?
+**问题**：我们应该采用哪种数据库迁移策略？
 
-**Timeline**: Need decision by end of week to include in Q4 planning
+**时间表**：需要在周末之前做出决定，以便纳入 Q4 规划
 
-**Impact**: 
-- Engineering team (4-8 weeks of work)
-- Application architecture
-- Operations & monitoring
-- Future feature development velocity
+**影响**：
+- 工程团队（4-8 周的工作）
+- 应用程序架构
+- 运营和监控
+- 未来功能开发速度
 
-## Options Analysis
+## 选项分析
 
-### Option A: Stay on MongoDB with Optimizations
+### 选项 A：继续使用 MongoDB 并进行优化
 
-**Description**: Invest in MongoDB performance tuning, add indexes, upgrade to latest version, implement better query patterns.
+**描述**：投资 MongoDB 性能调优，添加索引，升级到最新版本，实施更好的查询模式。
 
-**Pros**:
-- ✅ No migration complexity
-- ✅ Team familiar with MongoDB
-- ✅ Can implement immediately
-- ✅ Lower risk
-- ✅ Estimated 2 weeks effort
+**优点**：
+- ✅ 无迁移复杂性
+- ✅ 团队熟悉 MongoDB
+- ✅ 可以立即实施
+- ✅ 风险较低
+- ✅ 预计 2 周工作量
 
-**Cons**:
-- ❌ Doesn't solve fundamental schema flexibility issues
-- ❌ Still limited transaction support
-- ❌ Performance improvements may be temporary
-- ❌ Continues technical debt accumulation
+**缺点**：
+- ❌ 无法解决基本的模式灵活性问题
+- ❌ 仍然有限的事务支持
+- ❌ 性能改进可能是暂时的
+- ❌ 继续技术债务积累
 
-**Cost/Effort**: 2 weeks engineering + $5K/year additional MongoDB infrastructure
+**成本/工作量**：2 周工程 + 每年 5K 美元额外的 MongoDB 基础设施
 
-**Risk**: Medium - Improvements may not be sufficient
+**风险**：中等 - 改进可能不足
 
-**Source**: <mention-page url="...">Migration Options Analysis</mention-page>
+**来源**：<mention-page url="...">迁移选项分析</mention-page>
 
-### Option B: Migrate to PostgreSQL
+### 选项 B：迁移到 PostgreSQL
 
-**Description**: Full migration from MongoDB to PostgreSQL. Redesign schema with proper constraints, implement dual-write period, then cut over.
+**描述**：从 MongoDB 完全迁移到 PostgreSQL。使用适当的约束重新设计模式，实施双写期，然后切换。
 
-**Pros**:
-- ✅ Solves schema consistency issues
-- ✅ Full ACID transactions
-- ✅ Better performance for relational queries
-- ✅ Lower long-term complexity
-- ✅ Industry standard, easier hiring
+**优点**：
+- ✅ 解决模式一致性问题
+- ✅ 完整的 ACID 事务
+- ✅ 关系查询性能更好
+- ✅ 长期复杂性较低
+- ✅ 行业标准，更容易招聘
 
-**Cons**:
-- ❌ High migration effort (6-8 weeks)
-- ❌ Requires schema redesign
-- ❌ Application code changes extensive
-- ❌ Risk of data loss during migration
-- ❌ Downtime required (4-6 hours estimated)
+**缺点**：
+- ❌ 高迁移工作量（6-8 周）
+- ❌ 需要模式重新设计
+- ❌ 应用程序代码更改广泛
+- ❌ 迁移期间数据丢失风险
+- ❌ 需要停机时间（预计 4-6 小时）
 
-**Cost/Effort**: 8 weeks engineering + $8K migration costs - $15K/year MongoDB savings = net $7K/year savings
+**成本/工作量**：8 周工程 + 8K 美元迁移成本 - 每年 15K 美元 MongoDB 节省 = 每年净节省 7K 美元
 
-**Risk**: High - Complex migration, application changes required
+**风险**：高 - 复杂的迁移，需要应用程序更改
 
-**Recommendation**: ✅ **Favored by engineering team**
+**建议**：✅ **工程团队倾向于**
 
-**Source**: <mention-page url="...">Database Migration Proposal</mention-page>
+**来源**：<mention-page url="...">数据库迁移提案</mention-page>
 
-### Option C: Hybrid Approach
+### 选项 C：混合方法
 
-**Description**: Keep MongoDB for document-heavy data (logs, analytics), migrate transactional data to PostgreSQL. Run both databases.
+**描述**：为文档密集型数据（日志、分析）保留 MongoDB，将事务数据迁移到 PostgreSQL。运行两个数据库。
 
-**Pros**:
-- ✅ Phased migration (lower risk)
-- ✅ Use best tool for each data type
-- ✅ Can migrate incrementally
-- ✅ Smaller initial scope (4 weeks)
+**优点**：
+- ✅ 分阶段迁移（风险较低）
+- ✅ 为每种数据类型使用最佳工具
+- ✅ 可以增量迁移
+- ✅ 较小的初始范围（4 周）
 
-**Cons**:
-- ❌ Increased operational complexity
-- ❌ Two databases to maintain
-- ❌ Data consistency between databases challenging
-- ❌ Higher infrastructure costs
-- ❌ Complex application logic
+**缺点**：
+- ❌ 增加运营复杂性
+- ❌ 需要维护两个数据库
+- ❌ 数据库之间的数据一致性具有挑战性
+- ❌ 更高的基础设施成本
+- ❌ 复杂的应用程序逻辑
 
-**Cost/Effort**: 4 weeks initial + ongoing complexity + $10K/year additional infrastructure
+**成本/工作量**：4 周初始 + 持续复杂性 + 每年 10K 美元额外基础设施
 
-**Risk**: Medium - Operational complexity increases
+**风险**：中等 - 运营复杂性增加
 
-**Source**: <mention-page url="...">Migration Options Analysis</mention-page>
+**来源**：<mention-page url="...">迁移选项分析</mention-page>
 
-### Option D: Do Nothing
+### 选项 D：不采取任何行动
 
-**Description**: Accept current performance and continue with MongoDB as-is.
+**描述**：接受当前性能并继续使用 MongoDB 原样。
 
-**Implications**:
-- Performance continues to degrade
-- Technical debt increases
-- Feature development slows
-- Customer experience suffers
-- Eventually forced into emergency migration
+**影响**：
+- 性能继续下降
+- 技术债务增加
+- 功能开发放缓
+- 客户体验受损
+- 最终被迫进行紧急迁移
 
-**Not recommended**
+**不推荐**
 
-## Discussion Topics
+## 讨论主题
 
-### Technical Feasibility
-1. Can we achieve < 4 hours downtime for Option B?
-2. What's the rollback plan if PostgreSQL migration fails?
-3. How do we handle data migration for 500GB?
-4. Schema design - what constraints do we need?
+### 技术可行性
+1. 我们能否为选项 B 实现少于 4 小时的停机时间？
+2. 如果 PostgreSQL 迁移失败，回滚计划是什么？
+3. 我们如何处理 500GB 的数据迁移？
+4. 模式设计 - 我们需要什么约束？
 
-### Business Impact
-5. What's the customer impact of 4-6 hours downtime?
-6. Can we schedule migration during low-traffic period?
-7. How does this affect Q4 feature roadmap?
-8. Cost-benefit analysis over 2-year horizon?
+### 业务影响
+5. 4-6 小时停机时间对客户的影响是什么？
+6. 我们能否在低流量期间安排迁移？
+7. 这如何影响 Q4 功能路线图？
+8. 2 年时间范围内的成本效益分析？
 
-### Risk Management
-9. What are the biggest risks with Option B?
-10. How do we test thoroughly before cutover?
-11. What's the rollback procedure and time?
-12. Do we have necessary expertise on team?
+### 风险管理
+9. 选项 B 的最大风险是什么？
+10. 我们如何在切换前彻底测试？
+11. 回滚程序和时间是什么？
+12. 我们是否有团队所需的必要专业知识？
 
-### Timeline & Resources
-13. Can we allocate 2 engineers full-time for 8 weeks?
-14. Do we need external consultants?
-15. What's the impact on other Q4 projects?
-16. When could we realistically complete this?
+### 时间表和资源
+13. 我们能否为 8 周分配 2 名全职工程师？
+14. 我们是否需要外部顾问？
+15. 这对其他 Q4 项目有什么影响？
+16. 我们实际上何时可以完成？
 
-## Decision Framework
+## 决策框架
 
-**Evaluation criteria**:
-1. **Performance improvement**: Will this solve our performance issues?
-2. **Technical debt**: Does this reduce or increase complexity?
-3. **Risk**: What's the probability and impact of failure?
-4. **Cost**: Total cost of ownership (effort + infrastructure)
-5. **Timeline**: Can we complete in Q4?
-6. **Reversibility**: Can we roll back if needed?
+**评估标准**：
+1. **性能改进**：这能否解决我们的性能问题？
+2. **技术债务**：这是否减少或增加复杂性？
+3. **风险**：失败的概率和影响是什么？
+4. **成本**：总拥有成本（工作量 + 基础设施）
+5. **时间表**：我们能否在 Q4 完成？
+6. **可逆性**：如果需要，我们能否回滚？
 
-**Decision makers**:
-- Primary: David Kim (CTO)
-- Consulted: Sarah Chen (Engineering), Bob Martinez (DevOps)
-- Informed: Product, Executive team
+**决策者**：
+- 主要：David Kim（CTO）
+- 咨询：Sarah Chen（工程）、Bob Martinez（DevOps）
+- 通知：产品、执行团队
 
-## Decision
+## 决策
 
-*[To be filled during meeting]*
+*[会议期间填写]*
 
-**Selected Option**: ___________________
+**选择的选项**：_________________
 
-**Rationale**:
+**理由**：
 
-**Timeline**:
+**时间表**：
 
-**Owner**: ___________________
+**负责人**：_________________
 
-**Success Criteria**:
+**成功标准**：
 
-## Action Items
+## 行动项
 
-*[To be filled during meeting]*
+*[会议期间填写]*
 
-- [ ] [Action item] - @[Owner] - Due: [Date]
-- [ ] [Action item] - @[Owner] - Due: [Date]
+- [ ] [行动项] - @[负责人] - 截止日期：[日期]
+- [ ] [行动项] - @[负责人] - 截止日期：[日期]
 
-## Next Steps
+## 后续步骤
 
-**Immediate**:
-- Document decision rationale
-- Create detailed implementation plan
-- Schedule kickoff meeting
+**立即**：
+- 记录决策理由
+- 创建详细的实施计划
+- 安排启动会议
 
-**Follow-up meeting**: [Date] to review migration plan
+**后续会议**：[日期] 审查迁移计划
 
-## Related Resources
+## 相关资源
 
-### Primary Sources
-- <mention-page url="...">Database Migration Proposal</mention-page>
-- <mention-page url="...">Current Database Performance Issues</mention-page>
-- <mention-page url="...">Migration Options Analysis</mention-page>
-- <mention-page url="...">Previous Migration Post-mortem</mention-page>
+### 主要来源
+- <mention-page url="...">数据库迁移提案</mention-page>
+- <mention-page url="...">当前数据库性能问题</mention-page>
+- <mention-page url="...">迁移选项分析</mention-page>
+- <mention-page url="...">先前迁移事后分析</mention-page>
 
-### Supporting Documents
-- MongoDB performance metrics dashboard
-- PostgreSQL evaluation results
-- Cost analysis spreadsheet
+### 支持文档
+- MongoDB 性能指标仪表板
+- PostgreSQL 评估结果
+- 成本分析电子表格
 ```
 
-### Step 5: Share Agenda
+### 步骤 5：分享议程
 
 ```
 Notion:notion-create-comment
 parent: { page_id: "agenda-page-id" }
 rich_text: [{
   type: "text",
-  text: { content: "📋 Meeting agenda ready! Please review the pre-read before tomorrow's meeting. cc: @Sarah @David @Alice @Bob @Carol" }
+  text: { content: "📋 会议议程已准备就绪！请在明天的会议前审阅预读材料。抄送：@Sarah @David @Alice @Bob @Carol" }
 }]
 ```
 
-## Summary Provided to User
+## 提供给用户的摘要
 
 ```markdown
-## Meeting Prep Complete ✅
+## 会议准备完成 ✅
 
-### Meeting Details
-- **Topic**: Database Migration Strategy Decision
-- **Date**: October 15, 2025 at 2:00 PM
-- **Duration**: 90 minutes
-- **Attendees**: 5 (Engineering leads + CTO + Product)
+### 会议详情
+- **主题**：数据库迁移策略决策
+- **日期**：2025年10月15日下午2:00
+- **时长**：90分钟
+- **参会者**：5人（工程主管 + CTO + 产品）
 
-### Agenda Created
-<mention-page url="...">Architecture Decision: Database Migration Strategy</mention-page>
+### 已创建议程
+<mention-page url="...">架构决策：数据库迁移策略</mention-page>
 
-### Pre-Read Summary
+### 预读摘要
 
-**Problem**: MongoDB performance degrading (50ms → 400ms queries), schema flexibility causing issues
+**问题**：MongoDB 性能下降（50ms → 400ms 查询），模式灵活性导致问题
 
-**Decision needed**: Choose between:
-1. Stay on MongoDB (optimizations) - 2 weeks, low risk
-2. Migrate to PostgreSQL - 8 weeks, high value, high risk ✅ Recommended
-3. Hybrid approach - 4 weeks, medium complexity
-4. Do nothing - Not recommended
+**需要决策**：在以下选项中选择：
+1. 继续使用 MongoDB（优化）- 2周，低风险
+2. 迁移到 PostgreSQL - 8周，高价值，高风险 ✅ 推荐
+3. 混合方法 - 4周，中等复杂性
+4. 不采取任何行动 - 不推荐
 
-**Recommendation**: Engineering team favors PostgreSQL migration
+**建议**：工程团队倾向于 PostgreSQL 迁移
 
-### Key Information Included
+### 包含的关键信息
 
-✅ **Background context** from 4 relevant pages
-✅ **Options analysis** with pros/cons for each
-✅ **Cost-benefit** breakdown
-✅ **Risk assessment** for each option
-✅ **Discussion topics** (16 questions organized by theme)
-✅ **Decision framework** with evaluation criteria
-✅ **Historical context** from previous migration
-✅ **Empty sections** for decision and action items
+✅ **背景上下文**来自 4 个相关页面
+✅ **选项分析**每个选项的优缺点
+✅ **成本效益**细分
+✅ **风险评估**每个选项
+✅ **讨论主题**（16个问题按主题组织）
+✅ **决策框架**包含评估标准
+✅ **历史背景**来自先前迁移
+✅ **空白部分**用于决策和行动项
 
-### Discussion Topics Prepared
+### 准备的讨论主题
 
-**Technical** (4 questions):
-- Downtime achievability
-- Rollback planning
-- Data migration approach
-- Schema design
+**技术**（4个问题）：
+- 停机时间可实现性
+- 回滚规划
+- 数据迁移方法
+- 模式设计
 
-**Business** (4 questions):
-- Customer impact
-- Scheduling
-- Roadmap impact
-- Cost analysis
+**业务**（4个问题）：
+- 客户影响
+- 安排
+- 路线图影响
+- 成本分析
 
-**Risk** (4 questions):
-- Risk identification
-- Testing strategy
-- Rollback procedure
-- Expertise availability
+**风险**（4个问题）：
+- 风险识别
+- 测试策略
+- 回滚程序
+- 专业知识可用性
 
-**Resources** (4 questions):
-- Team allocation
-- External help needs
-- Project trade-offs
-- Timeline realism
+**资源**（4个问题）：
+- 团队分配
+- 外部帮助需求
+- 项目权衡
+- 时间表现实性
 
-### Success Factors
+### 成功因素
 
-1. **Comprehensive research**: 4 relevant pages analyzed
-2. **Clear options**: Pros/cons for each approach
-3. **Structured discussion**: 16 questions organized by theme
-4. **Decision framework**: Clear criteria for evaluation
-5. **Historical context**: Lessons from previous migration
-6. **Ready for outcomes**: Sections prepared for decision and actions
+1. **全面研究**：分析了 4 个相关页面
+2. **清晰选项**：每种方法的优缺点
+3. **结构化讨论**：16个问题按主题组织
+4. **决策框架**：明确的评估标准
+5. **历史背景**：从先前迁移中学到的经验
+6. **准备就绪**：为决策和行动准备了部分
 
-**Meeting is well-prepared for productive decision-making! 📊**
+**会议已为高效决策做好准备！📊**
 ```
 
-## Key Features Demonstrated
+## 演示的关键功能
 
-### Context Gathering
-- **Targeted search**: Engineering teamspace, recent documents
-- **Multiple perspectives**: Performance data, proposals, analysis, historical lessons
-- **Comprehensive synthesis**: Combined technical, business, and historical context
+### 上下文收集
+- **针对性搜索**：工程团队空间，最近的文档
+- **多角度视角**：性能数据、提案、分析、历史经验
+- **全面综合**：结合技术、业务和历史上下文
 
-### Options Analysis
-- **Structured comparison**: Pros/cons for each option
-- **Cost-benefit**: Effort and infrastructure costs included
-- **Risk assessment**: Probability and impact noted
-- **Recommendation**: Clear engineering preference stated
+### 选项分析
+- **结构化比较**：每个选项的优缺点
+- **成本效益**：包括工作量和基础设施成本
+- **风险评估**：注明概率和影响
+- **建议**：明确说明工程偏好
 
-### Decision Support
-- **Discussion topics**: 16 questions organized by theme
-- **Decision framework**: Evaluation criteria defined
-- **Decision makers**: Roles and responsibilities clear
-- **Outcome capture**: Sections ready for decision and actions
+### 决策支持
+- **讨论主题**：16个问题按主题组织
+- **决策框架**：定义评估标准
+- **决策者**：角色和职责清晰
+- **结果捕获**：为决策和行动准备的部分
 
-### Meeting Structure
-- **Pre-read**: Comprehensive background (can be read in 10 minutes)
-- **Options**: Clear comparison for quick decision
-- **Discussion**: Structured topics prevent rambling
-- **Capture**: Templates for decision and actions
+### 会议结构
+- **预读**：全面的背景（可在10分钟内阅读）
+- **选项**：清晰的比较以便快速决策
+- **讨论**：结构化主题防止漫谈
+- **捕获**：决策和行动的模板
 
-Perfect for: Architecture decisions, technical trade-offs, strategic choices
+适用于：架构决策、技术权衡、战略选择
 

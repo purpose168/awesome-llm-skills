@@ -1,19 +1,19 @@
-# Arctic Frost
+# 北极霜
 
-A cool and crisp winter-inspired theme that conveys clarity, precision, and professionalism.
+一个清新锐利的冬季主题，传达清晰、精确和专业的视觉效果。
 
-## Color Palette
+## 色彩调色板
 
-- **Ice Blue**: `#d4e4f7` - Light backgrounds and highlights
-- **Steel Blue**: `#4a6fa5` - Primary accent color
-- **Silver**: `#c0c0c0` - Metallic accent elements
-- **Crisp White**: `#fafafa` - Clean backgrounds and text
+- **冰蓝色**: `#d4e4f7` - 浅色背景和高亮
+- **钢蓝色**: `#4a6fa5` - 主要强调色
+- **银色**: `#c0c0c0` - 金属质感强调元素
+- **纯净白色**: `#fafafa` - 干净的背景和文本
 
-## Typography
+## 字体排版
 
-- **Headers**: DejaVu Sans Bold
-- **Body Text**: DejaVu Sans
+- **标题**: DejaVu Sans Bold（粗体）
+- **正文**: DejaVu Sans
 
-## Best Used For
+## 适用场景
 
-Healthcare presentations, technology solutions, winter sports, clean tech, pharmaceutical content.
+医疗保健演示、技术解决方案、冬季运动、清洁技术、制药内容。
